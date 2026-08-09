@@ -1,0 +1,363 @@
+:root {
+  color-scheme: light;
+  --ink: #1b2532;
+  --muted: #65707d;
+  --paper: #f7f5ef;
+  --surface: #ffffff;
+  --line: #d9d9d2;
+  --accent: #b24f3e;
+  --accent-dark: #7e3227;
+  --accent-soft: #f4e3dc;
+  --blue-soft: #e8eef2;
+  --shadow: 0 16px 45px rgba(27, 37, 50, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: var(--paper);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at top right, rgba(178, 79, 62, 0.08), transparent 32rem),
+    var(--paper);
+  color: var(--ink);
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.page-shell {
+  width: min(100% - 2rem, 66rem);
+  margin: 0 auto;
+  padding: 1.25rem 0 2.5rem;
+}
+
+.hero {
+  padding: clamp(2rem, 8vw, 5.5rem) clamp(0.25rem, 4vw, 2rem) 2rem;
+}
+
+.eyebrow,
+.section-kicker,
+.clue-label {
+  margin: 0;
+  color: var(--accent-dark);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+h1,
+h2,
+h3,
+p,
+blockquote,
+dl,
+ul {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  max-width: 12ch;
+  margin: 0.55rem 0 1rem;
+  font-size: clamp(2.35rem, 8vw, 4.8rem);
+  font-weight: 900;
+}
+
+h2 {
+  margin: 0.2rem 0 1rem;
+  font-size: clamp(1.6rem, 4vw, 2.25rem);
+}
+
+h3 {
+  margin: 0.35rem 0 1rem;
+  font-size: 1.35rem;
+}
+
+.lede {
+  max-width: 38rem;
+  margin-bottom: 1.5rem;
+  color: var(--muted);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+}
+
+.fiction-notice {
+  max-width: 48rem;
+  margin: 0;
+  padding: 0.95rem 1rem;
+  border-left: 4px solid var(--accent);
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--accent-dark);
+  font-size: 0.95rem;
+}
+
+main {
+  display: grid;
+  gap: 1.25rem;
+}
+
+section {
+  padding: clamp(1.25rem, 4vw, 2.25rem);
+  border: 1px solid rgba(27, 37, 50, 0.09);
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: var(--shadow);
+}
+
+.section-heading {
+  margin-bottom: 1.25rem;
+}
+
+.case-brief p {
+  max-width: 48rem;
+  margin-bottom: 0.6rem;
+}
+
+blockquote {
+  margin: 1.25rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  font-size: clamp(1.05rem, 3vw, 1.35rem);
+  font-weight: 700;
+}
+
+.brief-note,
+.helper-text,
+.clue-footnote,
+.boundary-note {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.clue-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.clue-card {
+  min-width: 0;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 0.85rem;
+  background: var(--surface);
+}
+
+.clue-card-accent {
+  border-color: rgba(178, 79, 62, 0.42);
+  background: linear-gradient(145deg, #fff, #fff8f4);
+}
+
+.evidence-list {
+  margin-bottom: 0.9rem;
+}
+
+.evidence-list div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px dashed var(--line);
+}
+
+.evidence-list dt {
+  color: var(--muted);
+}
+
+.evidence-list dd {
+  margin: 0;
+  font-weight: 800;
+  text-align: right;
+}
+
+.record-time {
+  margin-bottom: 0.2rem;
+  color: var(--accent-dark);
+  font-size: 2.25rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.clue-footnote {
+  margin-bottom: 0;
+}
+
+fieldset {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+  margin: 1.5rem 0 1.25rem;
+  padding: 0;
+  border: 0;
+}
+
+legend {
+  margin-bottom: 0.75rem;
+  font-weight: 800;
+}
+
+.choice-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: var(--surface);
+  transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease;
+}
+
+.choice-card:hover,
+.choice-card:has(input:focus-visible) {
+  border-color: var(--accent);
+}
+
+.choice-card:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateY(-1px);
+}
+
+.choice-card input {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.28rem;
+  accent-color: var(--accent);
+  flex: 0 0 auto;
+}
+
+.choice-card span {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.choice-card small {
+  color: var(--muted);
+}
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.primary-button,
+.secondary-button {
+  min-height: 2.9rem;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+.primary-button {
+  border: 1px solid var(--accent-dark);
+  background: var(--accent);
+  color: #fff;
+}
+
+.primary-button:hover,
+.primary-button:focus-visible {
+  background: var(--accent-dark);
+}
+
+.secondary-button {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+}
+
+.secondary-button:hover,
+.secondary-button:focus-visible {
+  border-color: var(--ink);
+  background: var(--blue-soft);
+}
+
+.primary-button:focus-visible,
+.secondary-button:focus-visible,
+.choice-card input:focus-visible {
+  outline: 3px solid rgba(178, 79, 62, 0.35);
+  outline-offset: 3px;
+}
+
+.helper-text {
+  min-height: 1.75em;
+  margin: 0.75rem 0 0;
+}
+
+.reveal-panel {
+  margin-top: 1.5rem;
+  padding: clamp(1.15rem, 4vw, 1.75rem);
+  border: 1px solid rgba(57, 98, 122, 0.3);
+  border-radius: 0.9rem;
+  background: var(--blue-soft);
+}
+
+.reveal-panel h3 {
+  color: #28556b;
+}
+
+.reveal-panel ul {
+  margin-bottom: 1rem;
+  padding-left: 1.35rem;
+}
+
+.boundary-note {
+  margin-bottom: 1.25rem;
+  padding: 0.75rem 0.9rem;
+  border-left: 3px solid #6b8492;
+}
+
+.success-note {
+  margin-bottom: 0;
+  color: #28556b;
+  font-weight: 700;
+}
+
+.site-footer {
+  padding: 2rem 0.25rem 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.site-footer p {
+  margin-bottom: 0.35rem;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (min-width: 700px) {
+  .page-shell {
+    padding-top: 2rem;
+  }
+
+  .clue-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="案件 #00｜最後一則訊息：一個不用下載、約三分鐘完成的繁體中文微型懸案。">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; connect-src 'none'; font-src 'self'; form-action 'self'; img-src 'self' data:; object-src 'none'; script-src 'self'; style-src 'self';">
+    <title>案件 #00｜最後一則訊息｜Momey</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <p class="eyebrow">MOMEY・短篇互動推理</p>
+        <h1>案件 #00｜最後一則訊息</h1>
+        <p class="lede">不用下載，直接在網頁調查一個約 3 分鐘完成的繁體中文微型懸案。</p>
+        <p class="fiction-notice" role="note">
+          本作品為原創虛構互動推理內容。人物、事件、地點與情節皆為虛構，與任何真實案件無關。
+        </p>
+      </header>
+
+      <main>
+        <section class="case-brief" aria-labelledby="brief-title">
+          <div class="section-heading">
+            <p class="section-kicker">CASE FILE 00</p>
+            <h2 id="brief-title">先讀取案件簡報</h2>
+          </div>
+          <p>23:58，陳雨安的室友報警。</p>
+          <p>雨安原本約好 23:30 回家，但一直沒有出現。</p>
+          <p>她最後留下的訊息是：</p>
+          <blockquote>「我 11:47 剛離開咖啡店，再十分鐘就到家。」</blockquote>
+          <p class="brief-note">警方目前取得三項資料。請比較它們的時間與狀態，再做出你的判斷。</p>
+        </section>
+
+        <section class="clues" aria-labelledby="clues-title">
+          <div class="section-heading">
+            <p class="section-kicker">EVIDENCE</p>
+            <h2 id="clues-title">三項線索</h2>
+          </div>
+
+          <div class="clue-grid">
+            <article class="clue-card">
+              <div class="clue-label">線索 1</div>
+              <h3>咖啡店收據</h3>
+              <dl class="evidence-list">
+                <div><dt>消費時間</dt><dd>23:31</dd></div>
+                <div><dt>結帳方式</dt><dd>信用卡</dd></div>
+              </dl>
+              <p>店員表示，她結帳後不久便離開。</p>
+            </article>
+
+            <article class="clue-card">
+              <div class="clue-label">線索 2</div>
+              <h3>手機截圖</h3>
+              <dl class="evidence-list">
+                <div><dt>訊息送出時間</dt><dd>23:47</dd></div>
+                <div><dt>手機右上角電量</dt><dd>7%</dd></div>
+                <div><dt>Wi-Fi 圖示</dt><dd>仍處於連線狀態</dd></div>
+              </dl>
+            </article>
+
+            <article class="clue-card clue-card-accent">
+              <div class="clue-label">線索 3</div>
+              <h3>咖啡店 Wi-Fi 紀錄</h3>
+              <p class="record-time">23:36</p>
+              <p>系統顯示：雨安的手機於 23:36 離線。</p>
+              <p class="clue-footnote">當晚該 Wi-Fi 的有效範圍僅涵蓋店內與門口附近。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="decision" aria-labelledby="decision-title">
+          <div class="section-heading">
+            <p class="section-kicker">YOUR JUDGMENT</p>
+            <h2 id="decision-title">你的判斷</h2>
+          </div>
+          <p>如果雨安真的在 23:47「剛離開咖啡店」，三項資料中，哪個細節最值得重新調查？</p>
+
+          <form id="investigation-form">
+            <fieldset>
+              <legend>選擇最值得重新調查的線索</legend>
+              <label class="choice-card">
+                <input type="radio" name="clue" value="1">
+                <span><strong>線索 1</strong><small>咖啡店收據</small></span>
+              </label>
+              <label class="choice-card">
+                <input type="radio" name="clue" value="2">
+                <span><strong>線索 2</strong><small>手機截圖</small></span>
+              </label>
+              <label class="choice-card">
+                <input type="radio" name="clue" value="3">
+                <span><strong>線索 3</strong><small>咖啡店 Wi-Fi 紀錄</small></span>
+              </label>
+            </fieldset>
+
+            <div class="action-row">
+              <button class="primary-button" type="submit">揭曉真相</button>
+              <button class="secondary-button" id="reset-button" type="button" hidden>重新調查</button>
+            </div>
+            <p class="helper-text" id="selection-message" aria-live="polite">先選一項線索，再揭曉調查結果。</p>
+          </form>
+
+          <div class="reveal-panel" id="reveal-panel" aria-live="polite" tabindex="-1" hidden>
+            <p class="section-kicker">INVESTIGATION RESULT</p>
+            <h3>關鍵是 Wi-Fi 紀錄。</h3>
+            <p>手機截圖看起來顯示訊息在 23:47 送出時，仍連著咖啡店 Wi-Fi；但系統紀錄顯示該手機早在 23:36 就已離線。</p>
+            <p>因此，「23:47 截圖」與 Wi-Fi 紀錄不能同時被視為對當時狀態完全可靠的證據。</p>
+            <p>至少有一項需要重新調查：</p>
+            <ul>
+              <li>時間資訊</li>
+              <li>截圖來源</li>
+              <li>或訊息產生方式</li>
+            </ul>
+            <p class="boundary-note">這個 micro case 只要求找出 evidence inconsistency，不代表已經證明某人偽造訊息。</p>
+            <p class="success-note">你成功找到了案件中的第一個矛盾。<br><strong>案件 #00 完。</strong></p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>© Momey</p>
+        <p>本作品內容及素材為 Momey 原創虛構作品。未經授權不得重製、轉售或作商業用途。</p>
+      </footer>
+    </div>
+  </body>
+</html>
