@@ -8,6 +8,8 @@
   const qaMode = params.get('qa') === '1';
   const GA_ID = window.MOMEY_GA_MEASUREMENT_ID || '';
   const gaReady = /^G-[A-Z0-9]+$/i.test(GA_ID) && GA_ID !== 'G-XXXXXXXXXX';
+  const COUNTER_URL = window.MOMEY_EVIDENCE_COLLECTOR_URL || '';
+  const counterReady = /^https:\/\/[^/]+\.workers\.dev\/collect$/i.test(COUNTER_URL);
 
   const prefix = qaMode ? 'qa_' : 'sr_';
   const state = {
@@ -42,9 +44,25 @@
     document.head.appendChild(script);
   }
 
+  function aggregateEvent(eventName) {
+    if (internalMode || !counterReady) return;
+    void fetch(COUNTER_URL, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'omit',
+      referrerPolicy: 'no-referrer',
+      keepalive: true,
+      headers: {'Content-Type': 'text/plain;charset=UTF-8'},
+      body: JSON.stringify({source, event_name: eventName})
+    }).catch(() => {});
+  }
+
   function event(name) {
-    if (internalMode || !gaReady || typeof window.gtag !== 'function') return;
-    window.gtag('event', `${prefix}${name}`, {
+    if (internalMode) return;
+    const eventName = `${prefix}${name}`;
+    aggregateEvent(eventName);
+    if (!gaReady || typeof window.gtag !== 'function') return;
+    window.gtag('event', eventName, {
       source,
       debug_mode: qaMode
     });
