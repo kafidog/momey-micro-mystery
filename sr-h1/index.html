@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="2–4 個朋友，同一個地方，一人一支手機；每個人看到的資訊不一樣。">
+  <title>Momey — Same-Room Social Game Test</title>
+  <link rel="stylesheet" href="../sr-assets/style.css">
+  <script src="../sr-assets/config.js"></script>
+</head>
+<body data-source="threads_h1">
+  <main>
+    <p class="eyebrow">Momey · early concept test</p>
+    <h1>你看到的，<br>不是他們看到的。</h1>
+    <p class="lead">2–4 個朋友，在同一個地方，每個人拿自己的手機，但每個人只收到自己的那一部分資訊。</p>
+    <div class="core"><strong>手機只負責把資訊分開。</strong><br>看完手機後，真正的遊戲發生在你們彼此之間：說、猜、說服與決定。</div>
+    <div class="facts" aria-label="玩法重點">
+      <div class="fact">2–4 人，同一地點</div>
+      <div class="fact">一人一支手機</div>
+      <div class="fact">不用下載 App</div>
+      <div class="fact">不需要實體配件</div>
+    </div>
+
+    <section id="group-step">
+      <h2>你現在的狀況？</h2>
+      <p class="hint">只選最接近你現在狀況的一個。</p>
+      <div class="choices">
+        <button class="choice" type="button" data-group="gr_now" aria-pressed="false"><strong>現在旁邊就有 1–3 個人</strong><span>如果有東西可以直接開始，我們現在就可能玩。</span></button>
+        <button class="choice" type="button" data-group="gr_today" aria-pressed="false"><strong>今天稍晚會和 1–3 個人在一起</strong><span>今天還有一場已經確定的聚會。</span></button>
+        <button class="choice" type="button" data-group="solo_browse" aria-pressed="false"><strong>現在只有我自己</strong><span>目前只是自己看到這個概念。</span></button>
+      </div>
+    </section>
+
+    <section id="concept-step" hidden>
+      <h2>如果現在真的有一款可以直接玩</h2>
+      <p class="hint">下面兩種，你第一個比較想試哪一種？</p>
+      <div class="concept">
+        <h3>A｜有點緊張，需要一起做決定</h3>
+        <p>每個人知道的事情不同。你們要把資訊拼起來，但最後可能還是不知道全部真相，仍然必須一起做決定。</p>
+        <button class="choice" type="button" data-pull="pull_serious" aria-pressed="false" style="margin-top:12px"><strong>我比較想試這個</strong></button>
+      </div>
+      <div class="concept">
+        <h3>B｜比較鬧，會讓朋友互相吐槽</h3>
+        <p>大家以為自己在討論同一件事，直到有人發現：你們拿到的題目或條件根本不完全一樣。</p>
+        <button class="choice" type="button" data-pull="pull_playful" aria-pressed="false" style="margin-top:12px"><strong>我比較想試這個</strong></button>
+      </div>
+      <button class="choice" type="button" data-pull="pull_none" aria-pressed="false" style="margin-top:10px"><strong>兩種都沒有特別想玩</strong></button>
+    </section>
+
+    <section id="final-step" hidden>
+      <div class="status">
+        <strong>Momey 還在早期驗證，目前尚未正式販售。</strong>
+        <p>這一頁只是在確認：當朋友真的已經聚在一起時，這類玩法是不是一個會想嘗試的活動。</p>
+      </div>
+      <p class="privacy">本頁不要求你提供姓名、Email、電話、精確位置、聯絡人或社群帳號；只記錄本頁的基本瀏覽與選項互動，用來判斷這個概念是否值得繼續驗證。</p>
+    </section>
+  </main>
+  <div id="mode-badge" class="badge" aria-live="polite"></div>
+  <script src="../sr-assets/app.js"></script>
+</body>
+</html>
