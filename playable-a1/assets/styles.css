@@ -139,6 +139,18 @@ button.quiet {
   letter-spacing: -0.02em;
 }
 
+.version-mark {
+  display: inline-block;
+  margin-left: 0.35rem;
+  border: 1px solid var(--amber);
+  padding: 0.16rem 0.4rem;
+  color: var(--amber);
+  font-size: 0.42em;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+}
+
 .prototype-header h1 {
   max-width: 26ch;
   font-size: clamp(1.2rem, 2.5vw, 1.65rem);

@@ -1,33 +1,33 @@
-# Decision and consequence map
+# Decision and consequence map — A1.1
 
-The final commitment is deliberately binary and legible. There is no score, win/loss label, good/bad ending, or dominant moral button.
+The commitment is binary and legible. There is no score, win/loss label, good/bad ending, or dominant moral button.
 
 ## Immediate seal
 
-- Prevents contamination from crossing downstream.
-- Closes the rescue window.
-- P remains on the sealed side.
-- The signal stops and P cannot be rescued.
+- Stops contamination before it crosses the boundary.
+- Q completes the second-door work and leaves safely.
+- P's rescue window closes; P remains on the sealed side, the signal stops, and P cannot be rescued.
 
 ## Delayed seal
 
 - Keeps the rescue window open long enough for P to be rescued.
-- Lets contamination cross the boundary.
-- Produces downstream closure/exposure and a real operational cost.
+- The same delay lets contamination reach Q's station.
+- Q completes the second-door closure, suffers permanent respiratory injury from the exposure, and is permanently removed from field duty.
 
 ## Causal integrity
 
-- Verification does not rewrite either result.
-- The result is driven primarily by the final commitment.
-- The selected verification only changes what the group can say about its reasoning afterward.
-- Both outcomes preserve a meaningful sacrifice and a residual question.
+- P and Q are both present before commitment; Q is not a surprise ending.
+- Verification changes the group's explanation, not the physical result.
+- The final commitment determines what is protected and what is sacrificed.
+- Before commitment, only the possibility of irreversible bodily harm is known; the fixed injury is revealed after commitment, preserving tension without hiding the causal chain.
 
-## Anti-alpha consensus protocol
+## Less-mechanical consensus
 
-Before any local commitment button is confirmed, the three seats complete the same short oral sequence:
+Each seat gets one private responsibility instead of a recitation checklist:
 
-1. Seat 2 says what a seal makes a person lose.
-2. Seat 3 says what a delay makes the downstream bear.
-3. Seat 1 restates both costs without deciding for the group.
+1. 人員訊號席 says the P-side human cost and what remains unknown.
+2. 封鎖風險席 says Q's human cost and what remains unknown.
+3. 事件指揮席 restates both unresolved costs without choosing for the group.
+4. The group talks freely, agrees, and each phone records the same commitment.
 
-Only after that shared discussion does each phone select the identical commitment and confirm it locally. The checkbox records completion of the oral protocol; it is not a vote owned by Seat 1.
+The single checkbox records that human agreement happened; it is not a vote owned by Seat 1.

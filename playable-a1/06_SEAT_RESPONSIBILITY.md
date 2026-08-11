@@ -1,32 +1,26 @@
-# Seat responsibility
+# Seat responsibility — A1.1
 
-## Seat 1 — 事件指揮
+## Seat 1 — 事件指揮席
 
-- First contribution: lawful entry authorization and time.
-- Second contribution: confirmation-service failure time plus the seal authority/window.
-- Decision responsibility: knows who can issue the action and what time remains.
-- Failure if removed: the group loses the lawful timeline and cannot ground the final command.
+- First contribution: P's lawful entry and time.
+- Second contribution: service-failure/no-exit timing, the command window, and Q's second-door station.
+- Verification fragments: A owns P's timeline; B owns the seal window and Q's timing.
+- Consensus responsibility: restate the unresolved P/Q tradeoff without deciding for the group.
 
-## Verification fragment ownership
+## Seat 2 — 人員訊號席
 
-- Option A: Seat 1 receives the entry-audit timeline, Seat 2 receives the wearable checksum/live-physiology link, and Seat 3 receives the location/environment boundary with residual evacuation risk.
-- Option B: Seat 1 receives the seal-window/breach-time fragment, Seat 2 receives the contamination-interference/personnel-exposure boundary, and Seat 3 receives the calibrated pressure-model reliability fragment.
-- No single result card contains the complete A or B proof; all three fragments must be explained aloud.
+- First contribution: a credible human-like signal temporarily associated with P, but not yet confirmed as P.
+- Second contribution: signal continuity and the possibility of distress; Q remains at the second door while the incident continues.
+- Verification fragments: A owns the P source; B owns how waiting can narrow the signal/Q boundary.
+- Consensus responsibility: say the P-side human cost and uncertainty first.
 
-## Seat 2 — 人員訊號
+## Seat 3 — 封鎖風險席
 
-- First contribution: human physiological pattern with a credible but temporary association to P's channel/location; relay checksum and device mapping are not yet verified.
-- Second contribution: continuity after service failure and the non-certain distress interpretation, still bounded by the provisional source mapping.
-- Decision responsibility: keeps the group from treating `0 confirmed` as proof of no human presence.
-- Failure if removed: the rescue possibility becomes unsupported or purely sentimental.
+- First contribution: real rising pressure toward downstream and Q's required position.
+- Second contribution: the human cost of Q's shrinking safety boundary, including the possibility of irreversible bodily harm without predicting whether it occurs.
+- Verification fragments: A owns the location/escape gap; B owns the calibrated danger toward Q.
+- Consensus responsibility: say Q's human cost after Seat 2, without choosing for the group.
 
-## Seat 3 — 封鎖風險
+## Dependency and anti-alpha guard
 
-- First contribution: real pressure/contamination trend toward downstream, with sensor calibration/model reliability still pending.
-- Second contribution: predicted downstream closure/exposure cost and the boundary between risk and an already-confirmed result.
-- Decision responsibility: keeps delay from being treated as neutral waiting.
-- Failure if removed: the group cannot articulate the safety consequence of preserving the rescue window.
-
-## Anti-alpha guard
-
-No seat sees the full answer or can advance the other seats. The first and second cards explicitly ask the holder to explain rather than show the screen. Stage 5 requires Seat 2 to state the human loss first, Seat 3 to state the downstream cost second, and Seat 1 to restate both without deciding for the group. The final commitment is local and only confirms after the shared three-round oral protocol checkbox.
+Every seat contributes twice before commitment and owns a different part of A/B. Q is deliberately seeded in more than one seat before the ending. Stage 5 gives 人員訊號席 and 封鎖風險席 the first two human responsibilities; 事件指揮席 speaks last only to summarize. Free discussion and identical local records—not a master screen—form the agreement.

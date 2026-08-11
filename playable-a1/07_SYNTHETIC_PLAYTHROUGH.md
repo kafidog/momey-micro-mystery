@@ -1,31 +1,31 @@
-# Synthetic three-seat walkthrough
+# Synthetic three-seat walkthrough — A1.1
 
 ## Method
 
-Each seat is opened in a separate browser tab. The engine isolates persistence by seat-specific key; this revision revalidation checks state topology, stage reachability, branch consequences, seat-specific verification fragments, refresh recovery, oral anti-alpha gating, and mobile layout. It does not simulate enjoyment.
+Each seat is opened in a separate fresh browser tab or isolated context. The walkthrough must check the human-led Stage 3 discovery gate, Q references before commitment, distinct A/B fragments, all four A/B × commitment branches, refresh/reset, isolation, responsive layout, and console health. It does not simulate enjoyment.
 
 `SYNTHETIC_REVIEW != HUMAN_FUN_EVIDENCE`
 
 ## Required branches
 
-| Branch | Verification | Commitment | Expected result | Result |
+| Branch | Verification | Commitment | Expected result | Status |
 |---|---|---|---|---|
-| A | A — human signal | 立即封鎖 | Spread stopped; P rescue window closed | PASS — revised fresh Seat 1 reached Stage 6; protocol copy visible; console errors 0 |
-| B | A — human signal | 延後封鎖 | P rescued; downstream cost occurs | PASS — revised fresh Seat 1 reached Stage 6; protocol copy visible; console errors 0 |
-| C | B — containment model | 立即封鎖 | Spread stopped; P rescue window closed | PASS — revised fresh Seat 1 reached Stage 6; protocol copy visible; console errors 0 |
-| D | B — containment model | 延後封鎖 | P rescued; downstream cost occurs | PASS — revised fresh Seat 1 reached Stage 6; protocol copy visible; console errors 0 |
+| A | A — P signal | 立即封鎖 | Q leaves safely; P rescue window closes | PASS — Seat 1 fresh UI flow reached Stage 6; console error/warn empty |
+| B | A — P signal | 延後封鎖 | P rescued; Q suffers permanent respiratory injury and is permanently removed from field duty | PASS — Seat 1 fresh UI flow reached Stage 6; console error/warn empty |
+| C | B — Q danger | 立即封鎖 | Q leaves safely; P rescue window closes | PASS — Seat 1 fresh UI flow reached Stage 6; console error/warn empty |
+| D | B — Q danger | 延後封鎖 | P rescued; Q suffers permanent respiratory injury and is permanently removed from field duty | PASS — Seat 1 fresh UI flow reached Stage 6; console error/warn empty |
 
-## Assertions
+## Assertions to record
 
-- No branch changes the fixed truth.
-- No branch bypasses the verbal-consensus gate.
-- A and B are credible-but-unverified before selection; the selected result is a verification, not a repeated known answer.
-- Three distinct result fragments must be spoken together: timeline/window, source/personnel boundary, and environment/model reliability.
-- Stage 5 requires the Seat 2 → Seat 3 → Seat 1 oral sequence before local confirmation.
-- A refresh keeps the current seat at approximately the same stage.
-- Reset requires opening the reset disclosure and confirming a second action.
-- Every seat can reach Stage 6 without another seat's storage or a facilitator: the revised Seat 2 A and Seat 3 B result routes reached their distinct result cards; Seat 1 completed both required browser branches.
-- Seat isolation check: seat 2 moved to Stage 1 while seat 3 remained at Stage 0 in separate tabs.
-- Responsive check: desktop, 390×844 iPhone-like, and 412×915 Android-like viewports reached the final panel with `document.documentElement.scrollWidth <= innerWidth`, zero captured console errors, and all seven marker rectangles inside the viewport.
-- Mobile progress check: all seven markers fit inside the stage navigation at both narrow widths; `stage-nav.scrollWidth <= stage-nav.clientWidth`.
-- Three-fragment proof: Seat 1 A = `入口稽核片段：時間線仍相容`, Seat 2 A = `穿戴裝置 checksum 與即時生理連結`, Seat 3 A = `位置與環境邊界仍有缺口`; Seat 1 B = `封鎖窗口片段：突破時間被標出`, Seat 2 B = `污染干擾與人員暴露邊界`, Seat 3 B = `校準後的壓差模型可靠度`.
+- Stage 3 begins with only `0 已確認人員`; the definition was absent from the visible DOM state before the discussion control and appeared after it.
+- Refresh after opening the definition preserved Stage 3 and the confirmed definition; Stage 2/4/5 refresh and Stage 6 reset were also exercised.
+- Q appears in at least two meaningful pre-commitment cards; Q is not introduced only by Stage 6.
+- A clarifies P's source; B clarifies danger toward Q; neither changes the final consequence mapping.
+- Result fragments are different by seat and are short enough to explain in own words.
+- Stage 5 has private 人員訊號席／封鎖風險席／事件指揮席 responsibilities and a free-discussion agreement gate, not a three-round compliance list; a capture records the 事件指揮席 responsibility.
+- Seat isolation snapshot showed Seat 1 at Stage 6 while Seat 2 and Seat 3 independently remained at Stage 4; reset was performed through the two-step UI only.
+- At 390×844 and 412×915, all seven progress markers fit without page or internal horizontal overflow.
+
+## Natural-language roleplay pass
+
+This synthetic roleplay did not recite card text. The prompts naturally produced questions such as: `P 的訊號還能代表什麼？`, `如果等三分鐘，Q 能不能離開第二道門？`, and `我們是相信訊號，還是相信時間窗口？` This is a conversation-topology check, not human-fun evidence.

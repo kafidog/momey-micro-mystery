@@ -1,11 +1,11 @@
-# Playable A1 execution record
+# Playable A1.1 execution record
 
 ## Handoff
 
-- `AGENT_WORKFLOW=SOL_HIGH_PLAN -> LUNA_MAX_EXECUTION -> SOL_HIGH_ADVERSARIAL_REVIEW`
+- `AGENT_WORKFLOW=SOL_HIGH_PLAN -> LUNA_MAX_PRIMARY_IMPLEMENTATION_AND_QA -> SOL_HIGH_SECOND_REVIEW -> LUNA_MAX_BOUNDED_CORRECTION`
 - `ASSIGNED_AGENT=luna_max_worker`
-- `TASK_SCOPE=Complete static 3-player Playable A1 milestone under /playable-a1/ only, including Sol plan, Luna implementation/revision, synthetic QA, and Sol final review; authorized commit/deployment/delivery occur only after this recorded review.`
-- `RESEARCH_SOURCE=Attachment 5772e398-0308-4c2a-9714-2b296d111f4d + approved benchmark pack + internal visual concept.`
+- `TASK_SCOPE=Bounded A1.1 human-first revision plus Sol-directed correction under /playable-a1/** only; no commit, push, deploy, packaging, or external validation in this worker round.`
+- `RESEARCH_SOURCE=Attachment a9a26b71-f579-4695-8058-c2230c71bdbe + current playable-a1 source.`
 - `LIVE_MOMEY_CHANGES=NONE`
 - `ACQUISITION_INFRA_CHANGED=NO`
 - `EXTERNAL_SPEND=NT$0`
@@ -14,41 +14,38 @@
 
 - `REPO=C:\Users\USER\Documents\ChatGPT\設定\momey-micro-mystery`
 - `BRANCH=main`
-- `HEAD_BEFORE=8b0d0afda60eb4dbec9b864a7249d1d98b6bd22c`
-- `ORIGIN_BEFORE=8b0d0afda60eb4dbec9b864a7249d1d98b6bd22c`
-- `TRACKED_BASELINE=clean`
+- `HEAD_BEFORE=a5d02df35ee0437a831799573b6452503d19eed6`
+- `ORIGIN_BEFORE=a5d02df35ee0437a831799573b6452503d19eed6`
+- `TRACKED_BASELINE=clean before playable-a1-only work`
+- `BEFORE_VISIBLE_WORD_COUNT=Seat1 979; Seat2 978; Seat3 957 (Intl.Segmenter zh-Hant word-like, head/script/style/tags excluded)`
+- `AFTER_VISIBLE_WORD_COUNT=Seat1 915 (-64); Seat2 920 (-58); Seat3 876 (-81), same metric; correction retained a materially lower player-facing copy count.`
 - `PROTECTED_HASH_SCOPE=12 substantive tracked files; .gitignore also checked separately`
 
-## Protected before hashes
+## Implementation intent
 
-The 12 substantive protected files were recorded before implementation: root `index.html`, `script.js`, `styles.css`; `sr-assets/app.js`, `config.js`, `style.css`; `sr-h1/index.html`, `sr-h2/index.html`, `sr-h3/index.html`; `worker/schema.sql`, `worker/src/index.js`, `worker/wrangler.toml`. `.gitignore` was also recorded separately. Final hashes must match.
-
-## Implementation
-
-- Added only `playable-a1/**`.
-- Kept seat secrets in the three seat HTML files; shared JavaScript contains only generic state transitions.
-- Implemented seven stages, A/B limited verification, binary final commitment, fixed consequences, seat-isolated local persistence, refresh recovery, and deliberate two-step reset.
-- Created the information matrix, flow, truth, verification, consequence, responsibility, playtest, limitation, and adversarial-review documents inside `playable-a1/`.
+- Keep the 3-player static architecture and seven-stage rhythm.
+- Add Q as a pre-commitment downstream human stake without changing the fixed P truth.
+- Make Stage 3 human-led: ambiguous line first, definition only after the discussion control, persisted in `recontextConfirmed`.
+- Replace operational jargon with short Traditional Chinese cards and plain A/B questions.
+- Replace the three-round compliance-looking protocol with private responsibilities plus free discussion and one agreement gate.
+- Make Q's seeded risk concrete without spoiling the result: possible irreversible bodily harm is known before commitment; delay reveals permanent respiratory injury and permanent removal from field duty.
+- Keep Stage 5 player-facing seat references in Traditional Chinese: 人員訊號席 / 封鎖風險席 / 事件指揮席.
+- Update the A1.1 docs, contract test, source snapshot, and screenshot capture plan without claiming unmade captures.
 
 ## QA status
 
-- `STATIC_TESTS=PASS — node --check app.js + contract.test.mjs; contract PASS (4 HTML files, 3 seat files, 7 stages, six distinct result fragments); all local href/src resources exist; no gtag/GA4/collector/D1/sr-assets/fetch/sendBeacon tokens; no gradient/glow/neon tokens; no trailing whitespace; UI copy boundary PASS.`
-- `BROWSER_QA=PASS — fresh local tabs; revised Seat 1 A+立即封鎖 and B+延後封鎖 completed Stage 6; revised Seat 2 A and Seat 3 B reached distinct result cards; remaining A/延後 and B/立即 branches also completed; revised three-round oral protocol visible before confirmation; fresh evidence tabs console errors 0.`
-- `MOBILE_QA=PASS — 390x844 and 412x915: page/body overflow 0; stage-nav scrollWidth equals clientWidth; all 7 marker rectangles were inside viewport; desktop path remained reachable.`
-- `REFRESH_RESET=PASS — revised Stage 2/4/5 refresh recovery preserved DOM stage; deliberate two-step reset returned Stage 0.`
-- `SEAT_ISOLATION=PASS — distinct seat pages/keys preserved; Seat 2 and Seat 3 result routes expose only their own selected fragments.`
-- `BRANCHES_A_B_C_D=PASS — verification A/B crossed with immediate/delayed commitment; fixed consequences remain commitment-driven.`
-- `SYNTHETIC_REVIEW != HUMAN_FUN_EVIDENCE`
-- `SOL_CORE_P1=5 found in first adversarial review; all five corrected and revalidated.`
+- `STATIC_TESTS=PASS — node --check app.js/test; Playable A1.1 contract pass; links/resources, forbidden transports, no gradient/glow/neon, and diff --check pass.`
+- `BROWSER_QA=PASS — fresh local Chrome tabs; Stage 3 prompt/definition order; Seat 1 A/seal, A/delay, B/seal, B/delay; Seat 2 A and Seat 3 B fragments; console-clean fresh evidence tabs.`
+- `MOBILE_QA=PASS — 390x844 and 412x915 viewport DOM assertions: page/body overflow 0, nav scrollWidth=clientWidth, seven marker rectangles inside viewport; one 390x844 flow reached Stage 6.`
+- `REFRESH_RESET=PASS — discovery confirmation refresh preserved; Stage 2/4/5 refresh checks and deliberate two-step reset returned Stage 0.`
+- `BRANCHES_A_B_C_D=PASS — all verification/commitment combinations reached Stage 6 with commitment-driven P/Q consequences.`
+- `NATURAL_ROLEPLAY=PASS synthetic topology check — own-word prompts generated P/Q/time-window questions; never human-fun evidence.`
 - `P0_COUNT=0`
-- `CORE_P1_COUNT=0 after revalidation`
-- `P2_FIDELITY_COPY=PASS within bounded revision; no unrelated visual expansion.`
-- `PROTECTED_HASH_MISMATCH=0 vs clean HEAD/origin; current wrangler.toml SHA256 is 1DCA42CEB91A3B5CCFE325349611B6D4630EABAF016BFDEC89FB2EE81BE0F416 (the earlier copied baseline note contained one extra 6; git diff confirms no file change).`
-- `GIT_FINAL=main; HEAD/origin both 8b0d0afda60eb4dbec9b864a7249d1d98b6bd22c; tracked diff clean; only untracked playable-a1/** exists.`
-- `FINAL_REVIEW=PASS — Sol independently reran the contract, inspected all seat content and the defect ledger, exercised revised A/立即封鎖 plus representative distinct-seat fragments, verified the commitment gate, and checked 390×844 plus 412×915 responsive evidence.`
-- `SOL_HIGH_INTERVENTIONS=P1-01 limited verification was flavor; P1-02 no-exit fact was not seeded; P1-03 mobile progress scrolled horizontally; P1-04 verification fragments were not seat-specific; P1-05 alpha-seat guard was weak. Luna corrected all five and Sol revalidated them.`
-- `SOL_HIGH_TAKEOVER=NOT REQUIRED`
-- `ESCALATIONS=NONE`
+- `CORE_P1_COUNT=0 after local A1.1 revalidation`
+- `PROTECTED_HASH_MISMATCH=0 vs HEAD/origin a5d02df35ee0437a831799573b6452503d19eed6; verified at final handoff`
+- `GIT_FINAL=No commit/push/deploy authorized in this round; only playable-a1/** may be dirty.`
+- `TEMP_EVIDENCE=C:\Users\USER\AppData\Local\Temp\momey-playable-a11-evidence — 13 PNG captures (12 distinct useful visual states; 390×844 and 412×915 captured in separate active viewport sessions); max 16; paths/hashes in SCREENSHOT_INDEX.md; not repo artifacts.`
+- `FINAL_REVIEW=SECOND_REVIEW_PENDING_SOL_HIGH`
 - `ACTUAL_FUN=UNPROVEN`
 - `MOMEY_SPECIFIC_WTP=NONE`
 - `E3=NONE`

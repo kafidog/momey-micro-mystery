@@ -1,18 +1,19 @@
 # Fixed truth
 
-This truth is constant across all verification and commitment branches. The final decision changes consequences, not what was true before the decision.
+This truth is constant across verification and commitment branches. Verification changes what the group understands; the final commitment changes the consequence.
 
 1. Technician P was legally authorized to enter Sector C.
-2. The personnel confirmation service failed after P entered.
-3. There was no confirmed P exit before that service failure.
-4. The human-origin signal is genuinely linked to P's wearable device and location in Sector C.
-5. Containment risk is real and rises with delay.
-6. The system does not lie. `0 confirmed personnel` means no personnel are currently confirmable after the confirmation capability failed; it is not proof that Sector C is physically empty.
-7. Immediate sealing prevents contamination from crossing downstream but closes P's rescue window. P remains on the sealed side, the signal stops, and P cannot be rescued.
-8. Delayed sealing rescues P within the window, but contamination crosses the boundary, producing downstream closure/exposure and a real operational cost.
-9. Neither consequence is labelled good, bad, win, or loss.
-10. There is no evil AI, fake log, villain, or retrospective rewrite.
+2. The personnel confirmation service failed after P entered and before any confirmed P exit.
+3. The human-origin signal is genuinely linked to P's wearable device and location in Sector C.
+4. Containment risk is real and rises with the same delay window.
+5. Q is a real downstream manual-isolation operator. Q must remain at the second door until that door is fully closed.
+6. The system does not lie. `0 已確認人員` means the confirmation capability cannot currently confirm anyone after the service failure; it does not prove Sector C is physically empty.
+7. Immediate sealing stops contamination before it crosses the boundary, lets Q leave safely, closes P's rescue window, and leaves P on the sealed side with the signal stopped and no rescue.
+8. Delayed sealing rescues P within the window, but the same delay lets contamination reach Q's station. Q completes the second-door closure, suffers permanent respiratory injury from the exposure, and is permanently removed from field duty.
+9. Before commitment, players hear that Q may face irreversible bodily harm, but not whether it will happen or what the fixed injury will be. Q's existence, vulnerability, and causal connection are never hidden.
+10. Neither consequence is labelled good, bad, win, or loss.
+11. There is no evil AI, fake log, villain, or retrospective rewrite.
 
 ## Fairness check
 
-The recontextualization is supported by all three exchanged seat contributions: lawful entry and the no-exit-confirmation timeline, a credible-but-not-yet-verified human-origin signal, and a real-but-not-yet-calibrated containment risk. The later `0 confirmed personnel` explanation reorganizes those seeded facts rather than inventing a new fact.
+The required facts are seeded before Stage 3: Seat 1 supplies lawful entry, service-failure timing, no confirmed exit, the command window, and Q's station; Seat 2 supplies a credible but unconfirmed human signal and Q's shared downstream path; Seat 3 supplies the rising physical risk and Q's need to remain at the door. Stage 3 first shows only the ambiguous status, then reveals the definition after human exchange.

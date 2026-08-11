@@ -1,39 +1,42 @@
-# Limited verification design
+# Limited verification design — A1.1
 
-The group gets exactly one verification choice. The choice is made verbally before each phone selects the same option. The result reduces one uncertainty but leaves the other unresolved.
+The group gets exactly one plain-language question. Before choosing, A and B are both credible but unconfirmed. Verification changes what the group knows; commitment changes what happens.
 
-## Option A — human signal credibility
+## Option A — P-side question
 
-- Verifies the relay checksum and device mapping: the live human physiological signal is linked to P's wearable device and location in Sector C.
-- Raises the credibility that P may still be inside.
-- Does not prove a safe evacuation path, rescue route, or current physical safety.
+**核對訊號是否真的來自 P**
 
-## Option B — containment model reliability
+- Confirms that the live human signal is from P's wearable device and is located in Sector C.
+- Makes P's possible presence materially clearer.
+- Does not prove a safe evacuation path, a rescue route, or P's current physical safety.
 
-- Calibrates the sensor inputs and model reliability, confirming that delay materially increases downstream breakthrough risk.
-- Raises the strength of the operational reason to seal now.
-- Does not prove which individual will be harmed or make P's presence certain.
+## Option B — Q-side question
 
-## Before and after verification
+**核對延後會不會讓危險到達 Q**
 
-- Before the choice, the human signal and containment model are both credible but unverified. Neither is fake, denied, or settled.
-- After the choice, each seat receives a different fragment. Seat 1 gets the entry-audit/window fragment, Seat 2 gets the source or personnel-boundary fragment, and Seat 3 gets the environment or calibrated-model fragment.
-- The group must speak all three fragments aloud to complete the picture. The unselected option remains credible but unverified rather than being disproven.
+- Confirms that the same delay window pushes danger toward Q's second-door station.
+- Makes Q's human risk materially clearer.
+- Does not announce whether the seeded irreversible harm will happen or make P's presence certain.
 
-## Why neither is dominant
+## Before and after
 
-- A clarifies the human possibility but leaves the downstream model credible and unverified.
-- B clarifies the containment cost but leaves the human possibility credible and unverified.
-- The final choice still requires prioritizing two real costs; verification is not a correct-answer detector.
-- The options are similar in visual weight, length, and interaction cost.
+- Before the choice, the signal and Q-side danger are both credible and incomplete; neither is fake or denied.
+- After the choice, each seat receives a different short fragment: S1 owns the timeline/window, S2 owns the P-signal or Q-boundary fragment, and S3 owns the location or danger fragment.
+- The group must explain all three fragments in its own words. The unselected question remains credible but unconfirmed.
+
+## Why neither dominates
+
+- A helps the group decide how much weight to give P's possible rescue, but leaves Q's danger less checked.
+- B helps the group decide how much weight to give Q's exposure, but leaves P's source less checked.
+- Either final commitment still protects one person and sacrifices something for another; A/B never becomes a correct-answer detector.
 
 ## Branch rule
 
-Verification changes the explanatory panel shown at the end. It never changes the fixed physical truth or the consequence mapping. The four synthetic combinations are therefore:
+Verification never changes fixed truth or consequence mapping:
 
-| Verification | Commitment | Expected consequence |
+| Verification | Commitment | Fixed consequence |
 |---|---|---|
-| A | 立即封鎖 | Downstream spread stopped; P rescue window closed. |
-| A | 延後封鎖 | P rescued; downstream contamination crosses the boundary and creates real cost. |
-| B | 立即封鎖 | Downstream spread stopped; P rescue window closed. |
-| B | 延後封鎖 | P rescued; downstream contamination crosses the boundary and creates real cost. |
+| A | 立即封鎖 | Q leaves safely; P's rescue window closes. |
+| A | 延後封鎖 | P is rescued; Q completes the door, suffers permanent respiratory injury, and is permanently removed from field duty. |
+| B | 立即封鎖 | Q leaves safely; P's rescue window closes. |
+| B | 延後封鎖 | P is rescued; Q completes the door, suffers permanent respiratory injury, and is permanently removed from field duty. |

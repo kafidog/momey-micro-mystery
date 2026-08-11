@@ -3,162 +3,87 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Momey Playable A1：事件指揮席位。">
-  <title>Playable A1 — Seat 1 / 事件指揮</title>
+  <meta name="description" content="Momey — Early Playable Prototype / Playable A1.1：事件指揮席位。">
+  <title>Momey — Early Playable Prototype / Playable A1.1 — Seat 1 / 事件指揮</title>
   <link rel="stylesheet" href="assets/styles.css">
   <script src="assets/app.js" defer></script>
 </head>
 <body data-playable-a1 data-seat="1" data-role="事件指揮">
   <div class="app-shell">
     <aside class="role-rail" aria-label="本席身份">
-      <div>
-        <p class="role-kicker">你的席次</p>
-        <p class="rail-seat">1</p>
-      </div>
-      <div>
-        <p class="rail-role">事件指揮</p>
-        <p class="rail-private"><span class="lock-icon" aria-hidden="true">⌑</span><span>只讀給自己</span></p>
-      </div>
+      <div><p class="role-kicker">你的席次</p><p class="rail-seat">1</p></div>
+      <div><p class="rail-role">事件指揮</p><p class="rail-private"><span class="lock-icon" aria-hidden="true">⌑</span><span>只讀給自己</span></p></div>
     </aside>
 
     <div class="main-column">
       <header class="prototype-header">
-        <div>
-          <h1>Momey — Early Playable Prototype</h1>
-        </div>
+        <div><h1>Momey — Early Playable Prototype <span class="version-mark">Playable A1.1</span></h1></div>
         <div class="header-meta"><span>三人同室 / 一人一機</span><br><span data-live-status aria-live="polite">準備開始</span></div>
       </header>
-
-      <nav class="stage-nav" aria-label="封鎖協議進度">
-        <ol class="stage-list">
-          <li class="stage-marker" data-stage-marker="0"><span>準備</span></li>
-          <li class="stage-marker" data-stage-marker="1"><span>私密</span></li>
-          <li class="stage-marker" data-stage-marker="2"><span>交換</span></li>
-          <li class="stage-marker" data-stage-marker="3"><span>重構</span></li>
-          <li class="stage-marker" data-stage-marker="4"><span>查證</span></li>
-          <li class="stage-marker" data-stage-marker="5"><span>共識</span></li>
-          <li class="stage-marker" data-stage-marker="6"><span>後果</span></li>
-        </ol>
-      </nav>
+      <nav class="stage-nav" aria-label="封鎖協議進度"><ol class="stage-list">
+        <li class="stage-marker" data-stage-marker="0"><span>準備</span></li><li class="stage-marker" data-stage-marker="1"><span>私密</span></li><li class="stage-marker" data-stage-marker="2"><span>交換</span></li><li class="stage-marker" data-stage-marker="3"><span>發現</span></li><li class="stage-marker" data-stage-marker="4"><span>查證</span></li><li class="stage-marker" data-stage-marker="5"><span>共識</span></li><li class="stage-marker" data-stage-marker="6"><span>後果</span></li>
+      </ol></nav>
 
       <main id="playable-main">
         <section class="stage-panel" data-stage-panel="0" aria-labelledby="stage-0-title">
-          <p class="stage-kicker">階段 0 / 準備</p>
-          <h2 id="stage-0-title">先留在自己的畫面。</h2>
-          <p class="stage-intro">你是事件指揮。這一席看見的是授權、時間與可用的封鎖權限。不要把手機交給別人；每讀完一張卡，就抬頭說出你認為重要的部分。</p>
-          <div class="instruction-strip"><span aria-hidden="true">01</span><div><strong>開始後 60 秒內先看私密資料</strong><span>三人各自讀自己的第一張卡，再開始交換。按鈕只推進你自己的手機。</span></div></div>
+          <p class="stage-kicker">階段 0 / 準備</p><h2 id="stage-0-title">先留在自己的畫面。</h2>
+          <p class="stage-intro">你是事件指揮。你握有時間與封鎖權限，但不握有全部答案。讀卡後抬頭說。</p>
+          <div class="instruction-strip"><span aria-hidden="true">01</span><div><strong>先看自己的第一張卡</strong><span>各自讀，再交換；按鈕只推進本機。</span></div></div>
           <div class="action-row"><button class="primary" type="button" data-action="to-stage" data-target-stage="1">開始個人簡報</button></div>
         </section>
 
         <section class="stage-panel" data-stage-panel="1" aria-labelledby="stage-1-title" hidden>
-          <p class="stage-kicker">階段 1 / 第一個私密視角</p>
-          <h2 id="stage-1-title">你知道一個不能被忽略的起點。</h2>
-          <p class="stage-intro">只把「這張卡改變了什麼」說給另外兩席，不要把手機遞過去。</p>
-          <div class="evidence-grid single">
-            <article class="evidence-card amber" data-reveal-unit="s1-u1">
-              <span class="evidence-label">私密證據 01 / 授權紀錄</span>
-              <h3>技術員 P 合法進入 Sector C</h3>
-              <p>07:14 的事件檔記錄：P 取得進入 Sector C 的正式授權。這不是未授權闖入，也不是一開始就被列為失蹤。</p>
-            </article>
-          </div>
-          <div class="instruction-strip"><span aria-hidden="true">說</span><div><strong>抬頭說出：合法進場，和時間 07:14。</strong><span>不要替其他席位補上你沒有的資料。</span></div></div>
+          <p class="stage-kicker">階段 1 / 私密</p><h2 id="stage-1-title">你知道 P 為什麼在裡面。</h2>
+          <p class="stage-intro">說出這張卡改變的地方，不要照讀。</p>
+          <div class="evidence-grid single"><article class="evidence-card amber" data-reveal-unit="s1-u1"><span class="evidence-label">你的起點</span><h3>P 合法進入 Sector C</h3><p>07:14，技術員 P 取得正式進入授權。這不是闖入，也不是一開始就被列為失蹤。</p></article></div>
+          <div class="instruction-strip"><span aria-hidden="true">說</span><div><strong>用自己的話說：P 為什麼在裡面？</strong><span>只說你掌握的起點，不替其他席補答案。</span></div></div>
           <div class="action-row"><button class="primary" type="button" data-action="to-stage" data-target-stage="2">我已說出我的起點</button></div>
         </section>
 
         <section class="stage-panel" data-stage-panel="2" aria-labelledby="stage-2-title" hidden>
-          <p class="stage-kicker">階段 2 / 交換與第二次貢獻</p>
-          <h2 id="stage-2-title">現在補上你能決定什麼。</h2>
-          <p class="stage-intro">先聽另外兩席，再把這張卡的時間窗口說出來。這是你的第二次必要貢獻。</p>
-          <div class="evidence-grid single">
-            <article class="evidence-card amber" data-reveal-unit="s1-u4">
-              <span class="evidence-label">私密證據 04 / 權限窗口</span>
-              <h3>確認服務中斷後，權限仍在你手上</h3>
-              <p>07:19，中央人員確認服務中斷；在這次中斷前，沒有 P 的確認離場或刷出紀錄。你的指揮台仍可在 07:20–07:23 下達封鎖命令；延後意味著保留一個可能的救援窗口，也意味著風險繼續累積。</p>
-            </article>
-          </div>
-          <div class="instruction-strip"><span aria-hidden="true">說</span><div><strong>說出：確認服務中斷的時間，以及 07:20–07:23 的窗口。</strong><span>你不能單獨判定 Sector C 裡是否有人。</span></div></div>
-          <div class="action-row"><button class="primary" type="button" data-action="to-stage" data-target-stage="3">三人已交換，進入重構</button></div>
+          <p class="stage-kicker">階段 2 / 交換</p><h2 id="stage-2-title">現在補上時間，還有一個人在下游。</h2>
+          <p class="stage-intro">先聽另外兩席，再說出你能決定的窗口。這是第二次必要貢獻。</p>
+          <div class="evidence-grid single"><article class="evidence-card amber" data-reveal-unit="s1-u4"><span class="evidence-label">你的第二張卡</span><h3>服務中斷，但出口沒有被確認</h3><p>07:19，確認服務中斷；在這之前沒有 P 的確認離場或刷出。你仍可在 07:20–07:23 下令。下游第二道門由 Q 值勤，關門完成前必須留在位置；若污染越界，Q 可能承受不可逆的身體傷害，現在還不能知道會不會發生。</p></article></div>
+          <div class="instruction-strip"><span aria-hidden="true">問</span><div><strong>說出窗口，再問：如果等待，Q 的位置會怎樣？</strong><span>你握有命令權，但不能單獨判定 P 或 Q 的結果。</span></div></div>
+          <div class="action-row"><button class="primary" type="button" data-action="to-stage" data-target-stage="3">我們已交換，看看這行狀態</button></div>
         </section>
 
         <section class="stage-panel" data-stage-panel="3" aria-labelledby="stage-3-title" hidden>
-          <p class="stage-kicker">階段 3 / 重構</p>
-          <h2 id="stage-3-title">「0 confirmed personnel」不是「物理上沒有人」。</h2>
-          <p class="stage-intro">把前兩段資料放在一起重新讀一次：P 先合法進場，後來確認服務中斷，而且沒有 P 的確認離場。系統沒有說謊；它只報告目前沒有任何人能被確認。</p>
-          <div class="recontext-callout"><strong>重構規則</strong><span>0 confirmed personnel = 確認資料中斷後的目前狀態，不是 Sector C 已被證明為空。</span></div>
-          <div class="instruction-strip"><span aria-hidden="true">問</span><div><strong>三人先互相回答：這個 0 現在能證明什麼，又不能證明什麼？</strong><span>確認人員狀態與物理真相不是同一件事。</span></div></div>
-          <div class="action-row"><button class="primary" type="button" data-action="to-stage" data-target-stage="4">我們理解 0 的邊界</button></div>
+          <p class="stage-kicker">階段 3 / 發現</p><h2 id="stage-3-title">先看這行，別急著替它下結論。</h2>
+          <p class="stage-intro">先把前兩張卡放在一起，用自己的話問：這句話能回答什麼？還缺什麼？</p>
+          <div class="evidence-grid single"><article class="evidence-card neutral" data-recontext-prompt><span class="evidence-label">系統狀態</span><h3>0 已確認人員</h3><p>目前只有這一行。先互相交換你們的判斷，再決定要不要查看狀態定義。</p></article></div>
+          <label class="checkbox-row"><input type="checkbox" data-recontext-check><span>我們已用自己的話交換前兩張卡的意義。</span></label>
+          <div class="action-row"><button class="primary" type="button" data-action="confirm-recontext" disabled>查看系統狀態定義</button></div>
+          <div class="recontext-callout" data-recontext-definition hidden><strong>狀態定義</strong><span>0 只代表目前無法確認；不證明 Sector C 沒有人。系統沒有說謊。</span></div>
+          <div class="instruction-strip"><span aria-hidden="true">問</span><div><strong>現在一起說：確認能力和物理真相，是同一件事嗎？</strong><span>讀完定義，再把你們的理解帶進下一個問題。</span></div></div>
+          <div class="action-row"><button class="primary" type="button" data-action="continue-recontext" disabled>我們已理解這個邊界</button></div>
         </section>
 
         <section class="stage-panel" data-stage-panel="4" aria-labelledby="stage-4-title" hidden>
-          <p class="stage-kicker">階段 4 / 限定查證</p>
-          <h2 id="stage-4-title">三人先口頭選一項，只能查證一項。</h2>
-          <p class="stage-intro">每支手機最後都選同一項。兩項都會讓一部分不確定變清楚，但都不會替你們做最後決定。</p>
-          <p class="choice-status" data-verification-status>尚未選擇。三人先口頭決定只查證一項，再在各機選同一項。</p>
-          <div class="decision-grid">
-            <button class="choice-button" type="button" data-action="choose-verification" data-choice="A" aria-pressed="false"><strong>A / 查人類訊號可信度</strong><span>校驗 P 的穿戴裝置、即時人類生理訊號與 Sector C 位置連結；不證明撤離路徑安全。</span></button>
-            <button class="choice-button" type="button" data-action="choose-verification" data-choice="B" aria-pressed="false"><strong>B / 查封鎖模型可靠性</strong><span>校準感測器輸入與封鎖模型，確認延後會提高下游突破風險；不指定受害者。</span></button>
-          </div>
-          <div class="result-grid single">
-            <article class="evidence-card verification-result" data-verification-result="A" data-fragment-id="s1-a" hidden>
-              <span class="evidence-label">查證結果 A / 只給你看</span>
-              <h3>入口稽核片段：時間線仍相容</h3>
-              <p>查證把 07:14 合法入場、07:19 服務中斷與沒有確認離場的入口稽核片段接起來；這仍不是穿戴裝置與即時生理訊號的完整連結。</p>
-              <p>這讓 A 的時間線更可信，但撤離路徑與另外兩席的來源片段仍未校驗。</p>
-            </article>
-            <article class="evidence-card verification-result" data-verification-result="B" data-fragment-id="s1-b" hidden>
-              <span class="evidence-label">查證結果 B / 只給你看</span>
-              <h3>封鎖窗口片段：突破時間被標出</h3>
-              <p>查證標出 07:20–07:23 的封鎖窗口，並指出延後會把下游突破推向更高風險區間；這不是完整模型可靠度。</p>
-              <p>這讓 B 的窗口代價更清楚，但不指定受害者，也不替另外兩席完成校準。</p>
-            </article>
-          </div>
-          <div class="action-row"><button class="primary" type="button" data-action="continue-verification" disabled>我已把查證結果說給另外兩席</button></div>
+          <p class="stage-kicker">階段 4 / 查證</p><h2 id="stage-4-title">你們最想先釐清哪一邊？</h2>
+          <p class="stage-intro">先談，再各機選同一項。A 讓 P 清楚，B 讓 Q 的危險清楚；兩項都不替你們決定。</p>
+          <p class="choice-status" data-verification-status>先談要釐清的問題，再各機選同一項。兩項都可信，仍未確認。</p>
+          <div class="decision-grid"><button class="choice-button" type="button" data-action="choose-verification" data-choice="A" aria-pressed="false"><strong>A / 核對訊號是否真的來自 P</strong><span>把 P、即時人類訊號與 Sector C 放在同一條線上；不保證安全離開。</span></button><button class="choice-button" type="button" data-action="choose-verification" data-choice="B" aria-pressed="false"><strong>B / 核對延後會不會讓危險到達 Q</strong><span>把窗口與 Q 的站位風險放在一起；不決定誰一定受傷。</span></button></div>
+          <div class="result-grid single"><article class="evidence-card verification-result" data-verification-result="A" data-fragment-id="s1-a" hidden><span class="evidence-label">A / 只給你看</span><h3>P 的時間線更站得住腳</h3><p>07:14 合法進入、07:19 服務中斷、沒有確認離場，三件事現在能接在一起。P 仍可能在裡面，但你還不知道他能不能安全離開。</p><p>把這個時間線用自己的話告訴另外兩席；Q 的位置也要由他們補上。</p></article><article class="evidence-card verification-result" data-verification-result="B" data-fragment-id="s1-b" hidden><span class="evidence-label">B / 只給你看</span><h3>Q 的時間窗口變得具體</h3><p>07:20–07:23 是可以下令的窗口；同一段等待會把危險推向 Q 的第二道門。這讓危險更清楚，但不指定 Q 會不會留下長期傷害。</p><p>把你的窗口說給另外兩席；P 是否仍在內，仍要由他們分享。</p></article></div>
+          <div class="action-row"><button class="primary" type="button" data-action="continue-verification" disabled>我已用自己的話分享結果</button></div>
         </section>
 
         <section class="stage-panel" data-stage-panel="5" aria-labelledby="stage-5-title" hidden>
-          <p class="stage-kicker">階段 5 / 口頭共識與承諾</p>
-          <h2 id="stage-5-title">先說出同一個決定，再各自在手機上確認。</h2>
-          <p class="stage-intro">先不要按。先完成三輪口頭協議，再由三人共同決定「立即封鎖」或「延後封鎖」，最後每支手機選相同的兩個選項之一。</p>
-          <div class="consensus-strip"><span aria-hidden="true">共識</span><div><strong>手機不會替你同步。</strong><span>一致是人類先說出來，再由三支手機各自留下相同承諾。</span></div></div>
-          <div class="consensus-protocol" aria-label="三輪口頭協議">
-            <ol>
-              <li><strong>第一輪／人員訊號先說</strong><span>若立即封鎖，人會失去什麼？</span></li>
-              <li><strong>第二輪／封鎖風險再說</strong><span>若延後封鎖，下游會承擔什麼？</span></li>
-              <li><strong>第三輪／事件指揮最後重述</strong><span>只重述兩個代價，不替全組決定。</span></li>
-            </ol>
-          </div>
-          <div class="decision-grid">
-            <button class="choice-button" type="button" data-action="choose-commitment" data-commitment="seal" aria-pressed="false"><strong>立即封鎖</strong><span>阻止污染下游擴散，但關閉 P 的救援窗口。</span></button>
-            <button class="choice-button" type="button" data-action="choose-commitment" data-commitment="delay" aria-pressed="false"><strong>延後封鎖</strong><span>保留救援窗口，但讓真實的下游突破風險繼續上升。</span></button>
-          </div>
-          <label class="checkbox-row"><input type="checkbox" data-verbal-consensus><span>我已完成三輪口頭協議，三支手機將選同一個決定。</span></label>
-          <div class="action-row"><button class="primary" type="button" data-action="confirm-commitment" disabled>確認本席承諾</button></div>
+          <p class="stage-kicker">階段 5 / 共識</p><h2 id="stage-5-title">把兩個人都放回決定裡。</h2>
+          <p class="stage-intro">先讓另外兩席說完，再自由談；三人同意後，各機記錄同一選擇。</p>
+          <div class="consensus-strip"><span aria-hidden="true">共識</span><div><strong>你的責任：只重述，不替團體決定。</strong><span>人員訊號席先談 P 這一側的人命與未知；封鎖風險席再談 Q 這一側的人身代價。你最後把兩個未解的代價放回同一句。</span></div></div>
+          <div class="decision-grid"><button class="choice-button" type="button" data-action="choose-commitment" data-commitment="seal" aria-pressed="false"><strong>立即封鎖</strong><span>阻止污染越界，Q 安全撤離；P 的救援窗口關閉。</span></button><button class="choice-button" type="button" data-action="choose-commitment" data-commitment="delay" aria-pressed="false"><strong>延後封鎖</strong><span>保留 P 的救援窗口，但同一延遲把危險帶到 Q 的站位。</span></button></div>
+          <label class="checkbox-row"><input type="checkbox" data-verbal-consensus><span>我們已自由討論，三人已同意同一個決定。</span></label>
+          <div class="action-row"><button class="primary" type="button" data-action="confirm-commitment" disabled>記錄本席承諾</button></div>
         </section>
 
         <section class="stage-panel" data-stage-panel="6" aria-labelledby="stage-6-title" hidden>
-          <p class="stage-kicker">階段 6 / 後果與完整結束</p>
-          <h2 id="stage-6-title">承諾已送出。讀完結果，再回到彼此身邊。</h2>
-          <article class="final-result" data-final-result="seal" hidden>
-            <h3>立即封鎖</h3>
-            <p>封鎖在污染跨過邊界前生效，下游擴散被阻止。</p>
-            <p>P 留在封鎖側；救援窗口關閉，訊號中止，P 無法被救出。這不是好結局，也不是壞結局；它是你們保住的東西與失去的東西。</p>
-          </article>
-          <article class="final-result" data-final-result="delay" hidden>
-            <h3>延後封鎖</h3>
-            <p>P 在窗口內被救出，但污染越過邊界。</p>
-            <p>下游區域被封區並出現暴露與實際代價。這不是好結局，也不是壞結局；它是你們保住的東西與失去的東西。</p>
-          </article>
-          <p class="final-interpretation" data-interpretation="A" hidden>你們查證的是人類來源可信度；它改變了你們如何理解訊號，不會改寫已發生的授權、服務中斷或風險。</p>
-          <p class="final-interpretation" data-interpretation="B" hidden>你們查證的是封鎖模型；它改變了你們如何理解延後的風險，不會改寫 P、訊號或已發生的服務中斷。</p>
-          <div class="instruction-strip"><span aria-hidden="true">談</span><div><strong>三人一起說：我們保住了什麼？誰承擔了什麼？</strong><span>這一輪已完成；沒有分數，也沒有正確按鈕。</span></div></div>
-          <details class="reset-panel">
-            <summary>內部重玩：重置本席進度</summary>
-            <div class="reset-confirmation" data-reset-confirmation hidden>
-              <p>這會清除本席的階段、查證與承諾。要重置嗎？</p>
-              <div class="action-row"><button class="quiet" type="button" data-action="reset-cancel">取消</button><button type="button" data-action="reset-confirm">確認清除</button></div>
-            </div>
-            <div class="action-row"><button class="quiet" type="button" data-action="reset-open">開啟重置確認</button></div>
-          </details>
+          <p class="stage-kicker">階段 6 / 後果</p><h2 id="stage-6-title">承諾已送出。抬頭談談誰承擔了什麼。</h2>
+          <article class="final-result" data-final-result="seal" hidden><h3>立即封鎖</h3><p>封鎖在污染越界前生效，Q 完成撤離，P 的救援窗口關閉。</p><p>P 留在封鎖側，訊號中止，無法被救出。這不是好結局，也不是壞結局；是你們保住與放棄的東西。</p></article>
+          <article class="final-result" data-final-result="delay" hidden><h3>延後封鎖</h3><p>P 在窗口內被救出，但同一段延遲讓污染到達 Q 的站位。</p><p>Q 完成第二道門關閉，承受污染暴露，留下永久呼吸傷害，之後永久離開現場值勤。這不是好結局，也不是壞結局；是你們保住與放棄的東西。</p></article>
+          <p class="final-interpretation" data-interpretation="A" hidden>A 讓 P 這一側的訊號更清楚；它改變你們理解未知的方式，不改寫固定真相或最後後果。</p><p class="final-interpretation" data-interpretation="B" hidden>B 讓 Q 這一側的風險更清楚；它改變你們理解等待的方式，不改寫固定真相或最後後果。</p>
+          <div class="instruction-strip"><span aria-hidden="true">談</span><div><strong>三人一起說：我們保住了誰？誰承擔了代價？</strong><span>沒有分數，也沒有正解。這輪完成。</span></div></div>
+          <details class="reset-panel"><summary>內部重玩：重置本席進度</summary><div class="reset-confirmation" data-reset-confirmation hidden><p>這會清除本席的階段、查證、發現與承諾。要重置嗎？</p><div class="action-row"><button class="quiet" type="button" data-action="reset-cancel">取消</button><button type="button" data-action="reset-confirm">確認清除</button></div></div><div class="action-row"><button class="quiet" type="button" data-action="reset-open">開啟重置確認</button></div></details>
         </section>
       </main>
     </div>

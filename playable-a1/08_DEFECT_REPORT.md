@@ -1,31 +1,20 @@
-# Defect report
+# Defect report — A1.1 bounded revision
 
-## Current bounded revision status
+## Scope
 
-Sol High identified five core P1 defects in the first adversarial review. Luna Max applied bounded corrections under `playable-a1/**`; the required static and fresh-tab browser revalidation now passes. A synthetic pass is not a human-fun pass.
+A1.1 addresses the three weaknesses identified in the A1 adversarial review: report-like language, a phone-spoon-fed recontextualization, and an abstract downstream stake. This document records the intended corrections and the evidence status; a synthetic pass is not a human-fun pass.
 
-- `P0=0` before and after the bounded implementation work; no private-seat cross-leak, unreachable branch, refresh corruption, or facilitator dependency was introduced.
-- `CORE_P1=0 after bounded correction and revalidation; the five Sol findings are retained below as resolved entries.`
-- Copy/fidelity changes are limited to the same bounded pass; no unrelated polish was expanded.
+## Defects addressed
 
-## Defects found
-
-| ID | Severity | Area | Evidence | Disposition |
+| ID | Severity | A1 weakness | A1.1 correction | Evidence status |
 |---|---|---|---|---|
-| P1-01 | Core | Limited verification is flavor because early cards stated A/B as settled | Seat 2 now shows provisional human pattern/mapping; Seat 3 now shows provisional pressure/model reliability; result copy states the unselected option remains credible but unverified. | RESOLVED — fresh result routes and status copy verified. |
-| P1-02 | Core | Stage 3 introduced no-confirmed-exit as a new fact | Seat 1 Stage 2/U4 now explicitly seeds no confirmed exit/刷出 before the service failure. | RESOLVED — static contract and Stage 2 → Stage 3 route verified. |
-| P1-03 | Core/mobile | Stage navigation horizontally scrolled at narrow width and hid nodes | Narrow CSS now fits all seven markers with hidden internal overflow; browser asserted marker bounds and nav scroll width at both required widths. | RESOLVED — 390×844 and 412×915 verified. |
-| P1-04 | Core | Verification result cards were nearly identical across seats | A/B result cards now carry seat-specific fragments with distinct `data-fragment-id`, headings, and body copy. | RESOLVED — six distinct fragments verified by static and browser DOM. |
-| P1-05 | Core/social | One shared checkbox did not sufficiently guard Seat 1 alpha control | Stage 5 now requires Seat 2 human-loss statement, Seat 3 downstream-cost statement, then Seat 1 neutral restatement before local confirmation. | RESOLVED — revised protocol visible and required before confirmation. |
-
-## Visual mismatch ledger
-
-| ID | Prior mismatch | Revision evidence | Status |
-|---|---|---|---|
-| V-01 | Narrow stage progress exposed an internal horizontal scrollbar and only four visible nodes. | At 390×844 and 412×915, seven marker rectangles were inside the viewport and `stage-nav.scrollWidth === stage-nav.clientWidth`. | RESOLVED |
-| V-02 | UI copy mixed unnecessary English labels with the Traditional Chinese interface. | UI now uses 階段、簡報、封鎖模型、未宣傳測試版、完成品/商業發行; required title and fixed technical terms remain. | RESOLVED |
-| V-03 | Protected visual constraints could be weakened by decorative effects. | No gradient/glow/neon tokens; palette/layout/touch/focus/reduced-motion rules remain bounded. | RESOLVED |
+| A1.1-01 | Core | Technical cards read like an incident report | Short, spoken Traditional Chinese cards; unexplained checksum/mapping/audit/model terms removed from player-facing HTML. | RESOLVED — static forbidden-copy check and fresh DOM captures pass. |
+| A1.1-02 | Core | Stage 3 announced the central interpretation before player exchange | Stage 3 starts with only `0 已確認人員`; checkbox/control reveals definition only after players exchange their own interpretations; `recontextConfirmed` persists. | RESOLVED — before/after screenshots, refresh, and Stage 4 gate pass. |
+| A1.1-03 | Core | Downstream cost was abstract | Q is a real manual-isolation operator seeded in multiple pre-commitment cards; delay reaches Q's station and produces a fixed irreversible human consequence. | RESOLVED after bounded correction — delay endings now reveal permanent respiratory injury and permanent removal from field duty; all four branches remain commitment-driven. |
+| A1.1-04 | Core/social | Consensus looked like a compliance checklist | Private Seat 2/3/1 responsibilities plus one free-discussion agreement gate replace the three-round script. | RESOLVED — Stage 5 DOM and screenshot show the private responsibility gate. |
+| A1.1-05 | Core/balance | A/B could become flavor or a dominant answer | A asks about P's source, B asks about danger to Q; both remain incomplete and commitment-driven. | RESOLVED — Seat 2 A and Seat 3 B distinct fragments plus all four branch outcomes pass. |
+| A1.1-06 | Evidence | The recaptured `07_stage5_free_consensus.png` initially contained a Stage 4 frame despite its Stage 5 label. | Sol High recaptured the actual Stage 5 Chinese-role/free-discussion state and updated the index hash without changing product source. | RESOLVED — final PNG bytes/hash and visual content independently rechecked. |
 
 ## Evidence boundary
 
-No defect ledger entry may be interpreted as actual-fun, demand, WTP, E3, or E4 evidence. `SYNTHETIC_REVIEW != HUMAN_FUN_EVIDENCE`.
+`P0=0` and `CORE_P1=0 after local A1.1 revalidation` are recorded for this bounded technical pass. No entry here is evidence of actual fun, demand, WTP, E3, or E4. `SYNTHETIC_REVIEW != HUMAN_FUN_EVIDENCE`.

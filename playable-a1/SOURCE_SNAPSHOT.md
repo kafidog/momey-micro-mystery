@@ -1,6 +1,6 @@
-# Playable A1 source snapshot
+# Playable A1.1 source snapshot
 
-This repository path is the reviewable source snapshot for the first playable slice. It contains only the isolated `playable-a1/**` implementation and review notes.
+This repository path is the reviewable source snapshot for the bounded A1.1 playable slice. It contains only the isolated `playable-a1/**` implementation and review notes.
 
 ```text
 playable-a1/
@@ -22,6 +22,7 @@ playable-a1/
 ├─ 10_PLAYTEST_INSTRUCTIONS.md
 ├─ 11_KNOWN_LIMITATIONS.md
 ├─ 12_AGENT_EXECUTION_RECORD.md
+├─ 13_A1_TO_A1_1_CHANGE_REVIEW.md
 ├─ SCREENSHOT_INDEX.md
 ├─ SOURCE_SNAPSHOT.md
 ├─ assets/
@@ -31,4 +32,4 @@ playable-a1/
    └─ contract.test.mjs
 ```
 
-No credentials, `.wrangler`, `node_modules`, browser profile, cache, or Git secret is part of this snapshot.
+No credentials, `.wrangler`, `node_modules`, browser profile, cache, or Git secret is part of this snapshot. Screenshots, if captured for this round, remain outside the repository in the user Temp directory.
