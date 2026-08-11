@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#06121c">
+    <meta name="description" content="MOMEY PLAYABLE A4：事件指揮的時間線與目前判斷工具。">
+    <link rel="icon" href="data:,">
+    <title>MOMEY A4｜事件指揮</title>
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body data-page="role" data-role="1">
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="index.html" aria-label="MOMEY A4 共同序章"><span>MOMEY</span><b>A4</b></a>
+        <div class="topbar-meta"><span>同一事故</span><span class="dot" aria-hidden="true"></span><span>18:48</span></div>
+        <button class="text-button" type="button" data-reset>重新開始</button>
+      </header>
+      <main class="role-main">
+        <a class="back-link" href="index.html">← 回到共同序章</a>
+        <section class="role-hero" aria-labelledby="role-page-title">
+          <div><p class="eyebrow" data-role-eyebrow>STAGE 02｜角色簡報｜指揮工具</p><h1 id="role-page-title" data-role-title>事件指揮</h1><p class="role-tagline" data-role-tagline>把事故的先後順序排成隊伍能用的時間線。</p></div>
+          <div class="role-stamp" aria-label="事件指揮角色編號"><span>ROLE</span><strong data-role-number>01</strong></div>
+        </section>
+        <section class="panel shared-situation" aria-labelledby="shared-title"><div class="panel-label">共同情勢</div><h2 id="shared-title">海岬防洪站｜同一個 18:48</h2><p>主電力與中央遙測中斷。林芮在西側維修隧道，高承仍在東閘手動撐點；你們三支手機接的是同一個事故時刻。</p><p class="ally-line compact">你們是同一隊。知道的都可以說；每個人能做的事不同。</p></section>
+        <section class="panel role-brief" aria-labelledby="brief-title"><div class="panel-label">你的角色</div><h2 id="brief-title">先把自己的責任接起來</h2><dl class="brief-grid"><div><dt>你的職責</dt><dd data-role-duty>整理同一個西側窗口裡，封閉和救援各自需要多久。</dd></div><div><dt>現在已知</dt><dd><ul data-role-known><li>18:47 主電力與中央遙測中斷。</li><li>18:48 指揮備援鏈路已接通。</li><li>西側同時有遠端封閉與救援清線流程。</li></ul></dd></div><div><dt>還不知道</dt><dd><ul data-role-unknown><li>封閉與清線的實際時間關係。</li><li>兩段流程是否會互相切斷。</li></ul></dd></div><div><dt>你可以做</dt><dd data-role-action-why>你負責把兩段流程放進同一個西側窗口。</dd></div></dl></section>
+        <section class="panel action-console role-tool-panel" data-role-tool aria-labelledby="tool-title"></section>
+        <section class="panel action-result" data-role-result hidden aria-live="polite"></section>
+        <section class="team-stage" data-team-stage aria-live="polite"><div class="panel stage-placeholder"><div class="panel-label">STAGE 04｜公開交換</div><h2>把證據和目前判斷說出來</h2><p>完成這支手機的角色工具與目前判斷後，和另外兩位隊友口頭交換，再由你確認隊伍可以往下走。</p></div></section>
+      </main>
+    </div>
+    <script src="assets/app.js" defer></script>
+  </body>
+</html>
