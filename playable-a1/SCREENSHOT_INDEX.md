@@ -13,9 +13,9 @@ The final bounded evidence set contains 12 browser screenshots. They are deliver
 | A1-SS-07 | `07_verification_A_result_desktop.png` | Seat 1 verification-A fragment | Desktop / 2560×1215 | `6A40C5AA2098778A8F4F1953555244514F88AC36C98A325DFC5193645884A2B9` |
 | A1-SS-08 | `08_verification_B_result_desktop.png` | Seat 3 verification-B fragment | Desktop / 2560×1215 | `E7A214BCEA5368FC4C38F4627A8C2F0AA6AE79AB0548B96E5730ED9CA3862127` |
 | A1-SS-09 | `09_commitment_desktop.png` | Three-round oral protocol and commitment gate | Desktop / 2560×1215 | `D22991E8164A16A8B7A737443D63B3A984C8B0CD867DAE9DB2DE71CAB8613C74` |
-| A1-SS-10 | `10_seal_consequence_desktop.png` | Immediate-seal consequence | Desktop / 2560×1215 | `85764D8F023A5A57CA881E6B125346971CBE25584E32B884BD184D87D9C47A9B` |
-| A1-SS-11 | `11_delay_consequence_desktop.png` | Delayed-seal consequence | Desktop / 2560×1215 | `1909075B96D07B2E6FD34902719F9D527CB02293EF9C31E40D4F4473C75D6A82` |
-| A1-SS-12 | `12_mobile_390x844.png` | Representative Stage-6 mobile view; all seven markers visible | 390×844 override / 375×812 capture region | `A7586D76FEE5542FD9911764D9C9A7B78DBD7FB5AC06B420F0A086EBFE389B69` |
+| A1-SS-10 | `10_seal_consequence_desktop.png` | Immediate-seal commitment selected; oral-consensus checkbox complete | Desktop / 2560×1215 | `85764D8F023A5A57CA881E6B125346971CBE25584E32B884BD184D87D9C47A9B` |
+| A1-SS-11 | `11_delay_consequence_desktop.png` | Delayed-seal commitment selected; oral-consensus checkbox complete | Desktop / 2560×1215 | `1909075B96D07B2E6FD34902719F9D527CB02293EF9C31E40D4F4473C75D6A82` |
+| A1-SS-12 | `12_mobile_390x844.png` | Delayed-seal Stage-6 consequence on mobile; all seven markers visible | 390×844 override / 375×812 capture region | `A7586D76FEE5542FD9911764D9C9A7B78DBD7FB5AC06B420F0A086EBFE389B69` |
 
 The browser extension exposes a content capture region smaller than its outer viewport on the mobile screenshot; DOM measurements still reported `innerWidth=390`, `stage-nav.scrollWidth=stage-nav.clientWidth=359`, and all seven marker rectangles within the viewport. No synthetic or sourced image was used as evidence.
 
