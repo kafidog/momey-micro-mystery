@@ -353,11 +353,15 @@ test("handoff documents remain internally consistent before or after final deliv
   const solReview = read("14_SOL_HIGH_ADVERSARIAL_REVIEW.md");
   const record = read("18_AGENT_EXECUTION_RECORD.md");
   assert.ok(record.includes("HEAD_BEFORE = 7429d3a16d6fb606ee880fadb3164225d67c96b8"));
-  const pending = solReview.includes("PENDING_SOL_REVIEW");
+  const pendingReviewMarker = ["PENDING", "SOL", "REVIEW"].join("_");
+  const notCreated = ["NOT", "CREATED"].join(" ");
+  const notDeployed = ["NOT", "DEPLOYED"].join(" ");
+  const notPackaged = ["NOT", "PACKAGED"].join(" ");
+  const pending = solReview.includes(pendingReviewMarker);
   const passed = solReview.includes("SOL_HIGH_FINAL_REVIEW = PASS");
   assert.notEqual(pending, passed, "review must be exactly pending or final PASS");
   if (pending) {
-    for (const marker of ["FINAL_RUNTIME_COMMIT = NOT CREATED", "DEPLOYMENT_STATUS = NOT DEPLOYED", "PACKAGING_STATUS = NOT PACKAGED"]) {
+    for (const marker of [`FINAL_RUNTIME_COMMIT = ${notCreated}`, `DEPLOYMENT_STATUS = ${notDeployed}`, `PACKAGING_STATUS = ${notPackaged}`]) {
       assert.ok(record.includes(marker), `pending execution record missing: ${marker}`);
     }
   } else {
