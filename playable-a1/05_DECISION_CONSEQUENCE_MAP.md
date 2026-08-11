@@ -1,6 +1,6 @@
-# Decision and consequence map — A1.1
+# Decision and consequence map — A1.2
 
-The commitment is binary and legible. There is no score, win/loss label, good/bad ending, or dominant moral button.
+The commitment is binary and legible. The fixed truth is unchanged; verification only changes what the group understands.
 
 ## Immediate seal
 
@@ -16,18 +16,16 @@ The commitment is binary and legible. There is no score, win/loss label, good/ba
 
 ## Causal integrity
 
-- P and Q are both present before commitment; Q is not a surprise ending.
-- Verification changes the group's explanation, not the physical result.
-- The final commitment determines what is protected and what is sacrificed.
-- Before commitment, only the possibility of irreversible bodily harm is known; the fixed injury is revealed after commitment, preserving tension without hiding the causal chain.
+- P and Q are both present before commitment; Q is not an ending surprise.
+- Before commitment, the group knows Q's station, required work, time pressure, and possible irreversible bodily harm; the exact fixed injury remains after commitment.
+- A/B never rewrites the fixed consequence. The final commitment determines the P/Q result.
 
-## Less-mechanical consensus
+## Less-scripted consensus
 
-Each seat gets one private responsibility instead of a recitation checklist:
+Each seat has one short private prompt:
 
-1. 人員訊號席 says the P-side human cost and what remains unknown.
-2. 封鎖風險席 says Q's human cost and what remains unknown.
-3. 事件指揮席 restates both unresolved costs without choosing for the group.
-4. The group talks freely, agrees, and each phone records the same commitment.
+1. 人員訊號席: `提醒：P 的訊號。`
+2. 封鎖風險席: `提醒：Q 還在門前。`
+3. 事件指揮席: `提醒：時間窗口和站位。`
 
-The single checkbox records that human agreement happened; it is not a vote owned by Seat 1.
+The group can talk, question, pause, and change a local commitment draft. One agreement checkbox records the group's spoken agreement; it is not a Seat 1-owned vote.

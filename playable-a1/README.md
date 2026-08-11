@@ -1,29 +1,29 @@
-# Momey Playable A1.1
+# Momey Playable A1.2
 
-`Momey — Early Playable Prototype` / `Playable A1.1` is an unadvertised, static 3-player same-room testbed. It is not finished, not Game01, and not a commercial release.
+`Momey — Early Playable Prototype` / `Playable A1.2` is a static three-seat same-room playable slice. Three people use one phone each, keep their screens private, and speak the information they receive.
 
 ## Start
 
-Open [index.html](index.html) from a static server. Three people use the same room, one phone each, with no shared screen, account, app install, props, or facilitator after start. Choose one seat per person:
+Open [index.html](index.html) through a static server. Choose one seat per person:
 
 - [Seat 1 — 事件指揮](seat-1.html)
 - [Seat 2 — 人員訊號](seat-2.html)
 - [Seat 3 — 封鎖風險](seat-3.html)
 
-Each seat progresses independently and stores only its own seat id, stage, discovery confirmation, verification choice, commitment, and confirmation state in a seat-isolated `localStorage` key. There is no network call, analytics, D1, Worker, account, or shared runtime.
+Each seat progresses independently. Its local key stores only the seat id, stage, Stage 3 gate, Stage 4 verification draft/confirmation, and Stage 5 commitment/confirmation. There is no network call, analytics, account, shared runtime, or backend.
 
 ## Play rhythm
 
 `準備 → 私密資訊 → 交換 → 發現 → 限定查證 → 自由共識 → 後果`
 
-Phones hold private information and reveal order. Humans explain cards in their own words, ask questions, challenge gaps, decide what the `0 已確認人員` line can mean, compare P and Q stakes, and agree before each phone records the same commitment. Delay saves P but leaves Q with permanent respiratory injury and permanent removal from field duty; immediate sealing protects Q but closes P's rescue window.
+Stage 3 first shows only `0 已確認人員`. The group describes the line in its own words, checks the shared-interpretation gate, and then opens the definition. Stage 4 keeps A/B editable as a local draft; the result stays hidden until `三人都確認選同一項了嗎？` is checked and the choice is explicitly confirmed. The confirmed choice locks and reveals one fragment for that seat.
 
-At Stage 3 the phone first shows only the ambiguous system line. Players must exchange their interpretations and explicitly open the status definition before the system clarifies that confirmation failure is not proof of an empty Sector C.
+Stage 5 has one short private prompt per seat and a free discussion. The final local commitment is either `立即封鎖` or `延後封鎖`. The fixed P/Q consequence is unchanged from the preceding foundation.
 
 ## Internal reset
 
-At the complete end, open **內部重玩：重置本席進度**, then open the explicit reset confirmation and confirm. Reset affects only the current seat's local key.
+At the complete end, open **重新開始本席**, then open the explicit reset confirmation. Reset affects only the current seat's local key and clears both Stage 4 verification fields.
 
 ## Evidence boundary
 
-The A1.1 walkthrough verifies topology, human-discovery gating, Q pre-commitment seeding, branch reachability, refresh recovery, reset, and mobile layout. It is synthetic technical evidence only: `SYNTHETIC_REVIEW != HUMAN_FUN_EVIDENCE`. `ACTUAL_FUN=UNPROVEN`, `MOMEY_SPECIFIC_WTP=NONE`, `E3=NONE`, and `E4=NONE` remain unchanged.
+The A1.2 contract and browser QA are technical evidence only. They can establish topology, discovery order, state transitions, branch reachability, refresh/reset behavior, copy counts, and responsive layout; they cannot establish fun, comfort, demand, WTP, E3, E4, or product-market fit. `SYNTHETIC_REVIEW != HUMAN_FUN_EVIDENCE`.

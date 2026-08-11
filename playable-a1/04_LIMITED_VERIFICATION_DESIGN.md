@@ -1,13 +1,22 @@
-# Limited verification design — A1.1
+# Limited verification design — A1.2
 
-The group gets exactly one plain-language question. Before choosing, A and B are both credible but unconfirmed. Verification changes what the group knows; commitment changes what happens.
+The group gets exactly one plain-language question. A/B is first a local draft, not a result. The draft can change; the result stays hidden until the group confirmation checkbox and explicit confirm action. After confirmation the choice is locked and only that seat's fragment appears.
+
+## State contract
+
+- `verificationDraft`: `null`, `A`, or `B`; editable while Stage 4 is unconfirmed.
+- `verificationConfirmed`: `false` until the explicit confirmation; only then may result cards render.
+- Changing the draft from A to B or B to A clears the group-consensus checkbox. The confirm button stays disabled until the group checks it again.
+- Refresh before confirmation preserves the draft but not an uncommitted checkbox. Refresh after confirmation preserves the locked choice and revealed fragment.
+- Reset removes both fields and returns the seat to Stage 0.
+- No network synchronization is implied: a deliberate A/B mismatch across phones remains a human-visible coordination problem, not an auto-resolved vote.
 
 ## Option A — P-side question
 
 **核對訊號是否真的來自 P**
 
-- Confirms that the live human signal is from P's wearable device and is located in Sector C.
-- Makes P's possible presence materially clearer.
+- Confirms that the live human signal is linked to P's wearable device and is located in Sector C.
+- Makes P's possible presence clearer.
 - Does not prove a safe evacuation path, a rescue route, or P's current physical safety.
 
 ## Option B — Q-side question
@@ -15,28 +24,22 @@ The group gets exactly one plain-language question. Before choosing, A and B are
 **核對延後會不會讓危險到達 Q**
 
 - Confirms that the same delay window pushes danger toward Q's second-door station.
-- Makes Q's human risk materially clearer.
+- Makes Q's physical/human risk clearer.
 - Does not announce whether the seeded irreversible harm will happen or make P's presence certain.
 
-## Before and after
+## Seat fragments
 
-- Before the choice, the signal and Q-side danger are both credible and incomplete; neither is fake or denied.
-- After the choice, each seat receives a different short fragment: S1 owns the timeline/window, S2 owns the P-signal or Q-boundary fragment, and S3 owns the location or danger fragment.
-- The group must explain all three fragments in its own words. The unselected question remains credible but unconfirmed.
+- S1 owns the timeline/window fragment for A/B.
+- S2 owns the P-source and signal-interpretation fragments for A/B.
+- S3 owns the location/path and Q-door-risk fragments for A/B.
 
-## Why neither dominates
-
-- A helps the group decide how much weight to give P's possible rescue, but leaves Q's danger less checked.
-- B helps the group decide how much weight to give Q's exposure, but leaves P's source less checked.
-- Either final commitment still protects one person and sacrifices something for another; A/B never becomes a correct-answer detector.
+The unselected question remains credible but unconfirmed. Verification changes the group's explanation, not fixed truth or the consequence map.
 
 ## Branch rule
-
-Verification never changes fixed truth or consequence mapping:
 
 | Verification | Commitment | Fixed consequence |
 |---|---|---|
 | A | 立即封鎖 | Q leaves safely; P's rescue window closes. |
-| A | 延後封鎖 | P is rescued; Q completes the door, suffers permanent respiratory injury, and is permanently removed from field duty. |
+| A | 延後封鎖 | P is rescued; Q completes the door, suffers permanent respiratory injury, and leaves field duty. |
 | B | 立即封鎖 | Q leaves safely; P's rescue window closes. |
-| B | 延後封鎖 | P is rescued; Q completes the door, suffers permanent respiratory injury, and is permanently removed from field duty. |
+| B | 延後封鎖 | P is rescued; Q completes the door, suffers permanent respiratory injury, and leaves field duty. |

@@ -1,26 +1,26 @@
-# Seat responsibility — A1.1
+# Seat responsibility — A1.2
 
 ## Seat 1 — 事件指揮席
 
-- First contribution: P's lawful entry and time.
-- Second contribution: service-failure/no-exit timing, the command window, and Q's second-door station.
-- Verification fragments: A owns P's timeline; B owns the seal window and Q's timing.
-- Consensus responsibility: restate the unresolved P/Q tradeoff without deciding for the group.
+- First contribution: P's lawful entry at 07:14.
+- Second contribution: service-failure/no-exit timing, the 07:20–07:23 command window, and only Q's second-door station.
+- Verification fragments: A owns the timeline; B owns the command window and Q station.
+- Stage 5 prompt: `提醒：時間窗口和站位。`
 
 ## Seat 2 — 人員訊號席
 
-- First contribution: a credible human-like signal temporarily associated with P, but not yet confirmed as P.
-- Second contribution: signal continuity and the possibility of distress; Q remains at the second door while the incident continues.
-- Verification fragments: A owns the P source; B owns how waiting can narrow the signal/Q boundary.
-- Consensus responsibility: say the P-side human cost and uncertainty first.
+- First contribution: a credible human signal near P, not yet confirmed as P.
+- Second contribution: short signal continuity after 07:19 and the open interpretations around distress.
+- Verification fragments: A owns the P source; B owns two readings of the signal continuity.
+- Stage 5 prompt: `提醒：P 的訊號。`
 
 ## Seat 3 — 封鎖風險席
 
-- First contribution: real rising pressure toward downstream and Q's required position.
-- Second contribution: the human cost of Q's shrinking safety boundary, including the possibility of irreversible bodily harm without predicting whether it occurs.
-- Verification fragments: A owns the location/escape gap; B owns the calibrated danger toward Q.
-- Consensus responsibility: say Q's human cost after Seat 2, without choosing for the group.
+- First contribution: rising physical movement toward downstream and Q working the second door.
+- Second contribution: why Q cannot leave before closure, the 07:20–07:23 pressure window, and the possibility of irreversible bodily harm without predicting its occurrence.
+- Verification fragments: A owns the location/path gap; B owns the Q-door movement and human-risk fragment.
+- Stage 5 prompt: `提醒：Q 還在門前。`
 
-## Dependency and anti-alpha guard
+## Dependency check
 
-Every seat contributes twice before commitment and owns a different part of A/B. Q is deliberately seeded in more than one seat before the ending. Stage 5 gives 人員訊號席 and 封鎖風險席 the first two human responsibilities; 事件指揮席 speaks last only to summarize. Free discussion and identical local records—not a master screen—form the agreement.
+Every seat contributes twice before commitment, but the facts are not interchangeable. Without S1 there is no lawful timeline or command window. Without S2 there is no credible P/human possibility. Without S3 there is no physical explanation for Q's required work or the human cost of delay. A common choice label cannot supply those missing private facts.
