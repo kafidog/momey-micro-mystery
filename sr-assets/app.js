@@ -14,7 +14,6 @@
   const prefix = qaMode ? 'qa_' : 'sr_';
   const state = {
     group: sessionStorage.getItem('momey_sr_group_choice') || null,
-    pull: sessionStorage.getItem('momey_sr_pull_choice') || null,
   };
 
   function initAnalytics() {
@@ -86,10 +85,8 @@
     });
   }
 
-  function revealAfterGroup(value) {
-    document.querySelector('#concept-step').hidden = value === 'solo_browse';
-    document.querySelector('#final-step').hidden = value !== 'solo_browse' && !state.pull;
-    if (value === 'solo_browse') document.querySelector('#final-step').hidden = false;
+  function revealAfterGroup() {
+    document.querySelector('#final-step').hidden = false;
   }
 
   function chooseGroup(value) {
@@ -98,38 +95,19 @@
     sessionStorage.setItem('momey_sr_group_choice', value);
     selectButtons('group', value);
     event(value);
-    revealAfterGroup(value);
-    const target = value === 'solo_browse' ? '#final-step' : '#concept-step';
-    document.querySelector(target)?.scrollIntoView({behavior: 'smooth', block: 'start'});
-  }
-
-  function choosePull(value) {
-    if (!state.group || state.group === 'solo_browse' || state.pull) return;
-    state.pull = value;
-    sessionStorage.setItem('momey_sr_pull_choice', value);
-    selectButtons('pull', value);
-    event(value);
-    document.querySelector('#final-step').hidden = false;
+    revealAfterGroup();
     document.querySelector('#final-step')?.scrollIntoView({behavior: 'smooth', block: 'start'});
   }
 
   function restore() {
     if (state.group) {
       selectButtons('group', state.group);
-      revealAfterGroup(state.group);
-    }
-    if (state.pull) {
-      selectButtons('pull', state.pull);
-      document.querySelector('#concept-step').hidden = false;
-      document.querySelector('#final-step').hidden = false;
+      revealAfterGroup();
     }
   }
 
   document.querySelectorAll('[data-group]').forEach(btn => {
     btn.addEventListener('click', () => chooseGroup(btn.dataset.group));
-  });
-  document.querySelectorAll('[data-pull]').forEach(btn => {
-    btn.addEventListener('click', () => choosePull(btn.dataset.pull));
   });
 
   if (internalMode || qaMode) {
