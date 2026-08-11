@@ -2,9 +2,9 @@
 
 ## Handoff
 
-- `AGENT_WORKFLOW=SOL_HIGH_PLAN -> LUNA_MAX_PRIMARY_IMPLEMENTATION_AND_QA -> SOL_HIGH_SECOND_REVIEW -> LUNA_MAX_BOUNDED_CORRECTION`
+- `AGENT_WORKFLOW=SOL_HIGH_PLAN -> LUNA_MAX_PRIMARY_IMPLEMENTATION_AND_QA -> SOL_HIGH_ADVERSARIAL_REVIEW -> LUNA_MAX_BOUNDED_CORRECTION_AND_RETRY -> SOL_HIGH_TAKEOVER_FOR_EVIDENCE_ONLY -> SOL_HIGH_FINAL_REVIEW`
 - `ASSIGNED_AGENT=luna_max_worker`
-- `TASK_SCOPE=Bounded A1.1 human-first revision plus Sol-directed correction under /playable-a1/** only; no commit, push, deploy, packaging, or external validation in this worker round.`
+- `TASK_SCOPE=Bounded A1.1 human-first revision under /playable-a1/**, followed by authorized commit, push, unadvertised Pages verification, and final review packaging.`
 - `RESEARCH_SOURCE=Attachment a9a26b71-f579-4695-8058-c2230c71bdbe + current playable-a1 source.`
 - `LIVE_MOMEY_CHANGES=NONE`
 - `ACQUISITION_INFRA_CHANGED=NO`
@@ -16,6 +16,7 @@
 - `BRANCH=main`
 - `HEAD_BEFORE=a5d02df35ee0437a831799573b6452503d19eed6`
 - `ORIGIN_BEFORE=a5d02df35ee0437a831799573b6452503d19eed6`
+- `FINAL_COMMIT_SHA=f982c3b3559f8f696688f8580094da6418b95abd (final runtime-affecting A1.1 commit)`
 - `TRACKED_BASELINE=clean before playable-a1-only work`
 - `BEFORE_VISIBLE_WORD_COUNT=Seat1 979; Seat2 978; Seat3 957 (Intl.Segmenter zh-Hant word-like, head/script/style/tags excluded)`
 - `AFTER_VISIBLE_WORD_COUNT=Seat1 915 (-64); Seat2 920 (-58); Seat3 876 (-81), same metric; correction retained a materially lower player-facing copy count.`
@@ -35,18 +36,27 @@
 ## QA status
 
 - `STATIC_TESTS=PASS — node --check app.js/test; Playable A1.1 contract pass; links/resources, forbidden transports, no gradient/glow/neon, and diff --check pass.`
-- `BROWSER_QA=PASS — fresh local Chrome tabs; Stage 3 prompt/definition order; Seat 1 A/seal, A/delay, B/seal, B/delay; Seat 2 A and Seat 3 B fragments; console-clean fresh evidence tabs.`
+- `BROWSER_QA=PASS — fresh local browser contexts; Stage 3 prompt/definition order; Seat 1 A/seal, A/delay, B/seal, B/delay; Seat 2 A and Seat 3 B fragments; console-clean fresh evidence tabs.`
 - `MOBILE_QA=PASS — 390x844 and 412x915 viewport DOM assertions: page/body overflow 0, nav scrollWidth=clientWidth, seven marker rectangles inside viewport; one 390x844 flow reached Stage 6.`
 - `REFRESH_RESET=PASS — discovery confirmation refresh preserved; Stage 2/4/5 refresh checks and deliberate two-step reset returned Stage 0.`
 - `BRANCHES_A_B_C_D=PASS — all verification/commitment combinations reached Stage 6 with commitment-driven P/Q consequences.`
 - `NATURAL_ROLEPLAY=PASS synthetic topology check — own-word prompts generated P/Q/time-window questions; never human-fun evidence.`
 - `P0_COUNT=0`
-- `CORE_P1_COUNT=0 after local A1.1 revalidation`
+- `CORE_P1_COUNT=0 after Luna correction/retry and Sol High independent revalidation`
 - `PROTECTED_HASH_MISMATCH=0 vs HEAD/origin a5d02df35ee0437a831799573b6452503d19eed6; verified at final handoff`
-- `GIT_FINAL=No commit/push/deploy authorized in this round; only playable-a1/** may be dirty.`
-- `TEMP_EVIDENCE=C:\Users\USER\AppData\Local\Temp\momey-playable-a11-evidence — 13 PNG captures (12 distinct useful visual states; 390×844 and 412×915 captured in separate active viewport sessions); max 16; paths/hashes in SCREENSHOT_INDEX.md; not repo artifacts.`
-- `FINAL_REVIEW=SECOND_REVIEW_PENDING_SOL_HIGH`
+- `GIT_FINAL=Runtime commit f982c3b3559f8f696688f8580094da6418b95abd pushed normally to origin/main; no force push.`
+- `DEPLOYMENT_STATUS=PASS — GitHub Pages returned HTTP 200 with Playable A1.1 and the corrected fixed Q outcome after bounded polling.`
+- `DEPLOYED_URL=https://kafidog.github.io/momey-micro-mystery/playable-a1/`
+- `PUBLIC_BROWSER_QA=PASS — deployed Seat 1 reached the Stage 3 pre-definition gate; Playable A1.1 visible; warning/error console empty.`
+- `ROOT_REGRESSION=PASS — public Case #00 clue 3 -> reveal -> reset; result cleared; warning/error console empty.`
+- `SCREENSHOT_EVIDENCE=13 PNG captures, max 16; exact final paths, bytes, and SHA256 values in SCREENSHOT_INDEX.md.`
+- `SOL_HIGH_INTERVENTION=The first bounded review required a concrete irreversible Q consequence and Traditional Chinese Stage 5 role labels.`
+- `SOL_HIGH_TAKEOVER=Evidence-only: the initial 07_stage5_free_consensus.png recapture contained Stage 4; Sol recaptured the correct Stage 5 state and updated its hash without changing product source.`
+- `FINAL_REVIEW=PASS`
+- `FINAL_PACKAGING=The delivery pack is assembled from this metadata-closed source and records the final ZIP integrity externally; no stale untracked/not-deployed/no-ZIP state remains.`
 - `ACTUAL_FUN=UNPROVEN`
+- `F1=NONE`
+- `F2=NONE`
 - `MOMEY_SPECIFIC_WTP=NONE`
 - `E3=NONE`
 - `E4=NONE`
