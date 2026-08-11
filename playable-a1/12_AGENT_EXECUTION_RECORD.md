@@ -89,11 +89,11 @@ Unchanged:
 
 ## Delivery metadata
 
-- `FINAL_RUNTIME_COMMIT=PENDING_COMMIT`
-- `FINAL_HEAD=PENDING_METADATA_CLOSURE`
-- `DEPLOYMENT=PENDING_PUSH_AND_PAGES_VERIFICATION`
+- `FINAL_RUNTIME_COMMIT=4cc5e0c9124a867cb362afaa09076bf319a15733`
+- `FINAL_HEAD=metadata closure commit containing this record; exact SHA is resolved in the authoritative review-pack copy after the commit exists`
+- `DEPLOYMENT=PASS — bounded poll reached HTTP 200 with Playable A1.2 on attempt 7; public browser entry and Seat 2 Stage 3 rendered A1.2 with empty pre-gate definition and no warning/error logs`
 - `DEPLOYED_URL=https://kafidog.github.io/momey-micro-mystery/playable-a1/`
-- `PACKAGING_STATUS=PENDING_FINAL_REVIEW_PACK`
+- `PACKAGING_STATUS=PENDING_FINAL_REVIEW_PACK_AFTER_METADATA_COMMIT`
 
 The repository copy is closed after runtime commit and deployment. The authoritative top-level review-pack copy records the exact final HEAD, ZIP hash, size, and file count after those values exist.
 

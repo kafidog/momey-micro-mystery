@@ -1,6 +1,10 @@
 # Playable A1.2 source snapshot
 
-This repository path is the reviewable source snapshot for the bounded A1.2 playable slice. It contains only the isolated `playable-a1/**` implementation and review notes. The exact source commit is recorded after the runtime commit exists.
+This repository path is the reviewable source snapshot for the bounded A1.2 playable slice. It contains only the isolated `playable-a1/**` implementation and review notes.
+
+- `SOURCE_RUNTIME_COMMIT=4cc5e0c9124a867cb362afaa09076bf319a15733`
+- `PUBLIC_URL=https://kafidog.github.io/momey-micro-mystery/playable-a1/`
+- `PUBLIC_RENDERED_VERSION=Playable A1.2`
 
 ```text
 playable-a1/
