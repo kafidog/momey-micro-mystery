@@ -1,6 +1,6 @@
 # Playable A1.1 screenshot index
 
-Thirteen A1.1 browser screenshots were captured outside the repository under `C:\Users\USER\AppData\Local\Temp\momey-playable-a11-evidence`. They are technical QA evidence only and are not committed or packaged in this worker round.
+Thirteen A1.1 browser screenshots were captured outside the repository under `C:\Users\USER\AppData\Local\Temp\momey-playable-a11-evidence`. They are technical QA evidence only. The repository intentionally does not commit PNG evidence; the final A1.1 review pack includes exact copies under `screenshots/`.
 
 | ID | Temp file | State | Bytes | SHA256 |
 |---|---|---|---:|---|
@@ -20,4 +20,4 @@ Thirteen A1.1 browser screenshots were captured outside the repository under `C:
 
 The 390×844 and 412×915 captures were made in separate active viewport sessions. DOM viewport assertions independently covered both sizes. All three initial private seat views and a clear pre-commitment Q stake are represented. No synthetic or sourced image was used as evidence.
 
-`SYNTHETIC_REVIEW != HUMAN_FUN_EVIDENCE`. This index records actual local captures and does not claim deployment, human feedback, fun, demand, WTP, E3, or E4.
+`SYNTHETIC_REVIEW != HUMAN_FUN_EVIDENCE`. This index records actual local captures and their final packaged copies. It does not claim human feedback, fun, demand, WTP, E3, or E4.

@@ -32,4 +32,4 @@ playable-a1/
    └─ contract.test.mjs
 ```
 
-No credentials, `.wrangler`, `node_modules`, browser profile, cache, or Git secret is part of this snapshot. Screenshots, if captured for this round, remain outside the repository in the user Temp directory.
+No credentials, `.wrangler`, `node_modules`, browser profile, cache, or Git secret is part of this snapshot. Screenshot PNGs remain outside the repository source tree and are copied separately into the final review pack's `screenshots/` directory.

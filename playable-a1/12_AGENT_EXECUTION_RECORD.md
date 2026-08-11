@@ -53,7 +53,7 @@
 - `SOL_HIGH_INTERVENTION=The first bounded review required a concrete irreversible Q consequence and Traditional Chinese Stage 5 role labels.`
 - `SOL_HIGH_TAKEOVER=Evidence-only: the initial 07_stage5_free_consensus.png recapture contained Stage 4; Sol recaptured the correct Stage 5 state and updated its hash without changing product source.`
 - `FINAL_REVIEW=PASS`
-- `FINAL_PACKAGING=The delivery pack is assembled from this metadata-closed source and records the final ZIP integrity externally; no stale untracked/not-deployed/no-ZIP state remains.`
+- `FINAL_PACKAGING=The delivery pack is assembled from this metadata-closed source; its screenshot copies, source snapshot, and ZIP integrity are verified in the final delivery report.`
 - `ACTUAL_FUN=UNPROVEN`
 - `F1=NONE`
 - `F2=NONE`
