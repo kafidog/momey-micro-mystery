@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#06121c">
+    <link rel="icon" href="data:,">
+    <title>MOMEY A2｜結構安全</title>
+    <link rel="stylesheet" href="assets/styles.css">
+  </head>
+  <body data-page="role" data-role="3">
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="index.html" aria-label="MOMEY A2 共同序章"><span>MOMEY</span><b>A2</b></a>
+        <div class="topbar-meta"><span>同一事故</span><span class="dot" aria-hidden="true"></span><span>18:48</span></div>
+        <button class="text-button" type="button" data-reset>重新開始</button>
+      </header>
+
+      <main class="role-main">
+        <a class="back-link" href="index.html">← 回到共同序章</a>
+        <section class="role-hero" aria-labelledby="role-page-title">
+          <div>
+            <p class="eyebrow">STAGE 02｜角色簡報｜安全鏈路</p>
+            <h1 id="role-page-title" data-role-title>結構安全</h1>
+            <p class="role-tagline" data-role-tagline>把壓力如何走到東閘撐點說清楚，讓代價不會被一句「撐住」帶過。</p>
+          </div>
+          <div class="role-stamp" aria-label="結構安全角色編號"><span>ROLE</span><strong>03</strong></div>
+        </section>
+
+        <section class="panel shared-situation" aria-labelledby="shared-title">
+          <div class="panel-label">共同情勢</div>
+          <h2 id="shared-title">海岬防洪站｜同一個 18:48</h2>
+          <p>主電力與中央遙測中斷。林芮在西側維修隧道，高承仍在東閘手動撐點；你們三支手機接的是同一個事故時刻。</p>
+          <p class="ally-line compact">你們是同一隊。知道的都可以說；每個人能做的事不同。</p>
+        </section>
+
+        <section class="panel role-brief" aria-labelledby="brief-title">
+          <div class="panel-label">你的角色</div>
+          <h2 id="brief-title">先把自己的責任接起來</h2>
+          <dl class="brief-grid">
+            <div><dt>你的職責</dt><dd data-role-duty>讀取類比壓力波形，說清楚 95 秒維持東閘會讓誰承受什麼。</dd></div>
+            <div><dt>現在已知</dt><dd><ul data-role-known><li>18:47 進水管破裂，壓力與水勢上升。</li><li>高承仍在東閘手動撐點。</li><li>中央遙測中斷，但類比壓力線還有回波。</li></ul></dd></div>
+            <div><dt>還不知道</dt><dd><ul data-role-unknown><li>壓力前緣何時抵達東閘。</li><li>撐架能否承受完整的 95 秒。</li></ul></dd></div>
+            <div><dt>你可以做</dt><dd data-role-action-why>你能用安全備援鏈路讀取類比壓力線，將壓力前緣與東閘撐點對齊。</dd></div>
+          </dl>
+        </section>
+
+        <section class="panel action-console" aria-labelledby="action-title">
+          <div class="console-topline"><div class="panel-label">你的操作</div><span class="console-state" data-action-state>待執行</span></div>
+          <h2 id="action-title" data-role-action-title>讀取類比壓力波形</h2>
+          <p data-role-action-prompt>從還能工作的類比線路讀取一段 95 秒波形，讓隊伍看見東閘撐點的實際壓力。</p>
+          <button class="primary-button action-button" type="button" data-role-action-button="3" data-action-key="pressure-waveform">執行：讀取壓力波形</button>
+          <p class="action-footnote">操作結果會留在這支手機，也會在三人公開交換時成為共同證據。</p>
+        </section>
+
+        <section class="panel action-result" data-role-action-result hidden aria-labelledby="result-title" aria-live="polite">
+          <div class="panel-label">STAGE 03｜角色行動結果</div>
+          <h2 id="result-title">這是你帶回隊伍的證據</h2>
+          <div class="evidence-card" data-action-evidence>
+            <dl class="evidence-list">
+              <div><dt>來源</dt><dd data-evidence-source></dd></div>
+              <div><dt>時間</dt><dd data-evidence-time></dd></div>
+              <div><dt>內容</dt><dd data-evidence-content></dd></div>
+              <div><dt>還不能確定</dt><dd data-evidence-unknown></dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <section id="team-stage" class="team-stage" data-team-stage aria-live="polite">
+          <div class="panel stage-placeholder"><div class="panel-label">STAGE 04｜公開交換</div><h2>把你知道的說出來</h2><p>完成這支手機的角色操作後，和另外兩位隊友口頭交換結果，再由你在本機確認。</p></div>
+        </section>
+      </main>
+    </div>
+    <script src="assets/app.js" defer></script>
+  </body>
+</html>
