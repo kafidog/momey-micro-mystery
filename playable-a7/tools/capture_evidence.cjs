@@ -137,6 +137,7 @@ async function roleToEnding(page, baseURL, role, seed, diagnostic, decision) {
     } finally { await reference.context.close(); }
 
     const files = fs.readdirSync(output).filter((file) => file.endsWith(".png")).sort();
+    fs.writeFileSync(path.join(output, "README.md"), "# Screenshots\n\n16 張最終 A7 功能證據；完整說明見上一層 `SCREENSHOT_INDEX.md`。\n", "utf8");
     console.log(JSON.stringify({ status: "PASS", count: files.length, files }, null, 2));
   } finally {
     await browser.close();

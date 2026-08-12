@@ -348,11 +348,11 @@
 
   function decisionSummary(local) {
     var result = resultParts(local);
-    return "<div class=\"decision-summary\"><p><strong>林芮</strong>：在高處避難台；西側救援軌道是她的主要救援路線。</p><p><strong>高承</strong>：在中央隔離閘東側，握著手動撐桿；海水與污染從東側靠近。</p><p><strong>中央隔離閘</strong>：20 秒內關上會保護控制室並切斷西側救援軌道供電；再開 95 秒保留救援車可能，讓高承留在手動撐桿旁。</p><p><strong>仍不知道</strong>：「" +
+    return "<div class=\"decision-summary\"><p><strong>林芮</strong>：在高處避難台；西側救援軌道是她的主要救援路線。</p><p><strong>高承</strong>：在中央隔離閘東側，握著手動撐桿；海水與污染從東側靠近。</p><p><strong>中央隔離閘</strong>：20 秒內關上會保護控制室並切斷西側救援軌道供電；再開 95 秒保留救援車可能，讓高承留在手動撐桿旁。</p><p><strong>仍不知道</strong>：" +
       escapeHtml(result.unknown) +
-      "」。本支手機查到「" +
+      " <strong>本支手機查到</strong>：" +
       escapeHtml(result.found) +
-      "」；其他兩支手機的結果以口頭交換。</p></div>";
+      " 其他兩支手機的結果以口頭交換。</p></div>";
   }
 
   function decisionStage(local) {
