@@ -1,0 +1,33 @@
+{
+  "schema": "momey-a6r-static-voice-v1",
+  "engine": "Kokoro-82M-v1.1-zh",
+  "voice": "zm_010",
+  "assetStatus": "READY",
+  "audioFilesPresent": true,
+  "entries": [
+    {"id":"OP_INDEX","captionText":"三條角色連結已準備好。請各自接手一個角色，查到什麼就交換什麼。","spokenText":"三條角色連結已準備好，請各自接手一個角色。","audioFile":"assets/audio/kokoro-zm-010/op_index.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"OP_BOOT","captionText":"岬衛-7 已連線。我會把已接通的資料告訴你；決定由你們做。","spokenText":"岬衛-7 已連線，資料會一項一項告訴你。","audioFile":"assets/audio/kokoro-zm-010/op_boot.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"OP_PLAN","captionText":"六個未知只能查三個。先和隊友說好要補哪一塊，再開始查詢。","spokenText":"六個未知只能查三個，先和隊友說好要查哪一塊。","audioFile":"assets/audio/kokoro-zm-010/op_plan.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"OP_SHARE","captionText":"把查到的和仍不知道的都說出來。不要只報結論。","spokenText":"把查到的和仍不知道的都說出來。","audioFile":"assets/audio/kokoro-zm-010/op_share.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"OP_ESCALATE","captionText":"事件窗口正在收束。請用仍然不完整的資料，形成共同決定。","spokenText":"窗口正在收束，請用手上的資料共同決定。","audioFile":"assets/audio/kokoro-zm-010/op_escalate.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"OP_AGREED","captionText":"共同選項已覆述。確認前仍可改；確認後立即執行。","spokenText":"共同選項已說清楚，確認前仍可改。","audioFile":"assets/audio/kokoro-zm-010/op_agreed.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"BL_O1","captionText":"時序鏈回報：封閉二十秒，撤離九十五秒；兩者互斥。","spokenText":"封閉二十秒，撤離九十五秒，兩者互斥。","audioFile":"assets/audio/kokoro-zm-010/bl_o1.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"BL_O2","captionText":"備援程序回報：替代進入十一分鐘，晚於西側窗口。","spokenText":"替代進入要十一分鐘，晚於西側窗口。","audioFile":"assets/audio/kokoro-zm-010/bl_o2.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"BL_R1","captionText":"訊號回報：四秒前直接寫入，有人主動操作。","spokenText":"四秒前直接寫入，有人仍在操作。","audioFile":"assets/audio/kokoro-zm-010/bl_r1.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"BL_R2","captionText":"西側回波：高位避難龕有定位；推車軌可通。","spokenText":"高位避難龕有定位，推車軌可通。","audioFile":"assets/audio/kokoro-zm-010/bl_r2.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"BL_S1","captionText":"東閘投影：前緣七十二秒抵達，八十三秒通過峰值。","spokenText":"前緣七十二秒抵達，八十三秒通過峰值。","audioFile":"assets/audio/kokoro-zm-010/bl_s1.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"BL_S2","captionText":"撐架回報：裂損模型無法承受完整救援窗口。","spokenText":"裂損模型撐不過完整救援窗口。","audioFile":"assets/audio/kokoro-zm-010/bl_s2.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"BW_O1","captionText":"時序鏈回報：封閉二十秒，低速撤離九十二秒；兩者互斥。","spokenText":"封閉二十秒，低速撤離九十二秒，兩者互斥。","audioFile":"assets/audio/kokoro-zm-010/bw_o1.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"BW_O2","captionText":"備援程序回報：替代進入四分鐘；安全空氣約三分鐘。","spokenText":"替代進入四分鐘，安全空氣約三分鐘。","audioFile":"assets/audio/kokoro-zm-010/bw_o2.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"BW_R1","captionText":"訊號回報：封包延遲四十一秒，無法證明當下位置。","spokenText":"封包延遲四十一秒，不能證明當下位置。","audioFile":"assets/audio/kokoro-zm-010/bw_r1.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"BW_R2","captionText":"西側回波：低速路徑可通，九十二秒完成撤離。","spokenText":"低速路徑可通，九十二秒完成撤離。","audioFile":"assets/audio/kokoro-zm-010/bw_r2.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"BW_S1","captionText":"東閘投影：污染八十四秒抵達；結構峰值在九十八秒後。","spokenText":"污染八十四秒抵達，結構峰值在九十八秒後。","audioFile":"assets/audio/kokoro-zm-010/bw_s1.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"BW_S2","captionText":"工作站回報：撐架可維持；呼吸防護密封受損。","spokenText":"撐架可維持，但呼吸防護密封受損。","audioFile":"assets/audio/kokoro-zm-010/bw_s2.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"BL_CLOSE","captionText":"封閉完成。高承已撤出；西側替代進入未趕上林芮的窗口。","spokenText":"封閉完成，高承已撤出；替代進入錯過窗口。","audioFile":"assets/audio/kokoro-zm-010/bl_close.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"BL_HOLD","captionText":"救援完成。林芮已撤出；東閘撐架在隔離完成後失效。","spokenText":"救援完成，林芮已撤出；撐架之後失效。","audioFile":"assets/audio/kokoro-zm-010/bl_hold.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"BW_CLOSE","captionText":"封閉完成。高承已撤出；林芮由替代小組救出。","spokenText":"封閉完成，替代小組救出林芮。","audioFile":"assets/audio/kokoro-zm-010/bw_close.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"},
+    {"id":"BW_HOLD","captionText":"救援完成。兩人存活；高承的暴露造成永久傷害。","spokenText":"救援完成，兩人存活；高承受到暴露傷害。","audioFile":"assets/audio/kokoro-zm-010/bw_hold.mp3","engine":"Kokoro-82M-v1.1-zh","voice":"zm_010","assetStatus":"READY"}
+  ]
+}
+
+
