@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#06131e">
+  <meta name="description" content="MOMEY PLAYABLE A6：三位人類盟友與純腳本數位事件操作員。">
+  <link rel="icon" href="data:,">
+  <title>MOMEY A6｜海岬防洪站</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="index">
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="MOMEY A6 首頁"><span>MOMEY</span><b>A6</b></a>
+      <div class="topbar-meta"><span>三位人類盟友</span><i aria-hidden="true"></i><span>岬衛-7</span></div>
+      <button class="text-button" type="button" data-new-session>新事件</button>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="title">
+        <div class="hero-copy">
+          <p class="eyebrow">SCRIPTED INCIDENT OPERATOR｜同室三人</p>
+          <h1 id="title">海岬防洪站</h1>
+          <p class="lede">主電力與中央遙測中斷。三位應變人員接上不同備援鏈路；岬衛-7 只播報已有資料，最後決定仍由你們做。</p>
+          <p class="ally-line">你們是同一隊。相關資訊都可以分享；每人只能完成一項角色診斷。</p>
+          <a class="primary-link" href="#session">建立三支角色連結</a>
+        </div>
+        <figure class="hero-art"><img src="assets/storyboard/panel-05.webp" alt="三位同隊應變人員各自拿著連接不同備援子系統的手機"><figcaption>18:48｜備援鏈路接通</figcaption></figure>
+      </section>
+
+      <section class="operator-card" aria-labelledby="operator-title">
+        <div class="operator-avatar" aria-hidden="true"><span></span><b>7</b></div>
+        <div><p class="panel-label">數位事件操作員</p><h2 id="operator-title">岬衛-7</h2><p>共同播報、倒數、固定問答與事件轉場。它不讀心、不預測，也不替隊伍選答案。</p></div>
+        <div class="operator-caption" data-index-caption aria-live="polite"></div>
+      </section>
+
+      <section class="story-section" aria-labelledby="story-title">
+        <div class="section-heading"><p class="eyebrow">共同序章｜六格現場</p><h2 id="story-title">先知道你們接手了什麼</h2><p>三人一起看完，再各自打開同一事件的角色連結。</p></div>
+        <div class="story-grid">
+          <figure class="story-panel"><img src="assets/storyboard/panel-01.webp" alt="18:40 的海岬防洪站，人員在西側隧道與東閘就位"><figcaption><span>01</span><div><strong>18:40｜人員就位</strong><p>林芮進入西側維修隧道；高承在東閘檢查手動撐架。主系統正常。</p></div></figcaption></figure>
+          <figure class="story-panel"><img src="assets/storyboard/panel-02.webp" alt="18:47 海水進水管破裂"><figcaption><span>02</span><div><strong>18:47｜進水管破裂</strong><p>海水衝入設施，主電力與中央遙測同時失效。</p></div></figcaption></figure>
+          <figure class="story-panel"><img src="assets/storyboard/panel-03.webp" alt="西側維修隧道被水霧遮蔽，林芮失聯"><figcaption><span>03</span><div><strong>西側｜林芮失聯</strong><p>穿戴頻道仍有回傳，但時間、位置與路線都未確認。</p></div></figcaption></figure>
+          <figure class="story-panel"><img src="assets/storyboard/panel-04.webp" alt="高承守在東閘，壓力沿東側逼近"><figcaption><span>04</span><div><strong>東閘｜高承留守</strong><p>他必須守住手動撐點，控制廊才能維持隔離。</p></div></figcaption></figure>
+          <figure class="story-panel"><img src="assets/storyboard/panel-05.webp" alt="三位應變人員接手三支備援手機"><figcaption><span>05</span><div><strong>18:48｜你們接手</strong><p>三支手機接到同一事件，各自保管一種診斷能力。</p></div></figcaption></figure>
+          <figure class="story-panel"><img src="assets/storyboard/panel-06.webp" alt="事故兩端與中央診斷資源"><figcaption><span>06</span><div><strong>每人只剩一次診斷</strong><p>六個未知只能查三個。先規劃，再決定要留下哪些空白。</p></div></figcaption></figure>
+        </div>
+      </section>
+
+      <section class="session-section" id="session" aria-labelledby="session-title">
+        <div class="section-heading"><p class="eyebrow">同一事件種子｜不需要帳號</p><h2 id="session-title">把三支角色連結分給隊友</h2><p>三條連結帶著同一事件碼。事件碼相同，三支手機得到的事故真相就相同。</p></div>
+        <div class="seed-card"><span>本次事件碼</span><strong data-seed-code>——</strong><button class="secondary-button" type="button" data-new-session>換一個新事件</button></div>
+        <div class="role-link-grid" data-role-links aria-live="polite"></div>
+        <p class="setup-note">三人同室、一人一機。選不同角色；讀完自己的資訊後直接開口交換。共享語音只在其中一支手機開啟即可。</p>
+      </section>
+    </main>
+  </div>
+  <script src="assets/app.js" defer></script>
+</body>
+</html>
