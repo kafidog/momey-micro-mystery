@@ -26,7 +26,9 @@
 - voice release verdict: `zm_010` accepted by owner for temporary use on 2026-08-12
 - contract: 12/12 PASS
 - rendered smoke: PASS, including three isolated seats, four endings, refresh/reset, mobile, MP3 playback and forced-missing fallback
-- protected systems: current git status shows no tracked modifications outside new `playable-a6r/`; final manifest check remains a pre-commit gate
-- deployed comparison: `/playable-a6/` HTTP 200; `/playable-a6r/` HTTP 404 before release, proving no accidental A6R publication
-- packaging preflight: PowerShell parser PASS; stale-metadata guard correctly refused packaging and created no Desktop delivery folder
+- protected systems: final commit diff is bounded to `playable-a6r/`; protected-path change count 0; post-push worktree clean
+- deployed comparison: `/playable-a6/` remained HTTP 200; `/playable-a6r/` changed from pre-release 404 to post-release HTTP 200
+- deployed parity: public `app.js` equals the LF-normalized committed source by SHA-256; representative public MP3 equals the committed asset byte-for-byte
+- deployed rendered QA: public entry exposed 3 role links; Seat 3 fresh purpose was ROLE with no future leak; after start purpose was CHOOSE and `op_plan.mp3` played without audio error
+- packaging preflight: PowerShell parser PASS; required-doc, 22-audio, 12–16 screenshot, metadata-placeholder and unsafe-ZIP-path guards enabled
 - EXTERNAL_SPEND: NT$0

@@ -23,7 +23,14 @@ Names, times, numbers and mixed technical fragments remain in the captions and a
 
 ## Candidate and license notes
 
-Kokoro-82M-v1.1-zh lists Apache-2.0 in its official Hugging Face model card. MeloTTS lists MIT in its official GitHub repository. Both were run locally; no hosted paid TTS API was used. Runtime ships generated MP3 only, not model weights or Python environments.
+| Candidate | Primary source / license | Audition outcome |
+| --- | --- | --- |
+| HyperFrames `zf_xiaobei` | Installed `npx hyperframes tts --list` path; 5 lines generated | Technically generated, but the installed path exposed only one Chinese voice and did not provide a stronger owner-approved result than the later Kokoro candidate. Not selected. |
+| Kokoro-82M-v1.1-zh `zf_001` | [Official model card](https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh), Apache-2.0 | 5-line audition and a complete 22-line runtime generated. Owner rejected it after listening; removed from runtime. |
+| Kokoro-82M-v1.1-zh `zm_010` | [Official model card](https://huggingface.co/hexgrad/Kokoro-82M-v1.1-zh), Apache-2.0 | 5-line audition and complete 22-line runtime generated. Owner accepted it for temporary A6R use. Selected. |
+| MeloTTS ZH | [Official repository](https://github.com/myshell-ai/MeloTTS), MIT | 5 representative lines generated locally. Kept as a technically available fallback; not promoted to a full runtime after the owner accepted `zm_010`. This is not a claim that MeloTTS objectively failed. |
+
+[sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx) was inspected as an offline infrastructure option but not added to the browser runtime: pre-generated files already met the cross-phone consistency goal with less first-run/runtime machinery. No hosted paid TTS API was used. Runtime ships generated MP3 only, not model weights or Python environments.
 
 ## Runtime target
 
