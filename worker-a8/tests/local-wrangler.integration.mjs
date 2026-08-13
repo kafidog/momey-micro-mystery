@@ -8,9 +8,11 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const PORT = Number(process.env.MOMEY_A8_TEST_PORT || 8787);
-const BASE_URL = "http://127.0.0.1:" + PORT;
-const WS_BASE_URL = "ws://127.0.0.1:" + PORT;
-const ORIGIN = "http://127.0.0.1:1574";
+const REMOTE_BASE_URL = String(process.env.MOMEY_A8_REMOTE_URL || "").replace(/\/$/, "");
+const IS_REMOTE = Boolean(REMOTE_BASE_URL);
+const BASE_URL = REMOTE_BASE_URL || "http://127.0.0.1:" + PORT;
+const WS_BASE_URL = BASE_URL.replace(/^http:/i, "ws:").replace(/^https:/i, "wss:");
+const ORIGIN = process.env.MOMEY_A8_TEST_ORIGIN || (IS_REMOTE ? "https://kafidog.github.io" : "http://127.0.0.1:1574");
 const WRANGLER_ARGS = [
   "--yes",
   "wrangler@4.120.0",
@@ -38,7 +40,7 @@ function record(stream, chunk) {
 
 async function waitForHealth() {
   for (let attempt = 0; attempt < 80; attempt += 1) {
-    if (wranglerProcess.exitCode !== null) {
+    if (wranglerProcess && wranglerProcess.exitCode !== null) {
       throw new Error("Wrangler exited before health check: " + logs.slice(-20).join("\n"));
     }
     try {
@@ -71,7 +73,7 @@ async function createRoom() {
   return payload.roomCode;
 }
 
-function waitUntil(predicate, label, timeoutMs = 5000) {
+function waitUntil(predicate, label, timeoutMs = IS_REMOTE ? 15000 : 5000) {
   return new Promise((resolve, reject) => {
     const started = Date.now();
     const timer = setInterval(() => {
@@ -215,16 +217,32 @@ async function waitRoomPhase(clients, phase) {
   )));
 }
 
+async function commandRoomAndWait(clients, roleId, command, label = command.type) {
+  const actor = clients[roleId];
+  const roomHead = Math.max(...Object.values(clients).map((client) => client.state?.version ?? -1));
+  await waitUntil(
+    () => actor.state?.version >= roomHead,
+    actor.roomCode + "/" + roleId + " catch up before " + label
+  );
+  await actor.commandAndWait(command, label);
+  const acceptedVersion = actor.state.version;
+  await Promise.all(Object.values(clients).map((client) => waitUntil(
+    () => client.state?.version >= acceptedVersion,
+    client.roomCode + "/" + client.roleId + " receive version " + acceptedVersion
+  )));
+}
+
 async function takeoverRoom(clients) {
   for (const roleId of ["operations", "rescue", "safety"]) {
-    await clients[roleId].commandAndWait({ type: "TAKEOVER" }, "TAKEOVER");
+    await commandRoomAndWait(clients, roleId, { type: "TAKEOVER" }, "TAKEOVER");
   }
 }
 
-async function completeOperator(client) {
+async function completeOperator(clients, roleId = "operations") {
+  const client = clients[roleId];
   const eventId = client.state?.operatorEvent?.id;
   assert.ok(eventId, client.roleId + " should see an operator event");
-  await client.commandAndWait({ type: "COMPLETE_OPERATOR", eventId }, "COMPLETE_OPERATOR " + eventId);
+  await commandRoomAndWait(clients, roleId, { type: "COMPLETE_OPERATOR", eventId }, "COMPLETE_OPERATOR " + eventId);
 }
 
 async function expectSocketRejected(roomCode, roleId) {
@@ -248,23 +266,28 @@ async function expectSocketRejected(roomCode, roleId) {
 
 async function run() {
   assert.equal(typeof WebSocket, "function", "Node WebSocket is required for local integration");
+  const runLabel = IS_REMOTE ? "remote" : "local";
   const step = (label) => {
-    const line = new Date().toISOString() + " [A8 local] " + label + "\n";
+    const line = new Date().toISOString() + " [A8 " + runLabel + "] " + label + "\n";
     fs.appendFileSync(PROGRESS_PATH, line, "utf8");
     console.log(line.trim());
   };
   fs.rmSync(PROGRESS_PATH, { force: true });
-  step("start Wrangler");
-  const wranglerExecutable = process.platform === "win32" ? process.execPath : "npx";
-  const wranglerArgs = process.platform === "win32" ? [NPX_CLI, ...WRANGLER_ARGS] : WRANGLER_ARGS;
-  wranglerProcess = spawn(wranglerExecutable, wranglerArgs, {
-    cwd: WORKER_DIR,
-    env: { ...process.env, WRANGLER_SEND_METRICS: "false" },
-    stdio: ["ignore", "pipe", "pipe"],
-    windowsHide: true
-  });
-  wranglerProcess.stdout.on("data", (chunk) => record("stdout", chunk));
-  wranglerProcess.stderr.on("data", (chunk) => record("stderr", chunk));
+  if (IS_REMOTE) {
+    step("use deployed Worker " + BASE_URL);
+  } else {
+    step("start Wrangler");
+    const wranglerExecutable = process.platform === "win32" ? process.execPath : "npx";
+    const wranglerArgs = process.platform === "win32" ? [NPX_CLI, ...WRANGLER_ARGS] : WRANGLER_ARGS;
+    wranglerProcess = spawn(wranglerExecutable, wranglerArgs, {
+      cwd: WORKER_DIR,
+      env: { ...process.env, WRANGLER_SEND_METRICS: "false" },
+      stdio: ["ignore", "pipe", "pipe"],
+      windowsHide: true
+    });
+    wranglerProcess.stdout.on("data", (chunk) => record("stdout", chunk));
+    wranglerProcess.stderr.on("data", (chunk) => record("stderr", chunk));
+  }
   await waitForHealth();
   step("health");
 
@@ -294,7 +317,7 @@ async function run() {
   assert.equal(clientsA.operations.state.phase, "INTRO_1");
   for (let beat = 1; beat <= 8; beat += 1) {
     assert.equal(clientsA.operations.state.operatorEvent.id, "A8_INTRO_" + String(beat).padStart(2, "0"));
-    await completeOperator(clientsA.operations);
+    await completeOperator(clientsA);
   }
   await waitRoomPhase(clientsA, "ROUND1_ACTION");
   step("room A intro complete");
@@ -316,13 +339,13 @@ async function run() {
     actionId: "R1_R_RAIL"
   }, "TOKEN_MISMATCH");
 
-  await clientsA.operations.commandAndWait({ type: "ACTION", actionId: "R1_O_GATE" });
+  await commandRoomAndWait(clientsA, "operations", { type: "ACTION", actionId: "R1_O_GATE" });
   step("room A first action");
   const duplicateVersion = clientsA.operations.state.version;
   await clientsA.operations.expectError({ type: "ACTION", actionId: "R1_O_GATE" }, "DUPLICATE_ACTION");
   assert.equal(clientsA.operations.state.version, duplicateVersion);
-  await clientsA.rescue.commandAndWait({ type: "ACTION", actionId: "R1_R_RAIL" });
-  await clientsA.safety.commandAndWait({ type: "ACTION", actionId: "R1_S_HAZARD" });
+  await commandRoomAndWait(clientsA, "rescue", { type: "ACTION", actionId: "R1_R_RAIL" });
+  await commandRoomAndWait(clientsA, "safety", { type: "ACTION", actionId: "R1_S_HAZARD" });
   await waitRoomPhase(clientsA, "ROUND1_DISCUSS");
   step("room A round 1 actions complete");
   assert.match(clientsA.operations.state.currentSeat.private.round1.found, /隔離閘/);
@@ -337,9 +360,9 @@ async function run() {
     type: "COMPLETE_OPERATOR",
     eventId: "A8_NOT_CURRENT"
   }, "WRONG_OPERATOR_EVENT");
-  await completeOperator(clientsA.operations);
+  await completeOperator(clientsA);
   for (const roleId of ["operations", "rescue", "safety"]) {
-    await clientsA[roleId].commandAndWait({ type: "READY" });
+    await commandRoomAndWait(clientsA, roleId, { type: "READY" });
   }
   await waitRoomPhase(clientsA, "ROUND2_ACTION");
   step("room A round 1 discussion complete");
@@ -357,31 +380,31 @@ async function run() {
 
   for (const roleId of ["operations", "rescue", "safety"]) {
     const actionId = clientsA[roleId].state.options[0].id;
-    await clientsA[roleId].commandAndWait({ type: "ACTION", actionId });
+    await commandRoomAndWait(clientsA, roleId, { type: "ACTION", actionId });
   }
   await waitRoomPhase(clientsA, "ROUND2_DISCUSS");
   step("room A round 2 actions complete");
-  await completeOperator(clientsA.operations);
+  await completeOperator(clientsA);
   for (const roleId of ["operations", "rescue", "safety"]) {
-    await clientsA[roleId].commandAndWait({ type: "READY" });
+    await commandRoomAndWait(clientsA, roleId, { type: "READY" });
   }
   await waitRoomPhase(clientsA, "ROUND3_ACTION");
   step("room A round 2 discussion complete");
-  await completeOperator(clientsA.operations);
+  await completeOperator(clientsA);
   for (const roleId of ["operations", "rescue", "safety"]) {
     const actionId = clientsA[roleId].state.options[0].id;
-    await clientsA[roleId].commandAndWait({ type: "ACTION", actionId });
+    await commandRoomAndWait(clientsA, roleId, { type: "ACTION", actionId });
   }
   await waitRoomPhase(clientsA, "ROUND3_DISCUSS");
   step("room A round 3 actions complete");
-  await completeOperator(clientsA.operations);
+  await completeOperator(clientsA);
   for (const roleId of ["operations", "rescue", "safety"]) {
-    await clientsA[roleId].commandAndWait({ type: "READY" });
+    await commandRoomAndWait(clientsA, roleId, { type: "READY" });
   }
   await waitRoomPhase(clientsA, "FINAL_VOTE");
   step("room A round 3 discussion complete");
   for (const roleId of ["operations", "rescue", "safety"]) {
-    await clientsA[roleId].commandAndWait({ type: "VOTE", vote: "close" });
+    await commandRoomAndWait(clientsA, roleId, { type: "VOTE", vote: "close" });
   }
   await waitRoomPhase(clientsA, "ENDING");
   step("room A ending");
@@ -400,7 +423,7 @@ async function run() {
   assert.equal(roomBSnapshot.ending, undefined);
 
   step("cross-room snapshot isolated");
-  console.log("local Wrangler A8 integration PASS: rooms=" + roomA + "," + roomB + " clients=3+3 mainPath=ENDING reconnect=PASS audioMasterReassignment=PASS crossRoomIsolation=PASS");
+  console.log(runLabel + " A8 integration PASS: rooms=" + roomA + "," + roomB + " clients=3+3 mainPath=ENDING reconnect=PASS audioMasterReassignment=PASS crossRoomIsolation=PASS");
 }
 
 try {
