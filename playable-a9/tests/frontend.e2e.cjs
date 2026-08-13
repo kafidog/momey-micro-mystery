@@ -83,7 +83,7 @@ async function train(page) { await down(page, "[data-training-hold]"); await del
 
 async function clickPower(page, mode) {
   await page.locator(`[data-power="${mode}"]`).click();
-  await page.waitForFunction((value) => window.__MOMEY_A9__?.getState()?.control?.powerMode === value, mode, { timeout: 5000 });
+  await page.waitForFunction((value) => window.__MOMEY_A9__?.getState()?.control?.powerMode === value, mode, { timeout: REMOTE_WORKER ? 15000 : 5000 });
 }
 
 async function waitControl(page, predicateSource, timeout = 8000) {
