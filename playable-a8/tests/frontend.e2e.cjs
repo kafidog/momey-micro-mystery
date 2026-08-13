@@ -12,8 +12,11 @@ const PLAYABLE_ROOT = path.resolve(__dirname, "..");
 const WORKER_ROOT = path.resolve(__dirname, "..", "..", "worker-a8");
 const STATIC_PORT = 1574;
 const WORKER_PORT = 8787;
-const STATIC_ORIGIN = "http://127.0.0.1:" + STATIC_PORT;
-const WORKER_URL = "http://127.0.0.1:" + WORKER_PORT;
+const REMOTE_FRONTEND_URL = String(process.env.MOMEY_A8_FRONTEND_URL || "").replace(/\/$/, "") + (process.env.MOMEY_A8_FRONTEND_URL ? "/" : "");
+const IS_REMOTE = Boolean(REMOTE_FRONTEND_URL);
+const STATIC_ORIGIN = REMOTE_FRONTEND_URL || "http://127.0.0.1:" + STATIC_PORT;
+const WORKER_URL = String(process.env.MOMEY_A8_REMOTE_URL || ("http://127.0.0.1:" + WORKER_PORT)).replace(/\/$/, "");
+const EVIDENCE_DIR = String(process.env.MOMEY_A8_SCREENSHOT_DIR || "");
 const NPX_CLI = path.join(path.dirname(process.execPath), "node_modules", "npm", "bin", "npx-cli.js");
 const BROWSER_EXECUTABLE = process.env.MOMEY_A8_BROWSER || "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 const WRANGLER_ARGS = [
@@ -118,7 +121,13 @@ function pageUrl(roomCode, options = {}) {
   });
   if (roomCode) query.set("room", roomCode);
   if (options.missingAudio) query.set("missingAudio", "1");
-  return STATIC_ORIGIN + "/index.html?" + query.toString();
+  return (IS_REMOTE ? STATIC_ORIGIN : STATIC_ORIGIN + "/index.html") + "?" + query.toString();
+}
+
+async function capture(page, fileName) {
+  if (!EVIDENCE_DIR || !fileName) return;
+  fs.mkdirSync(EVIDENCE_DIR, { recursive: true });
+  await page.screenshot({ path: path.join(EVIDENCE_DIR, fileName), fullPage: true });
 }
 
 async function waitFor(page, predicate, arg, label, timeout = 12000) {
@@ -129,6 +138,28 @@ async function waitFor(page, predicate, arg, label, timeout = 12000) {
 
 async function state(page) {
   return page.evaluate(() => window.__MOMEY_A8__ && window.__MOMEY_A8__.getState());
+}
+
+async function waitPagesAtSameVersion(pages, label, timeout = IS_REMOTE ? 15000 : 12000) {
+  const started = Date.now();
+  while (Date.now() - started < timeout) {
+    const versions = await Promise.all(pages.map(async (page) => (await state(page))?.version));
+    if (versions.every(Number.isInteger) && new Set(versions).size === 1) return versions[0];
+    await delay(50);
+  }
+  const versions = await Promise.all(pages.map(async (page) => (await state(page))?.version));
+  throw new Error(label + " clients did not converge: " + JSON.stringify(versions));
+}
+
+async function waitPagesPastVersion(pages, previousVersion, label, timeout = IS_REMOTE ? 15000 : 12000) {
+  const started = Date.now();
+  while (Date.now() - started < timeout) {
+    const versions = await Promise.all(pages.map(async (page) => (await state(page))?.version));
+    if (versions.every((version) => Number.isInteger(version) && version > previousVersion) && new Set(versions).size === 1) return versions[0];
+    await delay(50);
+  }
+  const versions = await Promise.all(pages.map(async (page) => (await state(page))?.version));
+  throw new Error(label + " clients did not advance together from " + previousVersion + ": " + JSON.stringify(versions));
 }
 
 async function waitPhase(page, phase, label = phase, timeout = 12000) {
@@ -213,14 +244,18 @@ async function selectAndConfirm(page, label) {
 
 async function readyAll(pages, label) {
   for (const page of pages) {
+    const beforeVersion = (await state(page))?.version;
     await page.locator("[data-ready]").click();
+    await waitPagesPastVersion(pages, beforeVersion, label + " ready convergence");
   }
   await Promise.all(pages.map((page) => waitPhase(page, label, "ready -> " + label)));
 }
 
 async function chooseVoteAll(pages, vote, label) {
   for (const page of pages) {
+    const beforeVersion = (await state(page))?.version;
     await page.locator(`[data-vote="${vote}"]`).click();
+    await waitPagesPastVersion(pages, beforeVersion, label + " vote convergence");
   }
   await Promise.all(pages.map((page) => waitPhase(page, "ENDING", label)));
 }
@@ -228,6 +263,7 @@ async function chooseVoteAll(pages, vote, label) {
 async function createRoom(browserContext, options) {
   const page = await browserContext.newPage();
   await page.goto(pageUrl(null, options), { waitUntil: "domcontentloaded" });
+  if (options.evidence === "main") await capture(page, "01_ENTRY_PAGE_390x844.png");
   await page.locator("[data-create]").click();
   await page.locator('[data-view="lobby"]', { timeout: 12000 }).waitFor();
   const roomCode = (await page.locator("[data-room-code]").innerText()).trim();
@@ -251,7 +287,10 @@ async function takeRole(page, roleId, label) {
   }
   await role.click();
   await page.locator("[data-takeover]").click();
-  await waitFor(page, (role) => window.__MOMEY_A8__?.getCurrentRole() === role, roleId, label + " selected role");
+  await waitFor(page, (role) => {
+    const api = window.__MOMEY_A8__;
+    return api?.getCurrentRole() === role && api?.getState()?.currentSeat?.started === true;
+  }, roleId, label + " took role", IS_REMOTE ? 15000 : 12000);
 }
 
 async function runRoomPath(browser, viewport, options) {
@@ -276,10 +315,14 @@ async function runRoomPath(browser, viewport, options) {
     pages.push(created.page);
     pages.push(await joinRoom(contexts[1], created.roomCode, options));
     pages.push(await joinRoom(contexts[2], created.roomCode, options));
+    if (options.evidence === "main") await capture(pages[0], "02_CREATE_JOIN_ROOM.png");
     const roles = ["operations", "rescue", "safety"];
     for (let index = 0; index < pages.length; index += 1) {
+      if (index > 0) await waitPagesAtSameVersion(pages.slice(0, index), "before " + roles[index] + " takeover");
       await takeRole(pages[index], roles[index], "client " + roles[index]);
+      await waitPagesAtSameVersion(pages.slice(0, index + 1), "after " + roles[index] + " takeover");
       await audioElementIdentity(pages[index], "client " + roles[index]);
+      if (options.evidence === "main" && index === 1) await capture(pages[0], "03_ROLE_ASSIGNMENT_PEERS.png");
     }
     await Promise.all(pages.map((page) => waitFor(page, () => {
       const phase = window.__MOMEY_A8__?.getState()?.phase;
@@ -294,6 +337,8 @@ async function runRoomPath(browser, viewport, options) {
     } else {
       for (let beat = 1; beat <= 8; beat += 1) {
         await Promise.all(pages.map((page) => waitPhase(page, "INTRO_" + beat, "intro beat " + beat)));
+        if (options.evidence === "main" && beat === 2) await capture(pages[0], "04_INTRO_LIN_RUI.png");
+        if (options.evidence === "main" && beat === 6) await capture(pages[0], "05_FACILITY_MAP.png");
         const masterBefore = await pages[0].evaluate(() => window.__A8_PLAY_LOG?.length || 0);
         if (beat === 1) {
           await pages[0].evaluate(() => window.__MOMEY_A8__.render());
@@ -313,10 +358,24 @@ async function runRoomPath(browser, viewport, options) {
       if (window.__A8_AUDIO_REF !== window.__MOMEY_A8__.getAudioElementForTest()) throw new Error(expected);
     }, "persistent audio identity changed before round 1")));
     await Promise.all(pages.map((page) => assertCurrentView(page, "action", "round 1 action")));
-    for (const page of pages) await selectAndConfirm(page, "round 1");
+    if (options.evidence === "main") {
+      await capture(pages[0], "06_ROUND1_OPERATIONS.png");
+      await capture(pages[1], "07_ROUND1_RESCUE.png");
+      await capture(pages[2], "08_ROUND1_SAFETY.png");
+    } else if (options.evidence === "alternate") {
+      await capture(pages[1], "18_MOBILE_412_ROUND1_RESCUE.png");
+    }
+    for (const page of pages) {
+      const beforeVersion = (await state(page))?.version;
+      await selectAndConfirm(page, "round 1");
+      await waitPagesPastVersion(pages, beforeVersion, "round 1 action convergence");
+    }
     await Promise.all(pages.map((page) => waitPhase(page, "ROUND1_DISCUSS", "round 1 discuss")));
+    if (options.evidence === "main") await capture(pages[1], "09_ROUND1_OPERATOR_UPDATE_PRIVATE.png");
     await completeOperator(pages[0], pages, "round 1 report");
     await readyAll(pages, "ROUND2_ACTION");
+    if (options.evidence === "main") await capture(pages[0], "10_ROUND2_INTERVENTION.png");
+    if (options.evidence === "alternate") await capture(pages[2], "19_MOBILE_412_ROUND2_SAFETY.png");
 
     // Reloading a role-bearing page exercises browser reconnect with its
     // room-scoped token while the other two clients remain in the room.
@@ -346,9 +405,15 @@ async function runRoomPath(browser, viewport, options) {
       window.__A8_AUDIO_REF = window.__MOMEY_A8__.getAudioElementForTest();
     });
     await assertCurrentView(pages[2], "action", "reconnected round 2 action");
+    if (options.evidence === "main") await capture(pages[2], "11_RECONNECT_PRESERVES_ROLE.png");
 
-    for (const page of pages) await selectAndConfirm(page, "round 2");
+    for (const page of pages) {
+      const beforeVersion = (await state(page))?.version;
+      await selectAndConfirm(page, "round 2");
+      await waitPagesPastVersion(pages, beforeVersion, "round 2 action convergence");
+    }
     await Promise.all(pages.map((page) => waitPhase(page, "ROUND2_DISCUSS", "round 2 discuss")));
+    if (options.evidence === "main") await capture(pages[0], "12_SHARED_STATE_AFTER_ROUND2.png");
     await completeOperator(pages[0], pages, "round 2 report");
     await readyAll(pages, "ROUND3_ACTION");
     await Promise.all(pages.map(async (page) => {
@@ -356,6 +421,7 @@ async function runRoomPath(browser, viewport, options) {
       assert.equal(await page.locator("[data-view=action] .voice-panel").count(), 1, "round 3 escalation caption must be visible");
       assert.ok((await page.locator("[data-caption]").innerText()).trim().length > 0, "round 3 escalation caption must contain text");
       if (options.missingAudio) {
+        await page.locator("[data-action-select]").first().waitFor({ state: "visible", timeout: IS_REMOTE ? 15000 : 12000 });
         assert.ok(await page.locator("[data-action-select]").count() >= 2, "missing audio fallback must unlock round 3 actions");
       } else {
         assert.equal(await page.locator("[data-action-select]").count(), 0, "round 3 actions must wait for escalation acknowledgement");
@@ -364,6 +430,7 @@ async function runRoomPath(browser, viewport, options) {
       await page.evaluate(() => window.__MOMEY_A8__.render());
       assert.equal(await page.evaluate(() => window.__A8_AUDIO_REF === window.__MOMEY_A8__.getAudioElementForTest()), true, "audio identity must survive round 3 render");
     }));
+    if (options.evidence === "main") await capture(pages[0], "13_ROUND3_ESCALATION_BEFORE_OPTIONS.png");
     await completeOperator(pages[0], pages, "round 3 escalation");
     const replayBefore = await pages[0].evaluate(() => window.__A8_PLAY_LOG?.length || 0);
     await pages[0].locator("[data-replay-voice]").click();
@@ -371,17 +438,25 @@ async function runRoomPath(browser, viewport, options) {
     const replayAfter = await pages[0].evaluate(() => window.__A8_PLAY_LOG?.length || 0);
     assert.equal(replayAfter, replayBefore + 1, "replay is a secondary explicit playback");
     await Promise.all(pages.map((page) => waitFor(page, () => (window.__MOMEY_A8__?.getState()?.options || []).length >= 2, undefined, "round 3 options unlock")));
-    for (const page of pages) await selectAndConfirm(page, "round 3");
+    if (options.evidence === "main") await capture(pages[2], "14_ROUND3_ROLE_SPECIFIC_LATE_ACTION.png");
+    for (const page of pages) {
+      const beforeVersion = (await state(page))?.version;
+      await selectAndConfirm(page, "round 3");
+      await waitPagesPastVersion(pages, beforeVersion, "round 3 action convergence");
+    }
     await Promise.all(pages.map((page) => waitPhase(page, "ROUND3_DISCUSS", "round 3 discuss")));
     await completeOperator(pages[0], pages, "round 3 report");
     await readyAll(pages, "FINAL_VOTE");
     await Promise.all(pages.map((page) => assertCurrentView(page, "final-vote", "final vote")));
+    if (options.evidence === "main") await capture(pages[0], "15_FINAL_DECISION.png");
     await chooseVoteAll(pages, options.vote || "close", "ending");
     await Promise.all(pages.map((page) => assertCurrentView(page, "ending", "ending")));
     const endingText = await pages[0].locator('[data-view="ending"]').innerText();
     assert.doesNotMatch(endingText, /這是這一場的固定結果/);
     assert.match(endingText, /如果要把這次的決定交給下一班人/);
     assert.equal(await pages[0].evaluate(() => window.__A8_AUDIO_REF === window.__MOMEY_A8__.getAudioElementForTest()), true, "audio identity must survive ending render");
+    if (options.evidence === "main") await capture(pages[0], "16_CLOSE_ENDING_CAUSAL.png");
+    if (options.evidence === "alternate") await capture(pages[0], "20_HOLD_ENDING_ALTERNATE.png");
     if (options.sameTabSecondRoom) {
       await pages[0].evaluate(() => {
         window.__A8_FIRST_ROOM_AUDIO_REF = window.__MOMEY_A8__.getAudioElementForTest();
@@ -396,9 +471,13 @@ async function runRoomPath(browser, viewport, options) {
       await pages[2].goto(pageUrl(secondRoomCode, options), { waitUntil: "domcontentloaded" });
       await Promise.all([pages[1], pages[2]].map((page) => page.locator('[data-view="lobby"]').waitFor()));
       await takeRole(pages[0], "operations", "same-tab second room operations");
+      await waitPagesAtSameVersion(pages.slice(0, 1), "second room operations takeover");
       await takeRole(pages[1], "rescue", "same-tab second room rescue");
+      await waitPagesAtSameVersion(pages.slice(0, 2), "second room rescue takeover");
       await takeRole(pages[2], "safety", "same-tab second room safety");
+      await waitPagesAtSameVersion(pages, "second room safety takeover");
       await Promise.all(pages.map((page) => waitFor(page, () => /^INTRO_[1-8]$/.test(window.__MOMEY_A8__?.getState()?.phase || ""), undefined, "same-tab second room intro")));
+      if (options.evidence === "main") await capture(pages[0], "17_SECOND_ROOM_AUDIO_MASTER.png");
       assert.equal(await pages[0].evaluate(() => window.__A8_FIRST_ROOM_AUDIO_REF === window.__MOMEY_A8__.getAudioElementForTest()), true, "same tab must reuse the persistent audio element");
       const attempted = await pages[0].evaluate(() => window.__MOMEY_A8__.getAudioAttemptedForTest());
       assert.ok(attempted.includes(secondRoomCode + ":A8_INTRO_01"), "second room must attempt the reused event id again");
@@ -420,18 +499,23 @@ async function runRoomPath(browser, viewport, options) {
 }
 
 async function run() {
-  await startStaticServer();
-  await startWrangler();
+  if (!IS_REMOTE) {
+    await startStaticServer();
+    await startWrangler();
+  } else {
+    await waitForHealth();
+  }
   const browser = await chromium.launch({ headless: true, executablePath: BROWSER_EXECUTABLE });
   try {
     // Main path at the narrowest contracted viewport; alternate path also
     // exercises the missing-audio fallback at the second contracted width.
-    await runRoomPath(browser, { width: 390, height: 844 }, { audioFallbackMs: 500, vote: "close", sameTabSecondRoom: true });
-    await runRoomPath(browser, { width: 412, height: 915 }, { audioFallbackMs: 35, missingAudio: true, vote: "hold" });
+    await runRoomPath(browser, { width: 390, height: 844 }, { audioFallbackMs: 500, vote: "close", sameTabSecondRoom: true, evidence: "main" });
+    await runRoomPath(browser, { width: 412, height: 915 }, { audioFallbackMs: 35, missingAudio: true, vote: "hold", evidence: "alternate" });
     const appSource = fs.readFileSync(path.join(PLAYABLE_ROOT, "assets", "app.js"), "utf8");
     assert.doesNotMatch(appSource, /data-complete-operator|繼續這段播報|這是這一場的固定結果/);
     assert.match(appSource, /momey-playable-a8-room\.momey-micro-mystery\.workers\.dev/);
-    console.log("frontend A8 browser PASS: cors-create=lobby r3-escalation=PASS main=ENDING alternate=ENDING missing-audio=fallback reconnect=PASS mobile=390x844+412x915 audio-persistent=PASS");
+    const evidence = EVIDENCE_DIR && fs.existsSync(EVIDENCE_DIR) ? fs.readdirSync(EVIDENCE_DIR).filter((name) => name.endsWith(".png")).length : 0;
+    console.log("frontend A8 browser PASS: mode=" + (IS_REMOTE ? "deployed" : "local") + " cors-create=lobby r3-escalation=PASS main=ENDING alternate=ENDING missing-audio=fallback reconnect=PASS mobile=390x844+412x915 audio-persistent=PASS screenshots=" + evidence);
   } finally {
     await browser.close();
   }
