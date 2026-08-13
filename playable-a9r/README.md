@@ -32,4 +32,4 @@ Focused suites cover engine authority, six briefing beats, three safe training l
 
 Automated and synthetic evidence establishes artifact story coverage, deterministic behavior, technical cross-phone causality, and mobile presentation. It does not establish actual human fun, willingness to pay, replay desire, commercial demand, social role dominance in real humans, or real human first-run duration.
 
-Deployment status is recorded in `CODEX_HANDOFF.md` after release verification.
+The unadvertised production build is at `https://kafidog.github.io/momey-micro-mystery/playable-a9r/`; exact deployment evidence is recorded in `CODEX_HANDOFF.md`.

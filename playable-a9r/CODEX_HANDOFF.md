@@ -37,6 +37,12 @@ Only `playable-a9r/**` and `worker-a9r/**` belong to this milestone. Root Micro-
 
 ## Deployment
 
-- Status: `PENDING_FINAL_COMMIT_AND_UNADVERTISED_DEPLOYMENT`
-- Intended URL: `https://kafidog.github.io/momey-micro-mystery/playable-a9r/`
-- Intended Worker: `momey-playable-a9r-room`
+- Runtime commit: `c0096d2d29a6ae1d4e1fe15b3caf5544d828fe94`
+- Status: `DEPLOYED_UNADVERTISED_AND_PRODUCTION_VERIFIED`
+- URL: `https://kafidog.github.io/momey-micro-mystery/playable-a9r/`
+- Worker: `momey-playable-a9r-room`
+- Worker version: `b005d634-ea96-4709-8f96-4fbb988f5c2e`
+- Durable Object: `A9RRoom` through isolated binding `ROOM_A9R`
+- GitHub Pages run: `31723569502`
+- Remote Worker: two rooms / six clients, briefing, training, four live causal links, reconnect, and cross-room isolation pass.
+- Production Pages × production Worker: three mobile contexts complete the full game with `COORDINATED_CLOSE`; compact operator strip, audio fallback, and no horizontal overflow pass.
