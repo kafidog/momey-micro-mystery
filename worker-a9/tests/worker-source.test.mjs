@@ -28,3 +28,8 @@ test("successful live commands emit an explicit acknowledgement", () => {
   assert.match(source, /type:\s*"ACK"/);
   assert.match(source, /commandId/);
 });
+
+test("new WebSockets receive the private welcome token before room broadcast", () => {
+  const handler = source.slice(source.indexOf("async handleWebSocket"), source.indexOf("async webSocketMessage"));
+  assert.ok(handler.indexOf('type: "WELCOME"') < handler.indexOf("this.broadcast"));
+});

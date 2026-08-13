@@ -183,8 +183,10 @@ export class A9Room extends DurableObject {
     const server = pair[1];
     this.ctx.acceptWebSocket(server, [roleId]);
     server.serializeAttachment({ roleId, token: result.token, connectionId });
-    await this.persistAndBroadcast(result.state);
+    this.saveState(result.state);
     this.send(server, { type: "WELCOME", token: result.token, roleId, state: projectRoomState(result.state, roleId) });
+    this.broadcast(result.state);
+    await this.schedule(result.state);
     return new Response(null, { status: 101, webSocket: client });
   }
 
