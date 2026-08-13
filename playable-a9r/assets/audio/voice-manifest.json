@@ -1,0 +1,169 @@
+{
+  "schema": "momey-a9r-voice-manifest-v1",
+  "source": "assets/dialogue-data.js",
+  "voice": "Kokoro-82M-v1.1-zh / zm_010",
+  "assetStatus": "READY",
+  "audioFilesPresent": true,
+  "entries": [
+    {
+      "id": "A9R_BRIEFING_1",
+      "stage": "BRIEFING",
+      "captionText": "海岬防洪站擋住暴潮與污染水，避免它們穿過站體進入沿岸設施。",
+      "spokenText": "海岬防洪站擋住暴潮與污染水，避免它們穿過站體，進入沿岸設施。",
+      "audioFile": "assets/audio/kokoro-zm-010/a9r_briefing_1.mp3",
+      "assetStatus": "READY",
+      "bytes": 52941,
+      "sha256": "0fd0ac7e7becfed48876218bdb0c345ce3cd0515537bad784a3532fcb54e19a7"
+    },
+    {
+      "id": "A9R_BRIEFING_2",
+      "stage": "BRIEFING",
+      "captionText": "林芮檢查西側救援軌道時，壓力衝擊卡死回程。她困在污染區一側，只能靠救援車越過安全界線。",
+      "spokenText": "林芮是西側維修員。她檢查救援軌道時，壓力衝擊卡死回程。她困在污染區一側，只能靠救援車，越過安全界線。",
+      "audioFile": "assets/audio/kokoro-zm-010/a9r_briefing_2.mp3",
+      "assetStatus": "READY",
+      "bytes": 86445,
+      "sha256": "630fb98f497c6445d2e37ef667109c6ebafe490685e2047f5f9c32fe59a69c24"
+    },
+    {
+      "id": "A9R_BRIEFING_3",
+      "stage": "BRIEFING",
+      "captionText": "高承趕到中央隔離閘處理故障。自動支撐失效，他留在閘旁手動承受負載，也持續接觸污染。",
+      "spokenText": "高承是閘門維護員。他趕到中央隔離閘處理故障。自動支撐失效，他留在閘旁手動承受負載，也持續接觸污染。",
+      "audioFile": "assets/audio/kokoro-zm-010/a9r_briefing_3.mp3",
+      "assetStatus": "READY",
+      "bytes": 86301,
+      "sha256": "f6d9323ab825e530a13f5df7aee6e85be735514ee75df4ef89aa32e55ce9bc5c"
+    },
+    {
+      "id": "A9R_BRIEFING_4",
+      "stage": "BRIEFING",
+      "captionText": "污染水正在西側事件區加壓；救援軌道與中央閘門必須共用有限的備用電力。",
+      "spokenText": "污染水正在西側事件區加壓。救援軌道與中央閘門，必須共用有限的備用電力。",
+      "audioFile": "assets/audio/kokoro-zm-010/a9r_briefing_4.mp3",
+      "assetStatus": "READY",
+      "bytes": 60213,
+      "sha256": "27d82d6a25242235d032f83af9fe0df44ccad96f7a7b6cfba19ec2698dea1678"
+    },
+    {
+      "id": "A9R_BRIEFING_5",
+      "stage": "BRIEFING",
+      "captionText": "關閘會封住污染區，也會切斷西側救援路線。太早關，林芮回不來；拖太久，高承與站體會承受傷害。",
+      "spokenText": "中央隔離閘一旦關閉，會封住污染區，也會切斷西側救援路線。太早關，林芮回不來。拖太久，高承與站體會承受傷害。",
+      "audioFile": "assets/audio/kokoro-zm-010/a9r_briefing_5.mp3",
+      "assetStatus": "READY",
+      "bytes": 88245,
+      "sha256": "5e191aa674c639f93a7b2173d7dc0dd791527756ef940827bdafcf9048f39cd6"
+    },
+    {
+      "id": "A9R_BRIEFING_6",
+      "stage": "BRIEFING",
+      "captionText": "你們分別控制電力與關閘、林芮的救援車、以及高承的支撐。移動林芮、保護高承，再一起抓住安全關閘時機。",
+      "spokenText": "你們三個，控制同一場救援。現場調度控制電力與關閘。救援聯絡移動林芮。結構安全保護高承。一起抓住安全關閘的時機。",
+      "audioFile": "assets/audio/kokoro-zm-010/a9r_briefing_6.mp3",
+      "assetStatus": "READY",
+      "bytes": 93357,
+      "sha256": "47dfc6b119f239b2dd8377b1f332ea07082dd75804a114eba93dbb44cbed2d7d"
+    },
+    {
+      "id": "A9R_TRAINING_COMPLETE",
+      "stage": "TRAINING",
+      "captionText": "排演完成。你剛才的操作改變了隊友的控制台；現在用喊話把三個控制接起來。",
+      "spokenText": "排演完成。你剛才的操作，改變了隊友的控制台。現在，用喊話把三個控制接起來。",
+      "audioFile": "assets/audio/kokoro-zm-010/a9r_training_complete.mp3",
+      "assetStatus": "READY",
+      "bytes": 63693,
+      "sha256": "23355585fb84f2b7bef77d2a6434dd44411dc7d55bd7e45ff1667fc8cf8c67f7"
+    },
+    {
+      "id": "A9_WINDOW1_START",
+      "stage": "WINDOW1",
+      "captionText": "第一段操作開始。救援車需要電，中央隔離閘需要支撐；請直接互相喊出你們看到的狀況。",
+      "spokenText": "第一段操作開始。救援車需要電，中央隔離閘需要支撐。請直接互相喊出你們看到的狀況。",
+      "audioFile": "assets/audio/kokoro-zm-010/a9_window1_start.mp3",
+      "assetStatus": "READY",
+      "bytes": 70293,
+      "sha256": "600499adc843fa2c5ffc7ff49f93011e70bad8cdf4d8976747ecb246a99345db"
+    },
+    {
+      "id": "A9_WINDOW1_RESULT",
+      "stage": "INTERLUDE",
+      "captionText": "第一段操作結束。第二波即將到達；剛才留下的位置、電力與損傷都會保留。",
+      "spokenText": "第一段操作結束。第二波即將到達。剛才留下的位置、電力與損傷，都會保留。",
+      "audioFile": "assets/audio/kokoro-zm-010/a9_window1_result.mp3",
+      "assetStatus": "READY",
+      "bytes": 57549,
+      "sha256": "df88b34160f96d51128461f08a235af3ef3984274cbb02c0c29c30ccb432f8fc"
+    },
+    {
+      "id": "A9_WINDOW2_START",
+      "stage": "WINDOW2",
+      "captionText": "第二波到達。第一段留下的救援位置、電力與閘門損傷全部保留。",
+      "spokenText": "第二波到達。第一段留下的救援位置、電力與閘門損傷，全部保留。",
+      "audioFile": "assets/audio/kokoro-zm-010/a9_window2_start.mp3",
+      "assetStatus": "READY",
+      "bytes": 49053,
+      "sha256": "fc1f0c487c75c3e88ab630eec02faf1fdefd50c3ab7da38719edd6b5a72c3470"
+    },
+    {
+      "id": "A9_FINAL_START",
+      "stage": "FINAL",
+      "captionText": "最後協作窗口開始。救援聯絡確認界線，結構安全守住支撐，現場調度抓住關閘時機。",
+      "spokenText": "最後協作窗口開始。救援聯絡確認界線。結構安全守住支撐。現場調度抓住關閘時機。",
+      "audioFile": "assets/audio/kokoro-zm-010/a9_final_start.mp3",
+      "assetStatus": "READY",
+      "bytes": 67773,
+      "sha256": "8ee22d71e2b1c798823a0b80939028c08f5e76752442a86448cad86ef72ce40c"
+    },
+    {
+      "id": "A9_OUTCOME_COORDINATED_CLOSE",
+      "stage": "OUTCOME",
+      "captionText": "中央隔離閘完成關閉。林芮已由救援車帶離，高承也離開污染暴露。",
+      "spokenText": "中央隔離閘完成關閉。林芮已由救援車帶離。高承也離開污染暴露。",
+      "audioFile": "assets/audio/kokoro-zm-010/a9_outcome_coordinated.mp3",
+      "assetStatus": "READY",
+      "bytes": 51573,
+      "sha256": "29372a1cd0d6affe891391f2ade42688a8813f0a26c70fc8838455a2e3ff1ec7"
+    },
+    {
+      "id": "A9_OUTCOME_CLOSE_GAO_HARM",
+      "stage": "OUTCOME",
+      "captionText": "中央隔離閘完成關閉，林芮已帶離；高承在最後支撐中受到不可逆傷害。",
+      "spokenText": "中央隔離閘完成關閉。林芮已帶離。高承在最後支撐中，受到不可逆傷害。",
+      "audioFile": "assets/audio/kokoro-zm-010/a9_outcome_gao_harm.mp3",
+      "assetStatus": "READY",
+      "bytes": 58893,
+      "sha256": "f155984af6a55e8b907dc8376899d190f3c88fc03a865937934d176e8b92e076"
+    },
+    {
+      "id": "A9_OUTCOME_RESCUE_WITH_GATE_DAMAGE",
+      "stage": "OUTCOME",
+      "captionText": "林芮已帶離，高承也撤出；中央隔離閘沒有完成關閉，站體持續受損。",
+      "spokenText": "林芮已帶離。高承也撤出。中央隔離閘沒有完成關閉，站體持續受損。",
+      "audioFile": "assets/audio/kokoro-zm-010/a9_outcome_gate_damage.mp3",
+      "assetStatus": "READY",
+      "bytes": 51165,
+      "sha256": "5d08051f7e20505ce93c1dbb84e66a305df9bf440ce410837a523d10f332763a"
+    },
+    {
+      "id": "A9_OUTCOME_LIN_STRANDED",
+      "stage": "OUTCOME",
+      "captionText": "高承離開暴露區，但林芮沒有在窗口結束前完成越界固定。",
+      "spokenText": "高承離開暴露區。但林芮沒有在窗口結束前，完成越界固定。",
+      "audioFile": "assets/audio/kokoro-zm-010/a9_outcome_lin_stranded.mp3",
+      "assetStatus": "READY",
+      "bytes": 49293,
+      "sha256": "1eab95217e46851c3c805c4e26da6b6ce6d9baebbcd11ce7386b3c33c45fa07b"
+    },
+    {
+      "id": "A9_OUTCOME_BOTH_EXPOSED",
+      "stage": "OUTCOME",
+      "captionText": "救援與支撐都沒有在窗口內完成；林芮與高承仍承受事件後果。",
+      "spokenText": "救援與支撐，都沒有在窗口內完成。林芮與高承，仍承受事件後果。",
+      "audioFile": "assets/audio/kokoro-zm-010/a9_outcome_both_exposed.mp3",
+      "assetStatus": "READY",
+      "bytes": 51285,
+      "sha256": "d691881363952b860e3ec43aed5c5e82a5e563e9b571092a65238dd11cd2b4c5"
+    }
+  ]
+}

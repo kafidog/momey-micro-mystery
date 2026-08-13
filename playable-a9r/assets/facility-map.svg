@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" role="img" aria-labelledby="map-title map-desc">
+  <title id="map-title">海岬防洪站位置簡圖</title>
+  <desc id="map-desc">控制室在左側，中央隔離閘在中間，西側救援軌道穿過閘門開口。林芮在左側高處避難台，高承在閘門東側握著手動撐桿。海水與污染從右側東側靠近。</desc>
+  <defs>
+    <linearGradient id="map-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#102b3c"/>
+      <stop offset="1" stop-color="#071a28"/>
+    </linearGradient>
+    <marker id="arrow-cyan" markerWidth="12" markerHeight="12" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#7ee2e8"/>
+    </marker>
+    <marker id="arrow-danger" markerWidth="12" markerHeight="12" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#ff8f82"/>
+    </marker>
+  </defs>
+  <rect width="760" height="520" rx="28" fill="url(#map-bg)"/>
+  <path d="M50 404 H710" stroke="#a1cede" stroke-opacity=".22" stroke-width="2"/>
+  <path d="M78 314 H656" stroke="#7ee2e8" stroke-width="10" stroke-linecap="round" stroke-dasharray="18 12" marker-end="url(#arrow-cyan)"/>
+  <text x="82" y="350" fill="#eef7fb" font-size="30" font-weight="700" font-family="sans-serif">西側救援軌道</text>
+  <text x="438" y="350" fill="#ffd37a" font-size="24" font-family="sans-serif">關上後無法通過</text>
+
+  <rect x="68" y="150" width="194" height="116" rx="18" fill="#0b4054" stroke="#7ee2e8" stroke-width="3"/>
+  <text x="102" y="207" fill="#eef7fb" font-size="34" font-weight="700" font-family="sans-serif">控制室</text>
+  <text x="102" y="241" fill="#a8bdc8" font-size="23" font-family="sans-serif">保護海岸與系統</text>
+
+  <rect x="302" y="120" width="118" height="210" rx="12" fill="#3b3c34" stroke="#ffd37a" stroke-width="4"/>
+  <path d="M360 136 V314" stroke="#ffd37a" stroke-width="10" stroke-dasharray="16 10"/>
+  <text x="284" y="92" fill="#ffd37a" font-size="30" font-weight="700" font-family="sans-serif">中央隔離閘</text>
+  <text x="280" y="382" fill="#a8bdc8" font-size="22" font-family="sans-serif">控制室／地下通道邊界</text>
+
+  <path d="M145 126 C158 84 210 74 258 98" fill="none" stroke="#7ee2e8" stroke-width="3" marker-end="url(#arrow-cyan)"/>
+  <circle cx="148" cy="93" r="20" fill="#7ee2e8"/>
+  <circle cx="148" cy="65" r="11" fill="#7ee2e8"/>
+  <text x="54" y="43" fill="#eef7fb" font-size="30" font-weight="700" font-family="sans-serif">林芮｜高處避難台</text>
+  <text x="56" y="75" fill="#a8bdc8" font-size="22" font-family="sans-serif">西側維修隧道／維修員</text>
+
+  <circle cx="505" cy="218" r="20" fill="#ffd37a"/>
+  <circle cx="505" cy="188" r="11" fill="#ffd37a"/>
+  <path d="M505 240 V285" stroke="#ffd37a" stroke-width="8" stroke-linecap="round"/>
+  <path d="M505 258 L470 279 M505 258 L540 279" stroke="#ffd37a" stroke-width="7" stroke-linecap="round"/>
+  <path d="M530 234 L582 286" stroke="#ff8f82" stroke-width="8" stroke-linecap="round"/>
+  <text x="450" y="148" fill="#eef7fb" font-size="30" font-weight="700" font-family="sans-serif">高承</text>
+  <text x="438" y="178" fill="#a8bdc8" font-size="22" font-family="sans-serif">閘門東側</text>
+  <text x="535" y="302" fill="#ffd37a" font-size="22" font-family="sans-serif">手動撐桿</text>
+
+  <path d="M700 110 C625 130 585 158 548 205" fill="none" stroke="#ff8f82" stroke-width="8" stroke-linecap="round" marker-end="url(#arrow-danger)"/>
+  <text x="520" y="70" fill="#ff8f82" font-size="30" font-weight="700" font-family="sans-serif">海水與污染</text>
+  <text x="565" y="102" fill="#a8bdc8" font-size="22" font-family="sans-serif">從東側靠近</text>
+
+  <path d="M90 455 H670" stroke="#a8bdc8" stroke-opacity=".6" stroke-width="2"/>
+  <text x="86" y="492" fill="#a8bdc8" font-size="24" font-family="sans-serif">西側</text>
+  <text x="640" y="492" fill="#a8bdc8" font-size="24" font-family="sans-serif">東側</text>
+</svg>
