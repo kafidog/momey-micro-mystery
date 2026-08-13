@@ -1,0 +1,14 @@
+{
+  "name": "momey-playable-a9-room",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:engine": "node --test tests/engine.test.mjs",
+    "test:worker": "node --test tests/worker-source.test.mjs",
+    "test:structural": "node --test tests/structural-simulation.test.mjs",
+    "test:scope": "node --test tests/protected-scope.test.mjs",
+    "test:local": "node tests/local-wrangler.integration.mjs",
+    "test:frontend": "node ../playable-a9/tests/frontend.e2e.cjs",
+    "test": "npm run test:engine && npm run test:structural && npm run test:worker && npm run test:scope && npm run test:local && npm run test:frontend"
+  }
+}
