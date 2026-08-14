@@ -1,0 +1,432 @@
+(function (global) {
+  "use strict";
+
+  var root = document.getElementById("app");
+  var operatorAudio = document.getElementById("operator-audio");
+  var DIALOGUE = global.MOMEY_A9R4_DIALOGUE || {};
+  var ROLE_IDS = ["operations", "rescue", "safety"];
+  var ROLE_LABELS = { operations: "現場調度", rescue: "救援聯絡", safety: "結構安全" };
+  var ROLE_DUTIES = {
+    operations: "切換備用電力，最後拉下中央隔離閘。",
+    rescue: "按住推進救援車，確認林芮越界並固定。",
+    safety: "按住支撐閘門，管理高承防護與後撤。"
+  };
+  var PHASE_LABELS = { LOBBY: "等待接手", BRIEFING: "共同事件簡報", TRAINING: "合作控制排演", WINDOW1: "第一操作窗口", INTERLUDE: "第二波前", WINDOW2: "第二操作窗口", FINAL: "最後協作窗口", OUTCOME: "事件結果" };
+  var query = new URLSearchParams(location.search);
+  var workerBaseUrl = String(query.get("worker") || "https://momey-playable-a9r4-room.momey-micro-mystery.workers.dev").replace(/\/$/, "");
+  var audioFallbackMs = Math.max(50, Number(query.get("audioFallbackMs")) || 15000);
+  var missingAudio = query.get("missingAudio") === "1";
+  var state = null;
+  var roomCode = null;
+  var currentRole = null;
+  var selectedRole = null;
+  var socket = null;
+  var commandInFlight = false;
+  var pendingCommand = null;
+  var queuedCommand = null;
+  var commandSerial = 0;
+  var pendingTakeover = false;
+  var reconnectTimer = null;
+  var reconnectAttempts = 0;
+  var statusText = "";
+  var statusKind = "";
+  var heldControl = null;
+  var trainingHeldAt = 0;
+  var audioUnlocked = false;
+  var audioAttempted = Object.create(null);
+  var audioCompleted = Object.create(null);
+  var audioFallbackTimer = null;
+  var boundAudioEvent = null;
+  var clockOffset = 0;
+  var lastSystemEventSerial = null;
+  var lastLocalEventSerial = null;
+  var renderedPhase = null;
+
+  function escapeHtml(value) {
+    return String(value == null ? "" : value).replace(/[&<>'"]/g, function (char) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]; });
+  }
+
+  function storageKey(name) { return "momey-a9r4:" + (roomCode || "none") + ":" + name; }
+  function getStored(name) { try { return localStorage.getItem(storageKey(name)); } catch { return null; } }
+  function setStored(name, value) { try { localStorage.setItem(storageKey(name), value); } catch {} }
+  function roleToken(roleId) { return getStored("token:" + roleId); }
+
+  function setStatus(text, kind) { statusText = text || ""; statusKind = kind || ""; }
+  function statusMarkup() { return '<p class="status ' + escapeHtml(statusKind) + '" role="status">' + escapeHtml(statusText) + "</p>"; }
+
+  function normalizeRoomCode(value) { return String(value || "").toUpperCase().replace(/[^ABCDEFGHJKMNPQRSTUVWXYZ23456789]/g, "").slice(0, 6); }
+  function shareUrl(code) { var url = new URL(location.href); url.search = ""; url.searchParams.set("room", code); return url.toString(); }
+  function wsUrl(code, roleId, token) { var url = new URL(workerBaseUrl + "/rooms/" + code + "/ws"); url.protocol = url.protocol === "https:" ? "wss:" : "ws:"; url.searchParams.set("role", roleId); if (token) url.searchParams.set("token", token); return url.toString(); }
+
+  function entryMarkup() {
+    return '<section class="stage" data-view="entry"><p class="eyebrow">海岬防洪站</p><h1>三支手機，控制同一場救援。</h1><p class="lead">一人切電、一人推救援車、一人撐住閘門。另一支手機的動作會立刻改變你能做的事。</p><div class="stack"><button class="primary" type="button" data-create>建立事件</button><div class="panel"><h2>加入事件</h2><form class="stack" data-join-form><label for="room-input">輸入朋友給你的六碼代碼</label><input id="room-input" name="room" maxlength="6" autocomplete="off" inputmode="text" placeholder="六碼代碼"><button class="secondary" type="submit">加入</button></form></div></div>' + statusMarkup() + "</section>";
+  }
+
+  function seatRows() {
+    return '<div class="seat-list">' + (state?.seats || []).map(function (seat) { return '<div class="seat-row"><strong>' + escapeHtml(seat.roleLabel) + '</strong><span>' + (seat.started ? (seat.connected ? "已接手" : "重新連線中") : seat.occupied ? "已選角色" : "等待加入") + "</span></div>"; }).join("") + "</div>";
+  }
+
+  function roleCards() {
+    return '<div class="roles">' + ROLE_IDS.map(function (roleId) {
+      var info = (state?.seats || []).find(function (seat) { return seat.roleId === roleId; });
+      var own = currentRole === roleId;
+      var occupied = info?.occupied && !own;
+      return '<button type="button" class="role-button' + (selectedRole === roleId ? " is-selected" : "") + (occupied ? " is-occupied" : "") + '" data-role-select="' + roleId + '"' + (occupied ? " disabled" : "") + '><strong>' + ROLE_LABELS[roleId] + '</strong><span>' + ROLE_DUTIES[roleId] + "</span></button>";
+    }).join("") + "</div>";
+  }
+
+  function lobbyMarkup() {
+    var started = state?.currentSeat?.started;
+    var audioLabel = state?.audioMasterLabel || "第一支接手的手機";
+    return '<section class="stage" data-view="lobby"><p class="eyebrow">事件代碼</p><div class="room-code" data-room-code>' + escapeHtml(roomCode) + '</div><p><button class="secondary" type="button" data-share>複製加入連結</button></p><h1>' + (started ? "等待另外兩個控制席。" : "選一個你要操作的系統。") + "</h1>" + (started ? seatRows() : roleCards() + seatRows() + '<button class="primary" type="button" data-takeover' + (selectedRole && !commandInFlight ? "" : " disabled") + '>接手這個控制席</button>') + '<p class="lead">岬衛-7 播報：' + escapeHtml(audioLabel) + "。只負責播放聲音，不是隊長。</p>" + statusMarkup() + "</section>";
+  }
+
+  function voiceMarkup(compactWhenDone, suppressMeta) {
+    var event = state?.operatorEvent;
+    if (!event) return "";
+    var master = state.audioMasterRole === currentRole;
+    var compact = Boolean(compactWhenDone && event.acknowledged);
+    var caption = event.caption || DIALOGUE[event.id]?.caption || "";
+    if (compact) return '<section class="operator-strip" data-operator-compact="true" aria-label="岬衛-7 播報"><span class="operator-mark">岬衛-7</span><span class="operator-line" data-caption>' + escapeHtml(caption) + '</span><button class="icon-button" type="button" data-replay aria-label="重播岬衛-7播報">重播</button></section>';
+    return '<section class="voice" data-operator-expanded="true"><div class="caption-label">岬衛-7 字幕</div><p data-caption>' + escapeHtml(caption) + '</p>' + (suppressMeta ? "" : '<p class="audio-note">' + (master ? "此手機自動播放；它不是隊長。" : escapeHtml((state.audioMasterLabel || "另一支手機") + " 自動播放；字幕同步顯示。")) + "</p>") + '<button class="secondary" type="button" data-replay>重播</button></section>';
+  }
+
+  function briefingMarkup() {
+    var briefing = state?.briefing || { beat: 0, total: 6, current: null };
+    var current = briefing.current || {};
+    var focusLabels = { 1: "站體與海岸", 2: "林芮／西側軌道", 3: "高承／中央閘門", 4: "污染壓力／共用電力", 5: "關閘路徑／救援路線", 6: "三個控制席" };
+    var visual = '<div class="briefing-visual beat-' + briefing.beat + '"><img class="facility-map" src="assets/facility-map.svg" alt="海岬防洪站簡圖：西側救援軌道穿過中央隔離閘，林芮在西側，高承在閘門旁。"><span class="map-focus focus-a" aria-hidden="true"></span><span class="map-focus focus-b" aria-hidden="true"></span><span class="map-flow" aria-hidden="true"></span><strong class="map-focus-label">' + escapeHtml(focusLabels[briefing.beat] || "事件位置") + "</strong></div>";
+    return '<section class="stage briefing" data-view="briefing" data-briefing-beat="' + briefing.beat + '"><div class="briefing-progress"><span>共同事件簡報</span><strong>' + briefing.beat + ' / ' + briefing.total + '</strong></div><h1>' + escapeHtml(current.title || "海岬防洪站") + "</h1>" + visual + '<div class="briefing-caption">' + voiceMarkup(false, briefing.beat > 1) + "</div>" + (briefing.beat === 1 ? '<p class="briefing-sync">三支手機同步；播報結束會一起前進。</p>' : "") + statusMarkup() + "</section>";
+  }
+
+  function trainingMarkup() {
+    var training = state?.training || { step: 0, total: 3, effects: {}, complete: false };
+    var expected = training.expectedRole;
+    var ownTurn = expected === currentRole;
+    var copy = {
+      operations: ["把測試電力送往救援軌道", "按住切送測試電力"],
+      rescue: ["收到電力，讓救援車試走一段", "按住讓救援車試走"],
+      safety: ["看見閘門負載，接上測試支撐", "按住接上測試支撐"]
+    }[currentRole] || ["合作控制排演", "按住測試"];
+    var received;
+    if (currentRole === "operations") {
+      received = training.effects.support ? "安全席已接上支撐；你的控制台看見支撐回來。" : training.effects.railPower ? "你已切電；救援席現在能推車。" : training.step === 0 ? "你是第一步。先把測試電力送到救援軌道。" : "你已完成第一步；等待下一個控制回應。";
+    } else if (currentRole === "rescue") {
+      received = training.effects.gateLoad ? "你讓救援車吃電；安全席已看見閘門負載上升。" : training.effects.railPower ? "你收到調度席的電力；現在能推車。" : "等待調度席先把測試電力送來。";
+    } else {
+      received = training.effects.support ? "你已接上支撐；調度席看見支撐回來。" : training.effects.gateLoad ? "你收到救援車造成的負載變化；現在接上支撐。" : "等待救援席的測試負載到達。";
+    }
+    var waiting = training.complete ? "三個控制已接成同一台機器。" : ownTurn ? copy[0] : "現在輪到「" + (training.expectedRoleLabel || "隊友") + "」。";
+    var control = training.complete ? '<div class="training-complete" data-training-complete><strong>排演完成</strong><span>你的操作會改變隊友的控制台。</span></div>' + voiceMarkup(false) : '<button type="button" class="hold-control training-control" data-training-hold' + (ownTurn ? "" : " disabled") + '>' + (ownTurn ? escapeHtml(copy[1]) : "等待隊友操作") + '</button>';
+    return '<section class="stage" data-view="training"><div class="briefing-progress"><span>安全合作排演</span><strong>' + Math.min(training.step + 1, training.total) + ' / ' + training.total + '</strong></div><p class="eyebrow">' + escapeHtml(ROLE_LABELS[currentRole] || "控制席") + "｜" + (ownTurn ? "輪到你" : training.complete ? "完成" : "隊友操作中") + '</p><h1>' + escapeHtml(waiting) + '</h1><div class="training-effect ' + (received.indexOf("等待") === 0 ? "is-waiting" : "is-received") + '" data-training-effect>' + escapeHtml(received) + '</div><div class="instrument training-instrument">' + control + '</div><div class="event-strip">切電 → 推進 → 支撐</div>' + statusMarkup() + "</section>";
+  }
+
+  function meter(label, value, suffix, kind) {
+    var bounded = Math.max(0, Math.min(100, Number(value) || 0));
+    return '<div class="meter"><div class="meter-label"><span>' + escapeHtml(label) + '</span><strong>' + escapeHtml(Math.round(Number(value) || 0) + (suffix || "%")) + '</strong></div><div class="meter-track"><div class="meter-fill ' + escapeHtml(kind || "") + '" style="--value:' + bounded + '%"></div></div></div>';
+  }
+
+  function commonLiveHead() {
+    var serial = Number(state.shared.systemEventSerial || 0);
+    var isNew = lastSystemEventSerial !== null && serial !== lastSystemEventSerial;
+    lastSystemEventSerial = serial;
+    var systemEvent = state.shared.systemEvent ? '<div class="event-strip system-event' + (isNew ? " is-new" : "") + '" data-system-event>' + escapeHtml(state.shared.systemEvent) + "</div>" : "";
+    return '<div class="phase-head"><div class="phase-row"><div><p class="eyebrow">' + escapeHtml(PHASE_LABELS[state.phase]) + '</p><strong>' + escapeHtml(ROLE_LABELS[currentRole]) + '</strong></div><div class="timer" data-timer>' + escapeHtml(state.shared.timerLabel || "") + "</div></div></div>" + objectiveMarkup() + systemEvent + voiceMarkup(true);
+  }
+
+  function objectiveMarkup() {
+    if (!state?.sharedObjective) return "";
+    return '<section class="shared-goal shared-objective" data-shared-objective><strong>共同目標</strong><p>' + escapeHtml(state.sharedObjective) + "</p></section>";
+  }
+
+  function localEventMarkup(control) {
+    if (!control?.localEvent) return "";
+    var serial = Number(control.localEventSerial || 0);
+    var isNew = lastLocalEventSerial !== null && serial !== lastLocalEventSerial;
+    lastLocalEventSerial = serial;
+    var sourceLabels = { operations: "電力控制台", rescue: "西側救援回報", safety: "閘門現場" };
+    return '<div class="event-strip local-event' + (isNew ? " is-new" : "") + '" data-local-event><small>' + escapeHtml(sourceLabels[currentRole] || "本席儀表") + '</small><strong>' + escapeHtml(control.localEvent) + "</strong></div>";
+  }
+
+  function operationsInstrument(control) {
+    var labels = { gate: ["閘門", "閘門最穩／車不動"], balanced: ["分流", "兩邊有電／車較慢"], rail: ["救援軌道", "車最快／壓力上升"] };
+    var power = ['<div class="power-switch" role="group" aria-label="備用電力路由">', ["gate", "balanced", "rail"].map(function (mode) { return '<button type="button" class="power-button' + (control.powerMode === mode ? " is-active" : "") + '" data-power="' + mode + '"><strong>' + labels[mode][0] + '</strong><small>' + labels[mode][1] + "</small></button>"; }).join(""), "</div>"].join("");
+    var cooling = Number(control.closeCooldownMs || 0) > 0;
+    var final = state.phase === "FINAL" ? '<div class="signal warn">電力控制台：收到西側救援與閘門現場回報後拉閘。</div>' + meter("關閘進度", control.closeProgressExact, "%", control.closeProgressExact > 70 ? "warn" : "") + '<button type="button" class="hold-control danger-control" data-hold-start="CLOSE_START" data-hold-stop="CLOSE_STOP"' + (cooling ? " disabled" : "") + '>' + (cooling ? "拉桿回彈，機械冷卻中" : "按住拉下中央隔離閘") + '</button>' : "";
+    return '<div class="instrument" data-instrument="operations"><div class="instrument-title"><h2>備用電力路由</h2><strong>' + Math.round(control.backupPowerExact) + '%</strong></div>' + power + final + "</div>";
+  }
+
+  function rescueInstrument(control) {
+    var heatKind = control.heatExact >= 80 ? "danger" : control.heatExact >= 60 ? "warn" : "";
+    var final = state.phase === "FINAL" ? '<div class="signal ' + (control.linBoundaryExact ? "" : "warn") + '">' + (control.linBoundaryExact ? "林芮已越過安全界線" : "林芮還沒越過安全界線") + '</div><button type="button" class="action-control" data-command="SECURE_TROLLEY"' + (control.linBoundaryExact && !control.secured ? "" : " disabled") + '>' + (control.secured ? "救援車已固定" : "固定救援車與林芮") + "</button>" : "";
+    var routeSignal = control.routeLocked ? "前方安全鎖尚未解除；救援車停在第二標記。" : control.railPowered ? "軌道有電，可以推進" : "軌道無電，快告訴現場調度";
+    return '<div class="instrument" data-instrument="rescue"><div class="instrument-title"><h2>西側救援車</h2><strong>第 ' + control.checkpointExact + ' 標記</strong></div>' + meter("精確位置", control.positionExact, "%", "") + meter("馬達溫度", control.heatExact, "%", heatKind) + '<div class="signal ' + (control.routeLocked ? "warn" : control.railPowered ? "" : "danger") + '">' + routeSignal + '</div><button type="button" class="hold-control" data-hold-start="TROLLEY_START" data-hold-stop="TROLLEY_STOP"' + (control.railPowered && control.heatExact < 94 && !control.secured && !control.routeLocked ? "" : " disabled") + '>按住讓救援車前進<br><small>放開就停止／降溫</small></button>' + final + "</div>";
+  }
+
+  function safetyInstrument(control) {
+    var pressureKind = control.pressureExact >= 82 ? "danger" : control.pressureExact >= 62 ? "warn" : "";
+    var shield = state.phase === "WINDOW2" && control.shieldAvailable ? '<button type="button" class="action-control" data-command="DEPLOY_SHIELD">升起一次防濺屏</button>' : control.shieldDeployed ? '<div class="signal">防濺屏已升起</div>' : "";
+    var final = state.phase === "FINAL" ? '<div class="signal ' + (control.pressureWindowExact === "現在可關閘" ? "" : "warn") + '">壓力波：' + escapeHtml(control.pressureWindowExact || "等待本席讀值") + '</div><button type="button" class="action-control" data-command="RETREAT_GAO"' + (control.gaoRetreated ? " disabled" : "") + '>' + (control.gaoRetreated ? "高承已後撤" : "命令高承後撤（會失去支撐）") + "</button>" : "";
+    return '<div class="instrument" data-instrument="safety"><div class="instrument-title"><h2>中央隔離閘支撐</h2><strong>' + escapeHtml(control.pressureTrend) + '</strong></div>' + meter("精確壓力", control.pressureExact, "%", pressureKind) + meter("支撐力量", control.braceStaminaExact, "%", control.braceStaminaExact < 25 ? "warn" : "") + meter("高承暴露", control.gaoExposureExact, "%", control.gaoExposureExact >= 65 ? "danger" : "") + '<div class="signal ' + (control.braceStableExact ? "" : "warn") + '">' + (control.braceStableExact ? "目前在安全支撐帶" : "支撐尚未進入安全帶") + '</div><button type="button" class="hold-control" data-hold-start="BRACE_START" data-hold-stop="BRACE_STOP"' + (control.braceStaminaExact >= 8 && !control.gaoRetreated ? "" : " disabled") + '>按住撐住閘門<br><small>放開就恢復力量</small></button>' + shield + final + "</div>";
+  }
+
+  function liveMarkup() {
+    var objective = { operations: "切換電力，聽隊友的界線與壓力訊號。", rescue: "有電時推進；把精確標記與界線喊給隊友。", safety: "守住壓力，告訴隊友何時能關閘。" }[currentRole];
+    var instrument = currentRole === "operations" ? operationsInstrument(state.control) : currentRole === "rescue" ? rescueInstrument(state.control) : safetyInstrument(state.control);
+    return '<section class="stage" data-view="live" data-phase="' + state.phase + '">' + commonLiveHead() + instrument + localEventMarkup(state.control) + '<details class="live-help"><summary>查看本席說明</summary><p>' + escapeHtml(objective) + "</p></details>" + statusMarkup() + "</section>";
+  }
+
+  function interludeMarkup() {
+    return '<section class="stage" data-view="interlude"><p class="eyebrow">第一段留下的狀態不會重設</p><h1>第二波正在逼近。</h1><div class="panel"><p>精確位置、壓力與剩餘電力仍留在各自控制席；先交換狀態，再進入第二段。</p></div>' + voiceMarkup() + statusMarkup() + "</section>";
+  }
+
+  function outcomeMarkup() {
+    var outcome = state.outcome || { causal: [], recap: [], details: {} };
+    var details = outcome.details || {};
+    var lin = details.linRui || { status: "狀態未回報", tone: "warn" };
+    var gao = details.gaoCheng || { status: "狀態未回報", tone: "warn" };
+    var gate = details.gate || { status: outcome.gateClosed ? "已關閉" : "尚未關閉", conditionLabel: "狀態未回報", tone: "warn" };
+    var recovery = details.recovery || { summary: "結果已記錄。" };
+    var contributions = details.contributions || [];
+    var headline = gate.status + "｜閘體" + gate.conditionLabel;
+    function outcomeCard(key, title, source, detail) {
+      return '<article class="outcome-card tone-' + escapeHtml(detail.tone || "warn") + '" data-outcome-card="' + escapeHtml(key) + '"><p class="outcome-card-title">' + escapeHtml(title) + '</p><strong>' + escapeHtml(detail.status || "狀態未回報") + '</strong><small>' + escapeHtml(source) + '</small></article>';
+    }
+    var cards = '<div class="outcome-cards">' + outcomeCard("lin-rui", "林芮", "西側救援回報", lin) + outcomeCard("gao-cheng", "高承", "閘門現場", gao) + outcomeCard("gate", "中央隔離閘", "電力控制台", gate) + '</div>';
+    var peerLines = contributions.map(function (row) { return '<li data-contribution="' + escapeHtml(row.roleId) + '"><div><strong>' + escapeHtml(row.roleLabel) + '</strong><small>' + escapeHtml(row.sourceLabel) + '</small></div><span>' + escapeHtml(row.line) + '</span></li>'; }).join("");
+    return '<section class="stage" data-view="outcome"><p class="eyebrow">事件結果</p><h1 data-outcome-headline>' + escapeHtml(headline) + '</h1>' + cards + voiceMarkup() + '<div class="panel outcome-recovery" data-outcome-recovery><h2>關閘過程</h2><p>' + escapeHtml(recovery.summary) + '</p></div><div class="panel causal-recap"><h2>事情怎麼走到這裡</h2><ol class="outcome-list">' + (outcome.recap || details.causalRecap || []).map(function (row) { return "<li>" + escapeHtml(row) + "</li>"; }).join("") + '</ol></div><div class="panel peer-contributions"><h2>三席各自留下的動作</h2><ul class="contribution-list">' + peerLines + '</ul></div><details class="metric-recap"><summary>查看控制數值</summary><ol class="outcome-list">' + (outcome.causal || []).map(function (row) { return "<li>" + escapeHtml(row) + "</li>"; }).join("") + '</ol></details><button class="secondary" type="button" data-new-event>重新建立事件</button>' + statusMarkup() + "</section>";
+  }
+
+  function render() {
+    var nextPhase = state?.phase || (roomCode ? "LOBBY" : "ENTRY");
+    var phaseChanged = nextPhase !== renderedPhase;
+    if (!roomCode) root.innerHTML = entryMarkup();
+    else if (!state || state.phase === "LOBBY") root.innerHTML = lobbyMarkup();
+    else if (state.phase === "BRIEFING") root.innerHTML = briefingMarkup();
+    else if (state.phase === "TRAINING") root.innerHTML = trainingMarkup();
+    else if (state.phase === "INTERLUDE") root.innerHTML = interludeMarkup();
+    else if (state.phase === "OUTCOME") root.innerHTML = outcomeMarkup();
+    else root.innerHTML = liveMarkup();
+    syncHeldClass();
+    syncAudio();
+    updateTimer();
+    renderedPhase = nextPhase;
+    if (phaseChanged) requestAnimationFrame(function () { global.scrollTo(0, 0); });
+  }
+
+  function handleState(next) {
+    if (!next || !next.phase) return;
+    state = next;
+    clockOffset = Date.now() - Number(next.serverNow || Date.now());
+    if (next.currentSeat?.roleId) { currentRole = next.currentSeat.roleId; selectedRole = currentRole; setStored("last-role", currentRole); }
+    setStatus("", "");
+    render();
+    flushQueued();
+  }
+
+  function sendRaw(extra) {
+    if (!socket || socket.readyState !== WebSocket.OPEN || !state || !currentRole) return false;
+    commandInFlight = true;
+    pendingCommand = extra;
+    commandSerial += 1;
+    socket.send(JSON.stringify({ roleId: currentRole, token: roleToken(currentRole), phase: state.phase, version: state.version, commandId: currentRole + "-" + commandSerial, ...extra }));
+    return true;
+  }
+
+  function sendCommand(command, priority) {
+    if (commandInFlight) { queuedCommand = command; return false; }
+    return sendRaw(command);
+  }
+
+  function flushQueued() {
+    if (commandInFlight || !queuedCommand) return;
+    var next = queuedCommand;
+    queuedCommand = null;
+    sendRaw(next);
+  }
+
+  function releaseHeld() {
+    if (!heldControl) return;
+    var stopType = heldControl.stop;
+    heldControl = null;
+    syncHeldClass();
+    if (stopType) sendCommand({ type: stopType }, true);
+  }
+
+  function startHold(button) {
+    if (button.disabled || heldControl) return;
+    var startType = button.getAttribute("data-hold-start");
+    var stopType = button.getAttribute("data-hold-stop");
+    heldControl = { start: startType, stop: stopType };
+    button.classList.add("is-held");
+    sendCommand({ type: startType });
+  }
+
+  function syncHeldClass() {
+    document.querySelectorAll("[data-hold-start]").forEach(function (node) { node.classList.toggle("is-held", Boolean(heldControl && node.getAttribute("data-hold-start") === heldControl.start)); });
+  }
+
+  function friendlyError(code) {
+    return ({ STALE_PHASE: "現場剛剛往下走，已更新畫面。", STALE_VERSION: "另一支手機剛做了動作，請依新狀況再操作。", FUTURE_PHASE: "這個控制還沒到時間。", FUTURE_VERSION: "這支手機尚未收到目前狀況。", WRONG_ROLE: "這不是你這支手機的控制。", IMPOSSIBLE_CONTROL: "目前物理條件不允許這個控制。", DUPLICATE_ACTION: "控制已經是這個狀態。", TOKEN_MISMATCH: "角色連結失效，請重新加入。" })[code] || "這個控制沒有成功；畫面正在更新。";
+  }
+
+  function connectSocket(afterTakeover) {
+    if (!roomCode || !currentRole) return;
+    if (socket) try { socket.close(1000, "replace"); } catch {}
+    pendingTakeover = Boolean(afterTakeover);
+    var token = roleToken(currentRole);
+    socket = new WebSocket(wsUrl(roomCode, currentRole, token));
+    socket.addEventListener("message", function (event) {
+      var payload;
+      try { payload = JSON.parse(event.data); } catch { return; }
+      if (payload.type === "WELCOME") {
+        if (payload.token) setStored("token:" + payload.roleId, payload.token);
+        reconnectAttempts = 0;
+        handleState(payload.state);
+        if (pendingTakeover && !payload.state.currentSeat?.started) { pendingTakeover = false; sendCommand({ type: "TAKEOVER" }); }
+        else pendingTakeover = false;
+      } else if (payload.type === "STATE") handleState(payload.state);
+      else if (payload.type === "ACK") {
+        commandInFlight = false;
+        pendingCommand = null;
+        flushQueued();
+      }
+      else if (payload.type === "ERROR") {
+        var failedCommand = pendingCommand;
+        commandInFlight = false;
+        pendingCommand = null;
+        if ((payload.code === "STALE_PHASE" || payload.code === "STALE_VERSION") && failedCommand && !queuedCommand) queuedCommand = failedCommand;
+        setStatus(friendlyError(payload.code), "error");
+        render();
+      }
+    });
+    socket.addEventListener("close", function () {
+      commandInFlight = false;
+      pendingCommand = null;
+      releaseHeld();
+      if (!roomCode || !currentRole || !roleToken(currentRole) || state?.phase === "OUTCOME") return;
+      clearTimeout(reconnectTimer);
+      reconnectAttempts += 1;
+      reconnectTimer = setTimeout(function () { connectSocket(false); }, Math.min(4000, 350 + reconnectAttempts * 450));
+      setStatus("正在接回目前控制席……", "warn"); render();
+    });
+  }
+
+  function enterRoom(code) {
+    roomCode = normalizeRoomCode(code);
+    state = null; currentRole = null; selectedRole = null; statusText = "";
+    history.replaceState(null, "", shareUrl(roomCode));
+    fetch(workerBaseUrl + "/rooms/" + roomCode, { headers: { Accept: "application/json" } }).then(function (response) { return response.json().then(function (payload) { return { response: response, payload: payload }; }); }).then(function (result) {
+      if (!result.response.ok) throw new Error(result.payload.error || "ROOM_FAILED");
+      state = result.payload;
+      var lastRole = getStored("last-role");
+      if (ROLE_IDS.indexOf(lastRole) >= 0 && roleToken(lastRole)) { currentRole = lastRole; selectedRole = lastRole; connectSocket(false); }
+      render();
+    }).catch(function () { roomCode = null; setStatus("找不到這個事件，請確認六碼代碼。", "error"); render(); });
+  }
+
+  function createRoom() {
+    setStatus("正在建立事件……", ""); render();
+    fetch(workerBaseUrl + "/rooms", { method: "POST", headers: { "Content-Type": "application/json" } }).then(function (response) { return response.json().then(function (payload) { return { response: response, payload: payload }; }); }).then(function (result) {
+      if (!result.response.ok) throw new Error(result.payload.error || "CREATE_FAILED");
+      enterRoom(result.payload.roomCode);
+    }).catch(function () { setStatus("目前無法建立事件，請稍後再試。", "error"); render(); });
+  }
+
+  function unlockAudio() {
+    audioUnlocked = true;
+    try {
+      operatorAudio.muted = true;
+      var result = operatorAudio.play();
+      if (result?.then) result.then(function () { operatorAudio.pause(); operatorAudio.currentTime = 0; operatorAudio.muted = false; }).catch(function () { operatorAudio.muted = false; });
+    } catch { operatorAudio.muted = false; }
+  }
+
+  function audioKey(id) { return (roomCode || "none") + ":" + id; }
+  function completeOperator(id) {
+    var key = audioKey(id);
+    if (audioCompleted[key] || state?.audioMasterRole !== currentRole) return;
+    audioCompleted[key] = true;
+    sendCommand({ type: "COMPLETE_OPERATOR", eventId: id });
+  }
+
+  function playOperator(replay) {
+    var event = state?.operatorEvent;
+    if (!event) return;
+    var row = DIALOGUE[event.id];
+    if (!row?.audio || missingAudio) { if (!replay) completeOperator(event.id); return; }
+    operatorAudio.src = new URL(row.audio, location.href).toString();
+    operatorAudio.muted = false;
+    if (replay) operatorAudio.currentTime = 0;
+    operatorAudio.onended = replay ? null : function () { completeOperator(event.id); };
+    operatorAudio.onerror = replay ? null : function () { completeOperator(event.id); };
+    try { var result = operatorAudio.play(); if (result?.catch) result.catch(function () { if (!replay) completeOperator(event.id); }); } catch { if (!replay) completeOperator(event.id); }
+  }
+
+  function syncAudio() {
+    clearTimeout(audioFallbackTimer);
+    var event = state?.operatorEvent;
+    if (!event || event.acknowledged || state.audioMasterRole !== currentRole) return;
+    var key = audioKey(event.id);
+    if (boundAudioEvent !== key) { boundAudioEvent = key; operatorAudio.onended = null; operatorAudio.onerror = null; }
+    audioFallbackTimer = setTimeout(function () { completeOperator(event.id); }, audioFallbackMs);
+    if (!audioAttempted[key]) { audioAttempted[key] = true; if (audioUnlocked) playOperator(false); }
+  }
+
+  function updateTimer() {
+    var node = document.querySelector("[data-timer]");
+    if (!node || !state?.deadlineAt) return;
+    var serverEstimate = Date.now() - clockOffset;
+    node.textContent = Math.max(0, Math.ceil((state.deadlineAt - serverEstimate) / 1000)) + " 秒";
+  }
+  setInterval(updateTimer, 250);
+  setInterval(function () {
+    if (!state || !["WINDOW1", "WINDOW2", "FINAL"].includes(state.phase)) return;
+    if (!socket || socket.readyState !== WebSocket.OPEN || commandInFlight) return;
+    sendCommand({ type: "HEARTBEAT" });
+  }, 1000);
+
+  document.addEventListener("click", function (event) {
+    var target = event.target.closest("button, a");
+    if (!target) return;
+    if (target.matches("[data-create]")) return createRoom();
+    if (target.matches("[data-role-select]")) { selectedRole = target.getAttribute("data-role-select"); render(); return; }
+    if (target.matches("[data-takeover]")) { currentRole = selectedRole; setStored("last-role", currentRole); unlockAudio(); connectSocket(true); setStatus("正在接手控制席……", ""); render(); return; }
+    if (target.matches("[data-share]")) { navigator.clipboard?.writeText(shareUrl(roomCode)); setStatus("加入連結已複製。", ""); render(); return; }
+    if (target.matches("[data-power]")) return sendCommand({ type: "SET_POWER", mode: target.getAttribute("data-power") });
+    if (target.matches("[data-command]")) return sendCommand({ type: target.getAttribute("data-command") });
+    if (target.matches("[data-replay]")) return playOperator(true);
+    if (target.matches("[data-new-event]")) { if (socket) try { socket.close(1000, "new event"); } catch {} roomCode = null; state = null; currentRole = null; selectedRole = null; history.replaceState(null, "", location.pathname); render(); }
+  });
+
+  document.addEventListener("submit", function (event) { if (!event.target.matches("[data-join-form]")) return; event.preventDefault(); var code = normalizeRoomCode(event.target.elements.room.value); if (code.length !== 6) { setStatus("請輸入六碼事件代碼。", "error"); render(); } else enterRoom(code); });
+  document.addEventListener("input", function (event) { if (event.target.name === "room") event.target.value = normalizeRoomCode(event.target.value); });
+  document.addEventListener("pointerdown", function (event) {
+    var hold = event.target.closest("[data-hold-start]");
+    var training = event.target.closest("[data-training-hold]");
+    if (hold) { event.preventDefault(); try { hold.setPointerCapture?.(event.pointerId); } catch {} startHold(hold); }
+    if (training && !training.disabled) { event.preventDefault(); trainingHeldAt = Date.now(); training.classList.add("is-held"); try { training.setPointerCapture?.(event.pointerId); } catch {} }
+  });
+  function pointerRelease(event) {
+    if (heldControl) { event?.preventDefault?.(); releaseHeld(); }
+    if (trainingHeldAt) { var elapsed = Date.now() - trainingHeldAt; trainingHeldAt = 0; document.querySelector("[data-training-hold]")?.classList.remove("is-held"); if (elapsed >= 250) sendCommand({ type: "TRAIN" }); }
+  }
+  document.addEventListener("pointerup", pointerRelease);
+  document.addEventListener("pointercancel", pointerRelease);
+  global.addEventListener("blur", releaseHeld);
+  document.addEventListener("visibilitychange", function () { if (document.hidden) releaseHeld(); });
+
+  var initialRoom = normalizeRoomCode(query.get("room"));
+  if (initialRoom.length === 6) enterRoom(initialRoom); else render();
+
+  global.__MOMEY_A9R4__ = {
+    getState: function () { return state; },
+    getRoomCode: function () { return roomCode; },
+    getCurrentRole: function () { return currentRole; },
+    getAudioElementForTest: function () { return operatorAudio; },
+    getHeldControlForTest: function () { return heldControl; },
+    releaseHeldForTest: releaseHeld,
+    workerBaseUrl: workerBaseUrl,
+    render: render
+  };
+})(window);

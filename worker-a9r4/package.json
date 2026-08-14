@@ -1,0 +1,18 @@
+{
+  "name": "momey-playable-a9r4-room",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test:engine": "node --test tests/engine.test.mjs",
+    "test:worker": "node --test tests/worker-source.test.mjs",
+    "test:structural": "node --test tests/structural-simulation.test.mjs",
+    "test:outcome": "node --test tests/a9r4-outcome-fidelity.test.mjs",
+    "test:council": "node --test tests/a9r-council-runs.test.mjs",
+    "test:human": "node --test tests/human-dependency.test.mjs",
+    "test:scope": "node --test tests/protected-scope.test.mjs",
+    "test:regression": "node --test tests/a9-core-regression.test.mjs",
+    "test:local": "node tests/local-wrangler.integration.mjs",
+    "test:frontend": "node ../playable-a9r4/tests/frontend.e2e.cjs",
+    "test": "npm run test:engine && npm run test:regression && npm run test:structural && npm run test:outcome && npm run test:human && npm run test:council && npm run test:worker && npm run test:scope && npm run test:local && npm run test:frontend"
+  }
+}
