@@ -21,7 +21,7 @@ One bounded room-level pressure-wave family is selected deterministically when t
 - Durable Object: `A9R3Room`
 - Binding: `ROOM_A9R3`
 - Schema: `momey-a9r3-room-v1`
-- Planned public path: `https://kafidog.github.io/momey-micro-mystery/playable-a9r3/`
+- Unadvertised deployed path: `https://kafidog.github.io/momey-micro-mystery/playable-a9r3/`
 
 ## Local verification
 

@@ -6,9 +6,10 @@ Complete the isolated A9R3 human-dependency pass: keep A9R2's story, event-drive
 
 ## Phase and status
 
-- Phase: development / adversarial QA.
-- Local engineering status: PASS.
-- Deployment and final review-package status: pending at this checkpoint.
+- Phase: final internal milestone delivery.
+- Engineering and production status: PASS.
+- Final runtime commit: `cbb67eb1776a63cdb0e93b5bf4a6cd643f4d4f93`.
+- Deployment: GitHub Pages + isolated A9R3 Worker verified; review-package verification follows this source checkpoint.
 
 ## Completed
 
@@ -23,6 +24,10 @@ Complete the isolated A9R3 human-dependency pass: keep A9R2's story, event-drive
 - Six Council scenarios passed, including no speech, late Rescue/Safety callouts, early Operations pull, and first-time coordinated play.
 - Local two-room/six-client realtime, reconnect, cross-room isolation, and projection-leak checks passed.
 - Local rendered three-device 390x844 / 412x915 flow passed with `COORDINATED_CLOSE`, no horizontal overflow, operator voice, and missing-audio fallback.
+- Isolated Worker deployed as `momey-playable-a9r3-room`; health reports schema `momey-a9r3-room-v1` and status `ok`.
+- GitHub Pages deployment run `31768472600` passed for the final runtime commit.
+- Production JavaScript/CSS hashes match the committed source exactly.
+- Production three-device room `KWKVVM` passed all six briefing beats, three training links, three live cross-phone links, projection-leak checks, mobile flow, audio fallback, and `COORDINATED_CLOSE`; 18 screenshots were captured.
 
 ## Important files
 
@@ -45,7 +50,7 @@ Complete the isolated A9R3 human-dependency pass: keep A9R2's story, event-drive
 - `npm run test:worker` — 4/4.
 - `npm run test:scope` — 1/1.
 - `npm run test:local` — PASS, two rooms/six clients/reconnect/cross-room isolation.
-- `npm run test:frontend` — PASS, three mobile contexts, 16 screenshots at this checkpoint.
+- `npm run test:frontend` — PASS locally and in production, three mobile contexts; the production evidence set contains 18 screenshots.
 
 ## Boundaries
 
@@ -55,8 +60,8 @@ Only `playable-a9r3/**` and `worker-a9r3/**` belong to this milestone. Root Micr
 
 - Actual human fun, conversation quality, first-run duration, social dominance, replay desire, WTP, and commercial demand remain unknown.
 - Operations still owns power and the final lever; removing digital teammate readiness improves information dominance, but real social dominance requires human playtests.
-- Production deployment and package/source hash verification remain to be completed.
+- Human-device testing remains outside this internal milestone; no synthetic result is reported as evidence of actual human fun or conversation quality.
 
 ## Next safest task
 
-Run the complete local suite from the final source, independently inspect the important Diff and rendered role-local screens, then commit/deploy the isolated Worker and Pages path, run production three-device/reconnect checks, and create the verified Desktop review ZIP.
+Return the verified review pack to Sol Chairman + Five-Seat Momey Council. The next authorized evidence layer, if requested later, is a real three-human first-run test; do not start A10, acquisition, payment, accounts, or public promotion from this handoff.
