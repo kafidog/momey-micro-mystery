@@ -40,6 +40,7 @@
   var clockOffset = 0;
   var lastSystemEventSerial = null;
   var lastLocalEventSerial = null;
+  var renderedPhase = null;
 
   function escapeHtml(value) {
     return String(value == null ? "" : value).replace(/[&<>'"]/g, function (char) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]; });
@@ -184,6 +185,8 @@
   }
 
   function render() {
+    var nextPhase = state?.phase || (roomCode ? "LOBBY" : "ENTRY");
+    var phaseChanged = nextPhase !== renderedPhase;
     if (!roomCode) root.innerHTML = entryMarkup();
     else if (!state || state.phase === "LOBBY") root.innerHTML = lobbyMarkup();
     else if (state.phase === "BRIEFING") root.innerHTML = briefingMarkup();
@@ -194,6 +197,8 @@
     syncHeldClass();
     syncAudio();
     updateTimer();
+    renderedPhase = nextPhase;
+    if (phaseChanged) requestAnimationFrame(function () { global.scrollTo(0, 0); });
   }
 
   function handleState(next) {

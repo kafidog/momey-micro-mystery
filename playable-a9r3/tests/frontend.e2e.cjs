@@ -147,10 +147,10 @@ async function browserRun() {
     await snapshot(operations, "11_live_operations_compact.png");
     await snapshot(rescue, "12_live_rescue_compact_412x915.png");
     await snapshot(safety, "13_live_safety_compact.png");
-    for (const [page, selector] of [[operations, ".power-switch"], [rescue, "[data-hold-start=TROLLEY_START]"], [safety, "[data-hold-start=BRACE_START]"]]) {
+    for (const [role, page, selector] of [["operations", operations, ".power-switch"], ["rescue", rescue, "[data-hold-start=TROLLEY_START]"], ["safety", safety, "[data-hold-start=BRACE_START]"]]) {
       const control = await page.locator(selector).boundingBox();
       const viewport = page.viewportSize();
-      assert.ok(control && control.y < viewport.height, "primary live control must begin inside the mobile viewport");
+      assert.ok(control && control.y < viewport.height, `primary live control must begin inside the mobile viewport: ${role} control=${JSON.stringify(control)} viewport=${JSON.stringify(viewport)}`);
     }
     await clickPower(operations, "gate");
     await rescue.waitForFunction(() => window.__MOMEY_A9R3__.getState().control.railPowered === false);
