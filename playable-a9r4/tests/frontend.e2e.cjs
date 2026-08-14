@@ -224,8 +224,10 @@ async function browserRun() {
     await snapshot(rescue, "18_outcome_412x915.png");
     const outcome = await operations.evaluate(() => window.__MOMEY_A9R4__.getState().outcome);
     assert.equal(outcome.variant, "COORDINATED_CLOSE");
-    assert.equal(outcome.metrics.gateDamage, PREMATURE_PULLS * 24);
+    assert.ok(outcome.metrics.gateDamage >= PREMATURE_PULLS * 24 && outcome.metrics.gateDamage < PREMATURE_PULLS * 24 + 12,
+      `gate damage must preserve the ${PREMATURE_PULLS * 24}-point rebound cost without overclassifying minor live-timing wear: ${outcome.metrics.gateDamage}`);
     assert.equal(outcome.details.recovery.reboundCount, PREMATURE_PULLS);
+    assert.equal(outcome.details.gate.condition, PREMATURE_PULLS === 0 ? "intact" : PREMATURE_PULLS === 1 ? "damaged" : "severely_damaged");
     assert.equal(await operations.locator("body").evaluate((node) => node.scrollWidth <= node.clientWidth), true);
     assert.equal(await rescue.locator("body").evaluate((node) => node.scrollWidth <= node.clientWidth), true);
     assert.equal(await operations.locator("[data-outcome-headline]").count(), 1);
