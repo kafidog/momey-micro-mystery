@@ -27,7 +27,7 @@ Complete the isolated A9R3 human-dependency pass: keep A9R2's story, event-drive
 - Isolated Worker deployed as `momey-playable-a9r3-room`; health reports schema `momey-a9r3-room-v1` and status `ok`.
 - GitHub Pages deployment run `31768472600` passed for the final runtime commit.
 - Production JavaScript/CSS hashes match the committed source exactly.
-- Production three-device room `KWKVVM` passed all six briefing beats, three training links, three live cross-phone links, projection-leak checks, mobile flow, audio fallback, and `COORDINATED_CLOSE`; 18 screenshots were captured.
+- Final-runtime production three-device room `Q5VVRH` passed all six briefing beats, three training links, three live cross-phone links, projection-leak checks, mobile flow, phase-transition viewport reset, audio fallback, and `COORDINATED_CLOSE`; 18 screenshots were captured.
 
 ## Important files
 
