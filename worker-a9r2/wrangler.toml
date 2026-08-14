@@ -1,0 +1,16 @@
+name = "momey-playable-a9r2-room"
+main = "src/index.js"
+compatibility_date = "2026-08-08"
+workers_dev = true
+preview_urls = false
+
+[observability]
+enabled = false
+
+[[durable_objects.bindings]]
+name = "ROOM_A9R2"
+class_name = "A9R2Room"
+
+[[migrations]]
+tag = "v1-a9r2"
+new_sqlite_classes = ["A9R2Room"]
