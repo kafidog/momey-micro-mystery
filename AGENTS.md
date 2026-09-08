@@ -29,3 +29,12 @@ Cloudflare runtime credentials and actual human/physical-device evidence are sep
 Update the single current handoff with CURRENT_HEAD/BRANCH, LAST_VERIFIED_STATE, COMPLETED / VERIFIED, ACTIVE_WORK, KNOWN_BLOCKERS, LOCKED_DECISIONS, EVENT_PENDING and NEXT_EXECUTABLE_ISSUE. Resolve actual HEAD using Git; recorded hashes identify evidence baselines, not a self-referential final documentation commit.
 
 Preserve unrelated dirty work. Stage only reviewed task files; no reset/clean/force push/history rewrite. Separate source sync from release/deploy/account authorization. Commit and push the safe current branch; verify local and remote HEAD equality before claiming GITHUB_SYNC=PUSHED. If unavailable, retain the commit and report exact blocker. Documentation-only validation checks references, Markdown and diff, never reruns the product suite for ceremony.
+
+<!-- doneaudit:start -->
+## DoneAudit completion rule
+Before claiming completion, write doneaudit.claim.json with {"completed":true,"summary":"what you changed"} and the exact config scope when governance-only.
+Then run `node .doneaudit/tool/bin/doneaudit.js run`. This executes configured checks and produces evidence automatically.
+Only describe the configured scope as verified when it exits 0 and reports VERIFIED. Governance-only evidence is NEVER product acceptance. If it fails, report FAILED or INSUFFICIENT EVIDENCE honestly.
+The final reviewer still checks Issue acceptance, scope, runtime requirements and current handoff; DoneAudit is not that review.
+Do not weaken tests, edit DoneAudit tooling/configuration, or manufacture receipts to obtain a passing score.
+<!-- doneaudit:end -->

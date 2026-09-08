@@ -1,3 +1,21 @@
+# Current DoneAudit integration checkpoint
+
+- CURRENT_GOAL: resume existing persistent context and integrate the single DoneAudit engine; governance-only.
+- CURRENT_BRANCH: resolve `git branch --show-current`; CURRENT_HEAD: resolve `git rev-parse HEAD`. Integration input: `2af90b290b8ceed5ea2c86728ac86574e6cc0513`.
+- LAST_VERIFIED_STATE: accepted product evidence below is CARRIED_FORWARD, not rerun. Scope/source-bound current proof is `.doneaudit/evidence/result.json`; absent or stale receipts are INSUFFICIENT EVIDENCE.
+- COMPLETED: previous governance commit retained; installer/configuration wired to source pin `2900f2dec4c8f6905412e23e8947b45eb1071bd2` (unreleased source, not npm 0.1.0).
+- ACTIVE_WORK: governance integration only; no unrelated product flow is being executed.
+- LOCKED_DECISIONS: Preserve A9R3 formulas, information boundaries, pacing and controls; A1–A9R3 and other Workers remain outside A9R4 scope. No A10 or acquisition expansion. DoneAudit governance scope never replaces product acceptance or the final reviewer.
+- KNOWN_BLOCKERS: EXTERNAL_WAIT: review/human evidence; EVIDENCE_INSUFFICIENT: fun, WTP, commercial demand and physical-device claims.
+- EVENT_PENDING: EVENT_PENDING: Council review and actual human evidence. Central portable source is not a published npm/Marketplace release.
+- UNVERIFIED: all product behavior not covered by the carried-forward evidence; this task performs no new runtime/Production acceptance.
+- NEXT_SINGLE_ACTION: run `node .doneaudit/tool/bin/doneaudit.js run` after any final edit/commit; review exact scope, then safe Git sync. Product resumption remains: NONE_EXECUTABLE in this governance task. Existing next action is A9R4 review; do not create A10 or reopen accepted engine work.
+
+`doneaudit.config.json` lists actual reference, pinned-byte and exact-diff allowlist checks, not product test/build substitutes. One installer-owned completion block is in AGENTS.md. CI re-executes the same governance commands with a proof-only Node bootstrap. A later product Issue must select its real product checks and acceptance scope; never reuse this governance-only result as product completion.
+
+## Carried-forward project truth
+
+
 # Current recovery checkpoint — 2026-09-09
 
 - CURRENT_HEAD: resolve `git rev-parse HEAD` at startup; governance baseline `ac12a3b89121d27cfb90aadc6ec5401f99bf7323`. Documentation commits after that baseline do not imply a new product validation.

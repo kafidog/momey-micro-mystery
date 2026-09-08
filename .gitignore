@@ -1,2 +1,6 @@
 .wrangler/
 worker/.wrangler/
+
+/.doneaudit/evidence/
+
+/.agent-proof/
