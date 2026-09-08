@@ -1,3 +1,21 @@
+# Current recovery checkpoint — 2026-09-09
+
+- CURRENT_HEAD: resolve `git rev-parse HEAD` at startup; governance baseline `ac12a3b89121d27cfb90aadc6ec5401f99bf7323`. Documentation commits after that baseline do not imply a new product validation.
+- CURRENT_BRANCH: `main`; confirm it with Git, do not silently switch branches.
+- LAST_VERIFIED_STATE: A9R4 engineering and recorded production verification complete; human/Council review remains separate.
+- COMPLETED / VERIFIED: CARRIED_FORWARD: runtime 0655f27e68c38f3ff75c3f48bc8d66533dccf356, outcome fidelity and three-device evidence documented below; not rerun by governance migration.
+- ACTIVE_WORK: governance-only context adoption; no product execution authorized by this checkpoint.
+- KNOWN_BLOCKERS: EXTERNAL_WAIT: review/human evidence; EVIDENCE_INSUFFICIENT: fun, WTP, commercial demand and physical-device claims.
+- LOCKED_DECISIONS: Preserve A9R3 formulas, information boundaries, pacing and controls; A1–A9R3 and other Workers remain outside A9R4 scope. No A10 or acquisition expansion.
+- EVENT_PENDING: EVENT_PENDING: Council review and actual human evidence.
+- NEXT_EXECUTABLE_ISSUE: NONE_EXECUTABLE in this governance task. Existing next action is A9R4 review; do not create A10 or reopen accepted engine work.
+
+Evidence/source references: `playable-a9r4/README.md`, `worker-a9r4/package.json` (paths relative to repository root). Preserve accepted evidence unless new evidence or explicit requirements invalidate it; record OLD_BASELINE / NEW_EVIDENCE / SUPERSEDED_DECISION when reopening. A fresh agent must read current Git state and the selected Issue, not infer completion from this summary.
+
+## Carried-forward evidence and prior checkpoint
+
+The following product evidence is retained, not rerun in this governance task. Earlier “this round/current Git/sync” wording describes its original checkpoint; the recovery header above selects the current branch and scope.
+
 # CODEX HANDOFF — MOMEY PLAYABLE A9R4
 
 ## Current goal
